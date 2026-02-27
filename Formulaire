@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recrutement Origin's Esports - Fortnite</title>
+    <style>
+        body { font-family: 'Arial', sans-serif; background: linear-gradient(135deg, #0A2540 0%, #1E3A5F 100%); color: white; margin: 0; padding: 20px; }
+        .container { max-width: 800px; margin: 0 auto; background: rgba(0,0,0,0.8); border-radius: 15px; padding: 30px; box-shadow: 0 10px 30px rgba(0,212,255,0.3); }
+        h1 { text-align: center; color: #00D4FF; font-size: 2.5em; margin-bottom: 10px; text-shadow: 0 0 10px #00D4FF; }
+        h2 { color: #00D4FF; border-bottom: 2px solid #00D4FF; padding-bottom: 10px; }
+        label { display: block; margin: 15px 0 5px; font-weight: bold; color: white; }
+        input, select, textarea { width: 100%; padding: 12px; border: 2px solid #00D4FF; border-radius: 8px; background: #1E3A5F; color: white; font-size: 18px; box-sizing: border-box; }
+        input:focus, select:focus, textarea:focus { outline: none; border-color: #00FFFF; box-shadow: 0 0 10px #00D4FF; }
+        .checkbox-group { display: flex; flex-direction: column; }
+        .checkbox-group label { margin: 5px 0; font-weight: normal; }
+        button { width: 100%; padding: 15px; background: linear-gradient(45deg, #00D4FF, #00FFFF); color: #0A2540; font-size: 1.2em; font-weight: bold; border: none; border-radius: 10px; cursor: pointer; margin-top: 20px; transition: transform 0.3s; }
+        button:hover { transform: scale(1.02); box-shadow: 0 5px 15px rgba(0,212,255,0.5); }
+        .logo { text-align: center; margin-bottom: 20px; }
+        .logo img { width: 150px; height: 150px; border-radius: 50%; border: 3px solid #00D4FF; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">
+            <!-- Remplace par ton logo ORG rond -->
+            <img src="https://via.placeholder.com/150/0A2540/00D4FF?text=ORG" alt="Origin's Logo">
+        </div>
+        <h1>🔥 Formulaire de Recrutement Origin's Esports (Fortnite) 🔥</h1>
+        <p style="text-align: center; font-size: 1.1em;">Team émergente | Squads compètes | 18+ ans | Grinder only 💪</p>
+
+        <form id="recrutementForm" action="https://formspree.io/f/YOUR_FORMSPREE_ID" method="POST" onsubmit="return submitForm()"> <!-- Remplace YOUR_FORMSPREE_ID par un service gratuit comme Formspree -->
+            
+            <h2>📋 Section 1: Infos Perso</h2>
+            <label for="nom">Nom complet *</label>
+            <input type="text" id="nom" name="nom" required>
+
+            <label for="age">Âge * (min 18)</label>
+            <input type="number" id="age" name="age" min="18" required>
+
+            <label for="pseudo">Pseudo Epic / Nom Fortnite *</label>
+            <input type="text" id="pseudo" name="pseudo" required>
+
+            <label for="tracker">Lien Fortnite Tracker *</label>
+            <input type="url" id="tracker" name="tracker" placeholder="https://fortnitetracker.com/profile/account/XXXX" required>
+
+            <label for="discord">Discord Tag *</label>
+            <input type="text" id="discord" name="discord" placeholder="Pseudo#1234" required>
+
+            <label for="twitter">Twitter / X (optionnel)</label>
+            <input type="url" id="twitter" name="twitter">
+
+            <label for="twitch">Twitch / YouTube (optionnel)</label>
+            <input type="url" id="twitch" name="twitch">
+
+            <h2>📊 Section 2: Stats & Performances</h2>
+            <label for="rang_solo">Rang Solo actuel</label>
+            <select id="rang_solo" name="rang_solo">
+                <option>Open</option>
+                <option>Elite</option>
+                <option>Unreal</option>
+                <option>Champion</option>
+            </select>
+
+            <label for="rang_equipe">Rang Duos/Trios/Squads</label>
+            <select id="rang_equipe" name="rang_equipe">
+                <option>Open</option>
+                <option>Elite</option>
+                <option>Unreal</option>
+                <option>Champion</option>
+            </select>
+
+            <label for="perf">Meilleure perf récente</label>
+            <textarea id="perf" name="perf" rows="3"></textarea>
+
+            <label for="victoires">Victoires Solo / Squads</label>
+            <input type="number" id="victoires" name="victoires">
+
+            <label for="kd">K/D global</label>
+            <input type="number" step="0.01" id="kd" name="kd">
+
+            <h2>🎮 Section 3: Expérience</h2>
+            <label for="teams">Teams précédentes</label>
+            <textarea id="teams" name="teams" rows="3"></textarea>
+
+            <label for="niveau">Niveau build/fight/game sense (1-10)</label>
+            <input type="range" id="niveau" name="niveau" min="1" max="10" value="5">
+            <span id="niveauValue">5</span>
+
+            <label>Position préférée *</label>
+            <select name="position" required>
+                <option>IGL</option>
+                <option>Main FRAG</option>
+                <option>Second FRAG</option>
+                <option>Support</option>
+            </select>
+
+            <label>Plateforme *</label>
+            <select name="plateforme" required>
+                <option>PC</option>
+                <option>PS5</option>
+                <option>Xbox</option>
+                <option>Switch</option>
+            </select>
+
+            <label for="clips">Liens clips/highlights * (min 3)</label>
+            <textarea id="clips" name="clips" rows="4" placeholder="YouTube/Twitch/MediaFire" required></textarea>
+
+            <h2>⏰ Section 4: Disponibilités</h2>
+            <label for="fuseau">Fuseau horaire</label>
+            <input type="text" id="fuseau" name="fuseau" placeholder="GMT+1">
+
+            <label>Heures entraînement/semaine *</label>
+            <select name="heures" required>
+                <option>10-20h</option>
+                <option>20-30h</option>
+                <option>30h+</option>
+            </select>
+
+            <label>Dispo scrims quotidiens ?</label>
+            <select name="scrims">
+                <option>Oui</option>
+                <option>Non</option>
+            </select>
+
+            <label>Dispo tournois/LAN ?</label>
+            <select name="tournois">
+                <option>Oui</option>
+                <option>Non</option>
+            </select>
+
+            <h2>💭 Section 5: Motivations</h2>
+            <label for="pourquoi">Pourquoi Origin's ? *</label>
+            <textarea id="pourquoi" name="pourquoi" rows="4" required></textarea>
+
+            <label for="objectifs">Objectifs court/long terme ?</label>
+            <textarea id="objectifs" name="objectifs" rows="4"></textarea>
+
+            <label for="connu">Comment as-tu connu Origin's ?</label>
+            <input type="text" id="connu" name="connu">
+
+            <h2>✅ Section 6: Conditions *</h2>
+            <div class="checkbox-group">
+                <label><input type="checkbox" name="conditions[]" value="age" required> J'ai 18+ ans</label>
+                <label><input type="checkbox" name="conditions[]" value="mature" required> Je suis mature & teamplayer</label>
+                <label><input type="checkbox" name="conditions[]" value="grind" required> J'engage à grinder quotidien</label>
+                <label><input type="checkbox" name="conditions[]" value="tryouts" required> J'accepte les tryouts</label>
+            </div>
+
+            <button type="submit">🚀 POSTULER À ORIGIN'S ! 🔥</button>
+        </form>
+
+        <p style="text-align: center; margin-top: 20px; font-size: 0.9em; opacity: 0.8;">
+            Réception auto sous 48h sur Discord | Branding Origin's © 2026
+        </p>
+    </div>
+
+    <script>
+        document.getElementById('niveau').addEventListener('input', function() {
+            document.getElementById('niveauValue').textContent = this.value;
+        });
+        function submitForm() {
+            alert('Postulé ! Manager te contacte soon 🔥');
+            return true;
+        }
+    </script>
+</body>
+</html>
