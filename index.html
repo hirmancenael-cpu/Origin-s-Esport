@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Origin's Esports • Recrutement Pro</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #00d4ff;
+      --primary-glow: rgba(0, 212, 255, 0.5);
+      --bg-dark: #020617;
+      --card-bg: rgba(15, 23, 42, 0.8);
+      --input-bg: rgba(30, 41, 59, 0.5);
+      --text-main: #f8fafc;
+      --text-dim: #94a3b8;
+    }
+
+    * { margin:0; padding:0; box-sizing:border-box; }
+    
+    body {
+      min-height: 100vh;
+      background: var(--bg-dark) url('https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&q=100&w=2400') center/cover no-repeat fixed;
+      font-family: 'Inter', sans-serif;
+      color: var(--text-main);
+      overflow-x: hidden;
+    }
+
+    /* Overlay de dégradé pour plus de profondeur */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(circle at center, rgba(0,20,50,0.7) 0%, var(--bg-dark) 100%);
+      z-index: 1;
+    }
+
+    .container {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 60px 20px;
+    }
+
+    /* --- LOGO & HEADER --- */
+    .logo-wrapper {
+      width: 220px;
+      margin-bottom: 20px;
+      filter: drop-shadow(0 0 20px var(--primary-glow));
+      animation: float 4s ease-in-out infinite;
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+    .logo { width: 100%; height: auto; }
+
+    h1 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: clamp(2rem, 8vw, 4rem);
+      text-transform: uppercase;
+      letter-spacing: 8px;
+      text-align: center;
+      background: linear-gradient(to bottom, #fff, var(--primary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 40px;
+    }
+
+    /* --- CARD STYLE --- */
+    .form-card {
+      background: var(--card-bg);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 24px;
+      padding: 40px;
+      width: 100%;
+      max-width: 800px;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin: 40px 0 25px;
+    }
+    .section-header hr { flex-grow: 1; border: 0; border-top: 1px solid rgba(255,255,255,0.1); }
+    .section-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.1rem;
+      color: var(--primary);
+      text-transform: uppercase;
+      letter-spacing: 3px;
+    }
+
+    /* --- FORM ELEMENTS --- */
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .form-group { margin-bottom: 20px; position: relative; }
+    
+    label {
+      display: block;
+      font-size: 0.85rem;
+      color: var(--text-dim);
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    input, textarea, select {
+      width: 100%;
+      padding: 14px 18px;
+      background: var(--input-bg);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 10px;
+      color: white;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+    }
+
+    input:focus, textarea:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 15px var(--primary-glow);
+      background: rgba(30, 41, 59, 0.8);
+    }
+
+    .stats-badge {
+      background: rgba(0, 212, 255, 0.1);
+      border: 1px dashed var(--primary);
+      padding: 15px;
+      border-radius: 12px;
+      margin-bottom: 25px;
+    }
+
+    /* --- CHECKBOXES --- */
+    .checkbox-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+      margin-top: 20px;
+    }
+    .check-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.9rem;
+      color: var(--text-dim);
+      cursor: pointer;
+    }
+    input[type="checkbox"] { width: 18px; height: 18px; accent-color: var(--primary); }
+
+    /* --- BUTTON --- */
+    button {
+      width: 100%;
+      margin-top: 40px;
+      padding: 20px;
+      background: var(--primary);
+      color: #000;
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 900;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 4px;
+      transition: all 0.3s ease;
+    }
+
+    button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 30px var(--primary-glow);
+      filter: brightness(1.1);
+    }
+
+    @media (max-width: 600px) {
+      .grid, .checkbox-container { grid-template-columns: 1fr; }
+      .form-card { padding: 25px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <div class="logo-wrapper">
+    <img src="images/logo.png" alt="Origin's Logo" class="logo">
+  </div>
+  <h1>RECRUITMENT</h1>
+
+  <div class="form-card">
+    <form name="recruitment" 
+      method="POST" 
+      data-netlify="true" 
+      netlify-honeypot="bot-field">
+
+  <input type="hidden" name="form-name" value="recruitment">
+
+  <p style="display:none">
+    <label>Ne pas remplir si humain : <input name="bot-field"></label>
+  </p>
+      
+      <div class="section-header">
+        <span class="section-title">01. Profil Joueur</span>
+        <hr>
+      </div>
+      <input type="text" name="_gotcha" style="display:none">
+
+      <div class="grid">
+        <div class="form-group">
+          <label>Pseudo In-Game</label>
+          <input type="text" name="epic_name" placeholder="Ex: Origin_Ninja" required>
+        </div>
+        <div class="form-group">
+          <label>Âge</label>
+          <input type="number" name="age" placeholder="18" required>
+        </div>
+      </div>
+
+      <div class="grid">
+        <div class="form-group">
+          <label>Discord Tag</label>
+          <input type="text" name="discord" placeholder="pseudo#0000" required>
+        </div>
+        <div class="form-group">
+          <label>Lien Twitter (X)</label>
+          <input type="url" name="twitter" placeholder="https://x.com/tonprofil">
+        </div>
+      </div>
+
+      <div class="section-header">
+        <span class="section-title">02. Statistiques Compétitives</span>
+        <hr>
+      </div>
+
+      <div class="stats-badge">
+        <div class="grid">
+          <div class="form-group">
+            <label>Power Ranking (PR) actuel</label>
+            <input type="number" name="pr" placeholder="Ex: 15000" required>
+          </div>
+          <div class="form-group">
+            <label>Earnings ($)</label>
+            <input type="number" name="earnings" placeholder="Ex: 500" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Lien Fortnite Tracker</label>
+          <input type="url" name="tracker_link" placeholder="https://fortnitetracker.com/profile/..." required>
+        </div>
+      </div>
+
+      <div class="grid">
+        <div class="form-group">
+          <label>Rôle principal</label>
+          <select name="role">
+            <option>IGL (In-Game Leader)</option>
+            <option>Fragger</option>
+            <option>Support / Co-IGL</option>
+            <option>Hybrid</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Plateforme</label>
+          <select name="platform">
+            <option>PC (240 FPS+)</option>
+            <option>PC (144 FPS)</option>
+            <option>Console Next-Gen (PS5/Xbox Series)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="section-header">
+        <span class="section-title">03. Expérience & Ambition</span>
+        <hr>
+      </div>
+
+      <div class="form-group">
+        <label>Meilleures Perfs (Top FNCS, Cash Cups...)</label>
+        <textarea name="performances" rows="3" placeholder="Détaille tes meilleurs placements ici..."></textarea>
+      </div>
+
+      <div class="form-group">
+        <label>Pourquoi rejoindre Origin's Esports ?</label>
+        <textarea name="motivation" rows="3" required></textarea>
+      </div>
+
+      <div class="section-header">
+        <span class="section-title">04. Validation</span>
+        <hr>
+      </div>
+
+      <div class="checkbox-container">
+        <label class="check-item">
+          <input type="checkbox" name="mature" required> Mature & Discipliné
+        </label>
+        <label class="check-item">
+          <input type="checkbox" name="scrims" required> Dispo pour Scrims quotidiens
+        </label>
+        <label class="check-item">
+          <input type="checkbox" name="lan" required> Prêt à se déplacer en LAN
+        </label>
+        <label class="check-item">
+          <input type="checkbox" name="tryout" required> Accepte la phase de test
+        </label>
+      </div>
+
+      <button type="submit">Envoyer ma candidature</button>
+
+    </form>
+  </div>
+
+  <div style="margin-top: 40px; color: var(--text-dim); font-size: 0.8rem; letter-spacing: 2px;">
+    © 2026 ORIGIN'S ESPORTS • ALL RIGHTS RESERVED
+  </div>
+</div>
+
+</body>
+</html>
