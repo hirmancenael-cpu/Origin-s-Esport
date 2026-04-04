@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ORIGIN'S ESPORTS — Rejoindre le Staff</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Orbitron:wght@400;700;900&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;cursor:none}
+:root{
+  --c:#a78bfa;--c2:#6d28d9;--c3:#c4b5fd;
+  --crgb:167,139,250;
+  --bg:#06040d;--bg2:#100830;
+  --glass:rgba(167,139,250,0.04);
+  --bd:rgba(167,139,250,0.15);--bd2:rgba(255,255,255,0.06);
+  --tx:#f0eeff;--mt:#6050a0;--mi:#9080c8;
+  --fd:'Orbitron',sans-serif;--fb:'Syne',sans-serif;--fm:'JetBrains Mono',monospace;
+  --expo:cubic-bezier(0.16,1,0.3,1);
+}
+html{overflow-x:hidden}
+body{font-family:var(--fb);background:var(--bg);color:var(--tx);overflow-x:hidden;line-height:1.7}
+@media(max-width:900px){*,*::before,*::after{cursor:auto!important}.cursor,.cursor-ring{display:none!important}}
+::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:rgba(167,139,250,.2);border-radius:3px}
+::-webkit-scrollbar-thumb:hover{background:var(--c)}
+
+/* LOADER */
+#loader{position:fixed;inset:0;z-index:9999;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:28px;overflow:hidden}
+.l-grid{position:absolute;inset:0;background-image:repeating-linear-gradient(0deg,transparent,transparent 59px,rgba(167,139,250,.03) 60px),repeating-linear-gradient(90deg,transparent,transparent 59px,rgba(167,139,250,.03) 60px);animation:lgd 8s linear infinite}
+@keyframes lgd{from{transform:translateY(0)}to{transform:translateY(60px)}}
+.l-brand{font-family:var(--fd);font-size:clamp(1rem,3vw,1.5rem);font-weight:900;letter-spacing:8px;color:transparent;-webkit-text-stroke:1px rgba(167,139,250,.3);text-transform:uppercase;z-index:1}
+.l-brand em{color:var(--c);-webkit-text-stroke:0;font-style:normal}
+.l-wrap{width:240px;z-index:1}
+.l-bg{height:1px;background:rgba(255,255,255,.06)}
+.l-fill{height:1px;background:linear-gradient(90deg,var(--c2),var(--c),var(--c3));width:0%;box-shadow:0 0 14px var(--c);position:relative;top:-1px}
+.l-pct{font-family:var(--fm);font-size:.6rem;color:var(--mt);letter-spacing:4px;text-align:right;margin-top:8px;z-index:1}
+.l-tag{font-family:var(--fm);font-size:.52rem;color:rgba(167,139,250,.3);letter-spacing:3px;z-index:1}
+
+/* BG */
+#bgc{position:fixed;inset:0;z-index:0;pointer-events:none}
+.noise{position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.025;background:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E") 0 0/200px 200px}
+.amb{position:fixed;inset:0;z-index:0;pointer-events:none}
+
+/* CURSOR */
+.cursor{position:fixed;z-index:9998;width:8px;height:8px;background:var(--c);border-radius:50%;transform:translate(-50%,-50%);pointer-events:none;box-shadow:0 0 10px var(--c);transition:width .15s,height .15s,background .15s,border-radius .15s}
+.cursor-ring{position:fixed;z-index:9997;width:40px;height:40px;border:1px solid rgba(167,139,250,.4);border-radius:50%;transform:translate(-50%,-50%);pointer-events:none;transition:width .35s var(--expo),height .35s var(--expo),border-color .3s,opacity .3s}
+body.ch .cursor{width:5px;height:5px;background:#fff}
+body.ch .cursor-ring{width:55px;height:55px;border-color:var(--c)}
+body.cc .cursor-ring{width:72px;height:72px;border-color:var(--c2);border-width:2px}
+body.ct .cursor{width:2px;height:22px;border-radius:2px}
+body.ct .cursor-ring{opacity:0}
+
+/* HEADER */
+.hdr{position:fixed;top:0;left:0;width:100%;z-index:1000;padding:26px 6%;display:flex;justify-content:space-between;align-items:center;transition:padding .5s var(--expo),background .5s,border-color .5s;border-bottom:1px solid transparent}
+.hdr.on{padding:14px 6%;background:rgba(6,4,13,.9);backdrop-filter:blur(28px);border-bottom-color:var(--bd)}
+.logo{font-family:var(--fd);font-size:.9rem;font-weight:900;color:#fff;text-decoration:none;letter-spacing:4px;display:flex;align-items:center;gap:10px}
+.lpip{width:7px;height:7px;background:var(--c);border-radius:50%;box-shadow:0 0 10px var(--c);animation:pip 2.5s ease infinite}
+@keyframes pip{0%,100%{transform:scale(1)}50%{transform:scale(1.5);opacity:.5}}
+.logo em{color:var(--c);font-style:normal}
+.nav{display:flex;align-items:center;gap:28px}
+.nav a{font-family:var(--fm);font-size:.6rem;color:var(--mt);text-decoration:none;letter-spacing:2px;text-transform:uppercase;transition:color .3s;position:relative}
+.nav a::after{content:'';position:absolute;bottom:-3px;left:0;width:0;height:1px;background:var(--c);transition:width .35s var(--expo);box-shadow:0 0 8px var(--c)}
+.nav a:hover{color:#fff}.nav a:hover::after,.nav a.on::after{width:100%}.nav a.on{color:var(--c)}
+.npill{font-family:var(--fd);font-size:.58rem;font-weight:700;padding:10px 22px;border:1px solid var(--c);color:var(--c);text-decoration:none;letter-spacing:2px;text-transform:uppercase;border-radius:3px;transition:all .3s}
+.npill:hover{background:var(--c);color:#000;box-shadow:0 0 24px rgba(167,139,250,.35)}
+@media(max-width:768px){.nav a:not(.npill){display:none}}
+
+/* PAGE HERO */
+.page-hero{min-height:65vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:150px 6% 80px;position:relative;z-index:10;overflow:hidden}
+.page-hero::before{content:'';position:absolute;inset:0;background-image:repeating-linear-gradient(0deg,transparent,transparent 79px,rgba(167,139,250,.02) 80px),repeating-linear-gradient(90deg,transparent,transparent 79px,rgba(167,139,250,.02) 80px);pointer-events:none;mask-image:radial-gradient(ellipse 80% 80% at 50% 50%,#000,transparent)}
+.ph-eye{font-family:var(--fm);font-size:.62rem;color:var(--c);letter-spacing:5px;text-transform:uppercase;display:flex;align-items:center;gap:18px;margin-bottom:32px;opacity:0}
+.ph-eye::before,.ph-eye::after{content:'';width:50px;height:1px;background:linear-gradient(90deg,transparent,var(--c))}
+.ph-eye::after{background:linear-gradient(90deg,var(--c),transparent)}
+.ph-icon{font-size:5rem;margin-bottom:24px;opacity:0;filter:drop-shadow(0 0 40px rgba(167,139,250,.4))}
+.ph-title{font-family:var(--fd);font-size:clamp(3rem,9vw,8rem);font-weight:900;line-height:.88;text-transform:uppercase;letter-spacing:-2px;margin-bottom:24px;opacity:0}
+.ph-title .l1{display:block;background:linear-gradient(170deg,#fff 30%,rgba(255,255,255,.35));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.ph-title .l2{display:block;background:linear-gradient(135deg,var(--c3) 0%,var(--c) 50%,var(--c2) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;filter:drop-shadow(0 0 24px rgba(167,139,250,.4))}
+.ph-sub{font-style:italic;font-size:clamp(1rem,2vw,1.35rem);color:var(--mi);max-width:620px;opacity:0;line-height:1.65}
+.ph-sub em{color:var(--c);font-style:normal}
+.ph-tags{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:28px;opacity:0}
+.ph-tag{padding:6px 16px;border:1px solid rgba(167,139,250,.2);border-radius:3px;font-family:var(--fm);font-size:.58rem;color:var(--mi);letter-spacing:2px;background:rgba(167,139,250,.05)}
+
+/* ROLE SELECTOR — full cards */
+.role-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:12px}
+@media(max-width:800px){.role-cards{grid-template-columns:1fr 1fr}}
+@media(max-width:500px){.role-cards{grid-template-columns:1fr}}
+.rc{padding:18px 16px;background:rgba(0,0,0,.3);border:1px solid rgba(167,139,250,.1);border-radius:10px;text-align:center;cursor:pointer;transition:all .3s}
+.rc:hover,.rc.sel{border-color:rgba(167,139,250,.4);background:rgba(167,139,250,.07)}
+.rc.sel{box-shadow:0 0 18px rgba(167,139,250,.12)}
+.rc .ri{font-size:1.8rem;display:block;margin-bottom:8px}
+.rc span{font-family:var(--fm);font-size:.6rem;color:var(--mt);letter-spacing:1.5px;display:block;text-transform:uppercase}
+.rc small{font-size:.52rem;color:rgba(96,80,160,.5);display:block;margin-top:3px}
+.rc:hover span,.rc.sel span{color:var(--c)}
+
+/* SECTION */
+section{position:relative;z-index:10}
+.si{max-width:1000px;margin:0 auto;padding:80px 6%}
+.ey{display:inline-flex;align-items:center;gap:14px;font-family:var(--fm);font-size:.62rem;color:var(--c);letter-spacing:4px;text-transform:uppercase;margin-bottom:22px}
+.ey::after{content:'';width:60px;height:1px;background:var(--bd)}
+.st{font-family:var(--fd);font-size:clamp(1.8rem,4vw,3rem);font-weight:900;text-transform:uppercase;letter-spacing:1px;line-height:1.05;margin-bottom:18px;color:#fff}
+.st .hl{color:transparent;-webkit-text-stroke:1.5px var(--c);position:relative;display:inline-block}
+.st .hl::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:2px;background:linear-gradient(90deg,var(--c),var(--c2));box-shadow:0 0 12px var(--c);transition:width 1.2s var(--expo)}
+.st .hl.li::after{width:100%}
+.ss{font-size:1rem;color:var(--mi);max-width:640px;margin-bottom:60px;line-height:1.8}
+.rv{opacity:0;transform:translateY(48px)}
+.rvs{opacity:0;transform:scale(.93)}
+
+/* FORM SHELL */
+.fsh{background:rgba(6,4,13,.92);backdrop-filter:blur(24px);border:1px solid var(--bd);border-radius:22px;overflow:hidden;position:relative;box-shadow:0 60px 120px rgba(0,0,0,.7)}
+.fsh::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--c) 30%,var(--c3) 70%,transparent)}
+
+/* STEP TABS */
+.ftabs{display:flex;border-bottom:1px solid var(--bd);overflow-x:auto;scrollbar-width:none}
+.ftabs::-webkit-scrollbar{display:none}
+.ftab{flex:1;min-width:90px;padding:20px 10px;display:flex;flex-direction:column;align-items:center;gap:6px;position:relative;cursor:pointer;transition:background .3s;border-right:1px solid var(--bd)}
+.ftab:last-child{border-right:none}
+.ftab::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:var(--c);box-shadow:0 0 10px var(--c);transform:scaleX(0);transform-origin:left;transition:transform .5s var(--expo)}
+.ftab.active{background:rgba(167,139,250,.03)}
+.ftab.active::after{transform:scaleX(1)}
+.ftab.done::after{transform:scaleX(1);background:rgba(167,139,250,.3);box-shadow:none}
+.tn{font-family:var(--fm);font-size:.58rem;color:var(--mt);letter-spacing:1px;transition:color .3s}
+.tl{font-family:var(--fd);font-size:.46rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--mt);transition:color .3s}
+.tck{font-size:.75rem;opacity:0;transition:opacity .3s;color:var(--c)}
+.ftab.active .tn,.ftab.active .tl{color:#fff}
+.ftab.done .tn,.ftab.done .tl,.ftab.done .tck{color:var(--c)}
+.ftab.done .tck{opacity:1}
+
+/* FORM BODY */
+.fbody{padding:56px}
+@media(max-width:700px){.fbody{padding:28px 20px}}
+.fpnl{display:none;will-change:transform,opacity}
+.fpnl.active{display:block}
+.ph2{margin-bottom:44px}
+.ph2 h3{font-family:var(--fd);font-size:1.35rem;font-weight:900;color:#fff;text-transform:uppercase;letter-spacing:3px;line-height:1.2}
+.ph2 p{color:var(--mt);font-size:.8rem;margin-top:8px;font-family:var(--fm)}
+.fpl{height:2px;background:rgba(255,255,255,.04);margin-bottom:48px;border-radius:2px;overflow:hidden}
+.fpb{height:100%;background:linear-gradient(90deg,var(--c2),var(--c),var(--c3));box-shadow:0 0 12px var(--c);transition:width .6s var(--expo);width:20%}
+.r2{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.r3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px}
+@media(max-width:600px){.r2,.r3{grid-template-columns:1fr}}
+.fg{margin-bottom:26px;position:relative}
+.fg label{display:flex;align-items:center;gap:6px;font-family:var(--fm);font-size:.6rem;color:var(--mt);letter-spacing:2px;text-transform:uppercase;margin-bottom:10px}
+.fg label .rq{color:#c4b5fd}
+.fg label .op{color:var(--mt);opacity:.5;font-size:.55rem;margin-left:auto}
+input[type=text],input[type=number],input[type=url],input[type=email],select,textarea{
+  width:100%;padding:14px 18px;background:rgba(255,255,255,.08);border:1px solid rgba(167,139,250,.25);
+  border-radius:7px;color:#fff;font-family:var(--fb);font-size:.95rem;outline:none;
+  transition:border-color .3s,background .3s,box-shadow .3s}
+input::placeholder,textarea::placeholder{color:rgba(255,255,255,.4)}
+input:focus,select:focus,textarea:focus{border-color:var(--c);background:rgba(16,8,48,.5);box-shadow:0 0 0 3px rgba(167,139,250,.07),0 0 24px rgba(167,139,250,.08)}
+select{appearance:none;cursor:pointer;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23a78bfa' stroke-width='1.5' stroke-linecap='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;background-size:16px;padding-right:44px}
+select option{background:#0d0820}
+textarea{resize:vertical;min-height:110px;line-height:1.65}
+
+/* CHECKBOXES */
+.cg{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin-top:12px}
+@media(max-width:600px){.cg{grid-template-columns:1fr}}
+.ci{display:flex;align-items:center;gap:13px;padding:13px 16px;background:rgba(0,0,0,.3);border:1px solid rgba(255,255,255,.05);border-radius:8px;cursor:pointer;transition:all .25s;user-select:none}
+.ci:hover{border-color:rgba(167,139,250,.25);background:rgba(109,40,217,.08)}
+.ci.ck{border-color:rgba(167,139,250,.35);background:rgba(167,139,250,.06)}
+.ci input{display:none}
+.cb{width:20px;height:20px;flex-shrink:0;border:1px solid rgba(255,255,255,.15);border-radius:4px;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.3);transition:all .25s;position:relative}
+.ci.ck .cb{background:var(--c);border-color:var(--c);box-shadow:0 0 12px rgba(167,139,250,.3)}
+.cb::after{content:'';width:5px;height:9px;border-right:2px solid #000;border-bottom:2px solid #000;transform:rotate(45deg) scale(0) translateY(-1px);transition:transform .2s}
+.ci.ck .cb::after{transform:rotate(45deg) scale(1) translateY(-1px)}
+.ci span{font-size:.88rem;color:var(--mi);transition:color .25s;font-weight:500}
+.ci.ck span{color:#fff}
+
+/* FORM NAV */
+.fnav{display:flex;align-items:center;gap:16px;margin-top:48px;padding-top:32px;border-top:1px solid rgba(255,255,255,.05)}
+.fsi{font-family:var(--fm);font-size:.58rem;color:var(--mt);letter-spacing:2px}
+.fbk{padding:14px 24px;background:transparent;border:1px solid rgba(255,255,255,.1);border-radius:6px;color:var(--mt);font-family:var(--fd);font-size:.58rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:all .25s;display:flex;align-items:center;gap:8px;width:auto;margin:0}
+.fbk:hover{border-color:rgba(255,255,255,.25);color:#fff;background:rgba(255,255,255,.03);transform:none;box-shadow:none;filter:none}
+.ffwd{margin-left:auto;padding:16px 34px;background:linear-gradient(135deg,var(--c),var(--c2));border:none;border-radius:6px;color:#fff;font-family:var(--fd);font-weight:900;font-size:.62rem;letter-spacing:3px;text-transform:uppercase;cursor:pointer;display:flex;align-items:center;gap:10px;box-shadow:0 6px 28px rgba(167,139,250,.25);transition:transform .35s var(--expo),box-shadow .35s var(--expo);width:auto;margin:0 0 0 auto}
+.ffwd:hover{transform:translateY(-3px);box-shadow:0 14px 48px rgba(167,139,250,.4);filter:none}
+.fsub{background:linear-gradient(135deg,var(--c),#4c1d95);box-shadow:0 6px 28px rgba(167,139,250,.25)}
+.fsub:hover{box-shadow:0 14px 48px rgba(167,139,250,.45)}
+
+/* RECAP */
+.rcg{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin-bottom:28px}
+@media(max-width:600px){.rcg{grid-template-columns:1fr}}
+.rci{padding:14px 18px;background:rgba(0,0,0,.3);border:1px solid rgba(255,255,255,.05);border-radius:8px}
+.rck{font-family:var(--fm);font-size:.55rem;color:var(--mt);letter-spacing:2px;text-transform:uppercase;margin-bottom:5px}
+.rcv{font-size:.88rem;color:#fff;font-weight:600}
+
+/* SUCCESS */
+.sw{display:none;text-align:center;padding:80px 40px}
+.sw.show{display:block}
+.swi{font-size:3.5rem;margin-bottom:20px;filter:drop-shadow(0 0 20px rgba(167,139,250,.5))}
+.swt{font-family:var(--fd);font-size:1.8rem;font-weight:900;color:var(--c);letter-spacing:4px;text-transform:uppercase;margin-bottom:14px}
+.swm{color:var(--mi);font-size:1rem;line-height:1.8;max-width:460px;margin:0 auto}
+.swc{display:inline-block;margin-top:24px;font-family:var(--fm);font-size:.62rem;color:var(--c);letter-spacing:3px;border:1px dashed rgba(167,139,250,.3);padding:10px 22px;border-radius:4px}
+
+/* FOOTER */
+footer{position:relative;z-index:10;border-top:1px solid var(--bd);padding:50px 6%;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px}
+.fb2{font-family:var(--fd);font-size:.85rem;font-weight:900;color:#fff;letter-spacing:4px}
+.fb2 em{color:var(--c);font-style:normal}
+.fl{display:flex;gap:24px}
+.fl a{font-family:var(--fm);font-size:.58rem;color:var(--mt);text-decoration:none;letter-spacing:2px;transition:color .3s}
+.fl a:hover{color:var(--c)}
+.fc{font-family:var(--fm);font-size:.58rem;color:var(--mt);letter-spacing:2px}
+</style>
+</head>
+<body>
+<div id="loader">
+  <div class="l-grid"></div>
+  <div class="l-brand">ORIGIN'S&nbsp;<em>ESPORTS</em>&nbsp;·&nbsp;STAFF</div>
+  <div class="l-wrap"><div class="l-bg"></div><div class="l-fill" id="lf"></div><div class="l-pct" id="lp">0%</div></div>
+  <div class="l-tag">Recrutement Staff — Chargement en cours</div>
+</div>
+<div class="cursor" id="cur"></div>
+<div class="cursor-ring" id="curR"></div>
+<canvas id="bgc"></canvas>
+<div class="noise"></div>
+<div class="amb" id="amb"></div>
+
+<header class="hdr" id="hdr">
+  <a class="logo" href="index.html"><span class="lpip"></span>ORIGIN'S&nbsp;<em>ESPORTS</em></a>
+  <nav class="nav">
+    <a href="recrutement.html" class="ht">← Toutes les sections</a>
+    <a href="staff.html" class="ht">Notre Équipe</a>
+    <a href="recrutement.html" class="ht npill hcta">Joueurs →</a>
+  </nav>
+</header>
+
+<section class="page-hero" id="hero">
+  <div class="ph-eye" id="phEye">Staff — Rejoindre l'Organisation 2026</div>
+  <div class="ph-icon" id="phIcon">🏢</div>
+  <h1 class="ph-title" id="phTitle">
+    <span class="l1">REJOINDRE</span>
+    <span class="l2">LE STAFF</span>
+  </h1>
+  <p class="ph-sub" id="phSub">Coach, Analyste, Caster, Manager, Content Creator... Tu as un skill à <em>apporter à la structure</em>.</p>
+  <div class="ph-tags" id="phTags">
+    <span class="ph-tag">👨‍🏫 Coach</span>
+    <span class="ph-tag">🎙️ Caster</span>
+    <span class="ph-tag">📊 Analyste</span>
+    <span class="ph-tag">🎬 Créateur de contenu</span>
+    <span class="ph-tag">📱 Community Manager</span>
+    <span class="ph-tag">🎮 Manager</span>
+  </div>
+</section>
+
+<section>
+  <div class="si">
+    <div class="ey rv">Candidature Staff</div>
+    <h2 class="st rv">Formulaire <span class="hl">Staff & Encadrement</span></h2>
+    <p class="ss rv">Pas joueur mais passionné par l'esport ? Chaque rôle compte dans notre structure. Présente-toi sérieusement.</p>
+
+    <div class="fsh rvs">
+      <div class="ftabs" id="ftabs">
+        <div class="ftab active" onclick="gS(1)"><div class="tn">01</div><div class="tl">Profil</div><div class="tck">✓</div></div>
+        <div class="ftab" onclick="gS(2)"><div class="tn">02</div><div class="tl">Rôle</div><div class="tck">✓</div></div>
+        <div class="ftab" onclick="gS(3)"><div class="tn">03</div><div class="tl">Expérience</div><div class="tck">✓</div></div>
+        <div class="ftab" onclick="gS(4)"><div class="tn">04</div><div class="tl">Motivation</div><div class="tck">✓</div></div>
+        <div class="ftab" onclick="gS(5)"><div class="tn">05</div><div class="tl">Review</div><div class="tck">✓</div></div>
+      </div>
+      <div class="sw" id="sw"><div class="swi">🏢</div><div class="swt">Candidature Envoyée</div><div class="swm">Ton dossier a été transmis à l'équipe dirigeante d'Origin's.<br>Réponse sous 72h via Discord.</div><div class="swc">// WELCOME TO THE TEAM.</div></div>
+      <div class="fbody" id="fb">
+        <div class="fpl"><div class="fpb" id="fpb"></div></div>
+        <form id="mf" name="candidature-staff" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+          <input type="hidden" name="form-name" value="candidature-staff" />
+          <input type="hidden" name="category" value="Staff">
+          <input type="hidden" name="role_val" id="rvf">
+          <input type="hidden" name="games_val" id="gvf">
+          <p class="hidden" style="display: none;"><label>Ne pas remplir : <input name="bot-field"></label></p>
+
+          <!-- STEP 1 — PROFIL -->
+          <div class="fpnl active" id="p1">
+            <div class="ph2"><h3>Profil Personnel</h3><p>Qui es-tu ?</p></div>
+            <div class="r2">
+              <div class="fg"><label>Prénom / Pseudo <span class="rq">*</span></label><input type="text" name="name" placeholder="Ton nom ou pseudo" required></div>
+              <div class="fg"><label>Âge <span class="rq">*</span></label><input type="number" name="age" placeholder="18" min="16" max="50" required></div>
+            </div>
+            <div class="r2">
+              <div class="fg"><label>Discord Tag <span class="rq">*</span></label><input type="text" name="discord" placeholder="pseudo#0000" required></div>
+              <div class="fg"><label>Email <span class="rq">*</span></label><input type="email" name="email" placeholder="ton@email.com" required></div>
+            </div>
+            <div class="r2">
+              <div class="fg"><label>Twitter / X <span class="op">optionnel</span></label><input type="url" name="twitter" placeholder="https://x.com/..."></div>
+              <div class="fg"><label>LinkedIn / Portfolio <span class="op">optionnel</span></label><input type="url" name="portfolio" placeholder="https://..."></div>
+            </div>
+            <div class="r2">
+              <div class="fg"><label>Nationalité</label><input type="text" name="nationality" placeholder="Française, Belge..."></div>
+              <div class="fg"><label>Fuseau horaire</label>
+                <select name="timezone"><option value="">Sélectionner...</option><option>EU — France (CET/CEST)</option><option>EU — UK (GMT/BST)</option><option>EU — Est</option><option>NA — Est</option><option>NA — Ouest</option><option>MENA</option></select></div>
+            </div>
+            <div class="fnav"><div class="fsi">01 / 05</div><button type="button" class="ffwd hcta" onclick="nS()">Continuer <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button></div>
+          </div>
+
+          <!-- STEP 2 — RÔLE -->
+          <div class="fpnl" id="p2">
+            <div class="ph2"><h3>Rôle Souhaité</h3><p>Quel est ton domaine de compétence principal ?</p></div>
+            <div class="fg"><label>Rôle principal <span class="rq">*</span></label>
+              <div class="role-cards" id="roleCards">
+                <div class="rc" onclick="sRole(this,'Coach')"><span class="ri">👨‍🏫</span><span>Coach</span><small>Gameplay, tactiques</small></div>
+                <div class="rc" onclick="sRole(this,'Analyste')"><span class="ri">📊</span><span>Analyste</span><small>VoD, data, stats</small></div>
+                <div class="rc" onclick="sRole(this,'Caster')"><span class="ri">🎙️</span><span>Caster</span><small>Commentaires live</small></div>
+                <div class="rc" onclick="sRole(this,'Créateur de Contenu')"><span class="ri">🎬</span><span>Créateur Contenu</span><small>Vidéos, clips, montage</small></div>
+                <div class="rc" onclick="sRole(this,'Community Manager')"><span class="ri">📱</span><span>Community Manager</span><small>Réseaux sociaux</small></div>
+                <div class="rc" onclick="sRole(this,'Manager / Team Manager')"><span class="ri">🎮</span><span>Team Manager</span><small>Logistique, planning</small></div>
+                <div class="rc" onclick="sRole(this,'Graphiste / Designer')"><span class="ri">🎨</span><span>Graphiste</span><small>Visual, branding</small></div>
+                <div class="rc" onclick="sRole(this,'Développeur Web')"><span class="ri">💻</span><span>Développeur</span><small>Site, outils</small></div>
+                <div class="rc" onclick="sRole(this,'Autre')"><span class="ri">➕</span><span>Autre</span><small>Précise en dessous</small></div>
+              </div>
+            </div>
+            <div class="fg"><label>Section(s) concernée(s)</label>
+              <div class="cg" id="gameCg">
+                <label class="ci" onclick="tC(this)"><input type="checkbox" name="game_fn"><div class="cb"></div><span>⚡ Fortnite</span></label>
+                <label class="ci" onclick="tC(this)"><input type="checkbox" name="game_vl"><div class="cb"></div><span>🎯 Valorant</span></label>
+                <label class="ci" onclick="tC(this)"><input type="checkbox" name="game_rl"><div class="cb"></div><span>🚀 Rocket League</span></label>
+                <label class="ci" onclick="tC(this)"><input type="checkbox" name="game_all"><div class="cb"></div><span>🌐 Toutes sections</span></label>
+              </div>
+            </div>
+            <div class="fg"><label>Précise ton rôle si "Autre" <span class="op">optionnel</span></label><input type="text" name="role_custom" placeholder="Ex: Psychologue du sport, Nutritionniste..."></div>
+            <div class="fnav">
+              <button type="button" class="fbk ht" onclick="pS()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Retour</button>
+              <div class="fsi">02 / 05</div>
+              <button type="button" class="ffwd hcta" onclick="nS()">Continuer <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button>
+            </div>
+          </div>
+
+          <!-- STEP 3 — EXPÉRIENCE -->
+          <div class="fpnl" id="p3">
+            <div class="ph2"><h3>Expérience & Compétences</h3><p>Prouve ce que tu apportes</p></div>
+            <div class="fg"><label>Expérience dans l'esport / gaming <span class="rq">*</span></label><textarea name="experience" rows="4" placeholder="Teams précédentes, projets réalisés, missions effectuées... Sois précis." required></textarea></div>
+            <div class="r2">
+              <div class="fg"><label>Années d'expérience dans l'esport</label>
+                <select name="years_exp"><option value="">Sélectionner...</option><option>Débutant (moins de 1 an)</option><option>1–2 ans</option><option>2–4 ans</option><option>4–6 ans</option><option>6+ ans</option></select></div>
+              <div class="fg"><label>Disponibilités / semaine</label>
+                <select name="availability"><option value="">Sélectionner...</option><option>5–10h</option><option>10–20h</option><option>20–30h</option><option>30h+</option><option>Temps plein</option></select></div>
+            </div>
+            <div class="fg"><label>Compétences clés (logiciels, outils, skills)</label><textarea name="skills" rows="3" placeholder="Ex: Adobe Premiere, OBS, Excel avancé, coaching Fortnite depuis 3 ans, méthodo VoD review..."></textarea></div>
+            <div class="fg"><label>Lien portfolio / références <span class="op">optionnel</span></label><input type="url" name="portfolio_link" placeholder="Site perso, Behance, YouTube, Google Drive..."></div>
+            <div class="fg"><label>Jeux pratiqués (niveau, temps de jeu)</label><textarea name="gaming_profile" rows="2" placeholder="Ex: Fortnite — 2000h, PR 8000 / Valorant — Immortal 2..."></textarea></div>
+            <div class="fnav">
+              <button type="button" class="fbk ht" onclick="pS()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Retour</button>
+              <div class="fsi">03 / 05</div>
+              <button type="button" class="ffwd hcta" onclick="nS()">Continuer <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button>
+            </div>
+          </div>
+
+          <!-- STEP 4 — MOTIVATION -->
+          <div class="fpnl" id="p4">
+            <div class="ph2"><h3>Motivation & Vision</h3><p>Pourquoi Origin's et qu'est-ce que tu apportes ?</p></div>
+            <div class="fg"><label>Lettre de motivation <span class="rq">*</span></label><textarea name="motivation" rows="5" placeholder="Explique pourquoi tu veux rejoindre Origin's Esports, ce que tu peux apporter, ta vision du rôle..." required></textarea></div>
+            <div class="r2">
+              <div class="fg"><label>Vision à court terme (6 mois)</label><textarea name="goals_6m" rows="2" placeholder="Ce que tu veux mettre en place rapidement..."></textarea></div>
+              <div class="fg"><label>Vision à long terme (1–2 ans)</label><textarea name="goals_2y" rows="2" placeholder="Où tu veux emmener la structure..."></textarea></div>
+            </div>
+            <div class="fg"><label>Rémunération souhaitée <span class="op">optionnel</span></label>
+              <select name="remuneration"><option value="">Sélectionner...</option><option>Bénévolat (passion)</option><option>Revenus partagés (tournois)</option><option>Salaire partiel</option><option>Salaire à discuter</option><option>À négocier selon le poste</option></select></div>
+            <div class="fg"><label>Engagements <span class="rq">*</span></label>
+              <div class="cg">
+                <label class="ci" onclick="tC(this)"><input type="checkbox" name="serious" required><div class="cb"></div><span>Engagement sérieux & régulier</span></label>
+                <label class="ci" onclick="tC(this)"><input type="checkbox" name="comms" required><div class="cb"></div><span>Communication proactive</span></label>
+                <label class="ci" onclick="tC(this)"><input type="checkbox" name="confidential"><div class="cb"></div><span>Respect de la confidentialité</span></label>
+                <label class="ci" onclick="tC(this)"><input type="checkbox" name="improve"><div class="cb"></div><span>Volonté de progresser</span></label>
+              </div>
+            </div>
+            <div class="fg"><label>Quelque chose à ajouter ? <span class="op">optionnel</span></label><textarea name="extra" rows="2" placeholder="Un projet spécial, une anecdote, une idée..."></textarea></div>
+            <div class="fnav">
+              <button type="button" class="fbk ht" onclick="pS()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Retour</button>
+              <div class="fsi">04 / 05</div>
+              <button type="button" class="ffwd hcta" onclick="nS()">Review <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button>
+            </div>
+          </div>
+
+          <!-- STEP 5 — REVIEW -->
+          <div class="fpnl" id="p5">
+            <div class="ph2"><h3>Récapitulatif</h3><p>Vérifie avant d'envoyer</p></div>
+            <div class="rcg" id="rcg">
+              <div class="rci"><div class="rck">Nom / Pseudo</div><div class="rcv" id="rna">—</div></div>
+              <div class="rci"><div class="rck">Discord</div><div class="rcv" id="rdi">—</div></div>
+              <div class="rci"><div class="rck">Rôle</div><div class="rcv" id="rro">—</div></div>
+              <div class="rci"><div class="rck">Disponibilité</div><div class="rcv" id="rav">—</div></div>
+              <div class="rci"><div class="rck">Expérience</div><div class="rcv" id="rex">—</div></div>
+              <div class="rci"><div class="rck">Rémunération</div><div class="rcv" id="rre">—</div></div>
+            </div>
+            <div class="fnav">
+              <button type="button" class="fbk ht" onclick="pS()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Modifier</button>
+              <div class="fsi">05 / 05</div>
+              <button type="submit" class="ffwd fsub hcta">🏢 Envoyer la Candidature</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="fb2">ORIGIN'S <em>ESPORTS</em> · <span style="color:var(--c)">STAFF</span></div>
+  <div class="fl"><a href="recrutement.html" class="ht">← Toutes sections</a><a href="staff.html" class="ht">Notre Équipe</a><a href="index.html" class="ht">Accueil</a></div>
+  <div class="fc">© 2026 — TOUS DROITS RÉSERVÉS</div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script>
+gsap.registerPlugin(ScrollTrigger);
+// THREE.JS ESPORT CYBER-FLUX
+(function(){const s=document.createElement('script');s.src='https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js';s.onload=()=>{
+  const cv=document.getElementById('bgc');
+  const rr=new THREE.WebGLRenderer({canvas:cv,antialias:true,alpha:true,powerPreference:"high-performance"});
+  rr.setPixelRatio(Math.min(window.devicePixelRatio,2));rr.setSize(window.innerWidth,window.innerHeight);
+  const sc=new THREE.Scene();sc.fog=new THREE.FogExp2(0x06060c,0.035);
+  const cm=new THREE.PerspectiveCamera(60,window.innerWidth/window.innerHeight,1,300);cm.position.set(0,2,10);
+  const tc=getComputedStyle(document.documentElement).getPropertyValue('--c').trim()||'#00d8ff';
+  const cC=new THREE.Color(tc);const mC=new THREE.Color('#ffffff');
+  const gr=new THREE.GridHelper(300,120,cC,cC);
+  gr.material.transparent=true;gr.material.opacity=0.15;gr.material.blending=THREE.AdditiveBlending;
+  gr.position.y=-6;sc.add(gr);
+  const sg=new THREE.TetrahedronGeometry(1);
+  const sm=new THREE.MeshBasicMaterial({color:cC,wireframe:true,transparent:true,opacity:0.4,blending:THREE.AdditiveBlending});
+  const sm2=new THREE.MeshBasicMaterial({color:mC,wireframe:false,transparent:true,opacity:0.1,blending:THREE.AdditiveBlending});
+  const shards=new THREE.Object3D();const sD=[];
+  for(let i=0;i<120;i++){
+    const m=new THREE.Mesh(sg,Math.random()>.8?sm2:sm);
+    m.position.set((Math.random()-.5)*120,(Math.random()-.5)*40,(Math.random()-.5)*150);
+    m.rotation.set(Math.random()*Math.PI,Math.random()*Math.PI,Math.random()*Math.PI);
+    const sca=Math.random()*1.5+.5;m.scale.set(sca,sca,sca);shards.add(m);
+    sD.push({rx:(Math.random()-.5)*.06,ry:(Math.random()-.5)*.06,vz:Math.random()*.4+.2});
+  }
+  sc.add(shards);
+  const lG=new THREE.BufferGeometry();const lP=new Float32Array(400*6);const lV=[];
+  for(let i=0;i<400;i++){
+    const x=(Math.random()-.5)*150;const y=(Math.random()-.5)*60;const z=(Math.random()-.5)*150;
+    const len=Math.random()*3+1;
+    lP[i*6]=x;lP[i*6+1]=y;lP[i*6+2]=z;lP[i*6+3]=x;lP[i*6+4]=y;lP[i*6+5]=z-len;
+    lV.push(Math.random()*.8+.8);
+  }
+  lG.setAttribute('position',new THREE.BufferAttribute(lP,3));
+  const lM=new THREE.LineBasicMaterial({color:mC,transparent:true,opacity:.3,blending:THREE.AdditiveBlending});
+  const lns=new THREE.LineSegments(lG,lM);sc.add(lns);
+  let mx=0,my=0,tx=0,ty=0;
+  document.addEventListener('mousemove',e=>{mx=(e.clientX/window.innerWidth-.5)*2;my=-(e.clientY/window.innerHeight-.5)*2;});
+  function a(){
+    requestAnimationFrame(a);tx+=(mx-tx)*.05;ty+=(my-ty)*.05;
+    cm.position.x=tx*6;cm.position.y=2+ty*4;cm.lookAt(tx*3,0,0);
+    gr.position.z+=.4;if(gr.position.z>2.5)gr.position.z=0;
+    shards.children.forEach((m,i)=>{
+      m.rotation.x+=sD[i].rx;m.rotation.y+=sD[i].ry;m.position.z+=sD[i].vz;
+      if(m.position.z>15){m.position.z=-120;m.position.x=(Math.random()-.5)*120;m.position.y=(Math.random()-.5)*40;}
+    });
+    const p=lG.attributes.position.array;
+    for(let i=0;i<400;i++){
+      p[i*6+2]+=lV[i];p[i*6+5]+=lV[i];
+      if(p[i*6+2]>20){
+        p[i*6+2]=-130;p[i*6+5]=-130-(Math.random()*3+1);
+        p[i*6]=(Math.random()-.5)*150;p[i*6+1]=(Math.random()-.5)*60;
+        p[i*6+3]=p[i*6];p[i*6+4]=p[i*6+1];
+      }
+    }
+    lG.attributes.position.needsUpdate=true;rr.render(sc,cm);
+  }
+  a();window.addEventListener('resize',()=>{cm.aspect=window.innerWidth/window.innerHeight;cm.updateProjectionMatrix();rr.setSize(window.innerWidth,window.innerHeight);});
+};document.head.appendChild(s)})();
+// LOADER
+let pc=0;const li=setInterval(()=>{pc+=Math.random()*18+5;if(pc>=100){pc=100;clearInterval(li)}document.getElementById('lf').style.width=pc+'%';document.getElementById('lp').textContent=Math.round(pc)+'%'},120);
+window.addEventListener('load',()=>{clearInterval(li);document.getElementById('lf').style.width='100%';document.getElementById('lp').textContent='100%';
+  gsap.to('#loader',{opacity:0,duration:.85,delay:.25,ease:'power2.inOut',onComplete:()=>{document.getElementById('loader').style.display='none';heroIn()}})});
+// HERO
+function heroIn(){
+  const tl=gsap.timeline({defaults:{ease:'expo.out'}});
+  tl.to('#phEye',{opacity:1,y:0,duration:1})
+    .to('#phIcon',{opacity:1,scale:1,duration:1,ease:'back.out(2)'},'-=.4')
+    .to('#phTitle',{opacity:1,y:0,duration:1.2},'-=.6')
+    .to('#phSub',{opacity:1,y:0,duration:1},'-=.5')
+    .to('#phTags',{opacity:1,y:0,duration:.8},'-=.4');
+}
+// CURSOR
+const cur2=document.getElementById('cur'),curR=document.getElementById('curR');
+let mx=innerWidth/2,my=innerHeight/2,rx=mx,ry=my;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;gsap.set(cur2,{x:mx,y:my})});
+(function cr(){requestAnimationFrame(cr);rx+=(mx-rx)*.11;ry+=(my-ry)*.11;gsap.set(curR,{x:rx,y:ry})})();
+document.querySelectorAll('.ht,a,button').forEach(e=>{e.addEventListener('mouseenter',()=>document.body.classList.add('ch'));e.addEventListener('mouseleave',()=>document.body.classList.remove('ch'))});
+document.querySelectorAll('.hcta').forEach(e=>{e.addEventListener('mouseenter',()=>{document.body.classList.remove('ch');document.body.classList.add('cc')});e.addEventListener('mouseleave',()=>document.body.classList.remove('cc'))});
+document.querySelectorAll('input,textarea').forEach(e=>{e.addEventListener('focus',()=>document.body.classList.add('ct'));e.addEventListener('blur',()=>document.body.classList.remove('ct'))});
+// AMBIENT
+const amb=document.getElementById('amb');let ax=50,ay=20;
+document.addEventListener('mousemove',e=>{ax+=(e.clientX/innerWidth*100-ax)*.025;ay+=(e.clientY/innerHeight*100-ay)*.025;amb.style.background=`radial-gradient(ellipse 80% 60% at ${ax}% ${ay-20}%,rgba(109,40,217,0.1) 0%,transparent 65%)`});
+// HEADER
+ScrollTrigger.create({start:80,onEnter:()=>document.getElementById('hdr').classList.add('on'),onLeaveBack:()=>document.getElementById('hdr').classList.remove('on')});
+// REVEALS
+gsap.utils.toArray('.rv').forEach(el=>gsap.fromTo(el,{y:55,opacity:0},{y:0,opacity:1,duration:1.1,ease:'power4.out',scrollTrigger:{trigger:el,start:'top 88%',once:true}}));
+gsap.utils.toArray('.rvs').forEach(el=>gsap.fromTo(el,{scale:.92,opacity:0},{scale:1,opacity:1,duration:1.3,ease:'expo.out',scrollTrigger:{trigger:el,start:'top 90%',once:true}}));
+gsap.utils.toArray('.st .hl').forEach(el=>ScrollTrigger.create({trigger:el,start:'top 80%',once:true,onEnter:()=>el.classList.add('li')}));
+// ROLE CARDS STAGGER
+ScrollTrigger.create({trigger:'.role-cards',start:'top 85%',once:true,onEnter:()=>{
+  gsap.from('.rc',{y:20,opacity:0,stagger:.05,duration:.6,ease:'power3.out'});
+}});
+// FORM
+let cS=1;const BARS=['20%','40%','60%','80%','100%'];
+function gS(n){
+  if(n<1||n>5)return;
+  const old=document.getElementById('p'+cS);const nw=document.getElementById('p'+n);const fwd=n>cS;
+  if(n===5)upRec();
+  gsap.to(old,{opacity:0,x:fwd?-35:35,duration:.28,ease:'power2.in',onComplete:()=>{
+    old.classList.remove('active');old.style.cssText='';nw.classList.add('active');
+    gsap.fromTo(nw,{opacity:0,x:fwd?35:-35},{opacity:1,x:0,duration:.45,ease:'expo.out'});
+  }});
+  document.querySelectorAll('.ftab').forEach((t,i)=>{t.classList.remove('active','done');if(i+1===n)t.classList.add('active');else if(i+1<n)t.classList.add('done')});
+  document.getElementById('fpb').style.width=BARS[n-1];cS=n;
+  const top=document.querySelector('.fsh').getBoundingClientRect().top;
+  if(top<-30)window.scrollTo({top:window.scrollY+top-100,behavior:'smooth'});
+}
+function nS(){gS(cS+1)}function pS(){gS(cS-1)}
+function sRole(el,val){document.querySelectorAll('.rc').forEach(r=>r.classList.remove('sel'));el.classList.add('sel');document.getElementById('rvf').value=val}
+function tC(lbl){setTimeout(()=>{lbl.querySelector('input').checked?lbl.classList.add('ck'):lbl.classList.remove('ck')},10)}
+function upRec(){
+  const v=id=>{const e=document.querySelector('[name="'+id+'"]');return e?e.value||'—':'—'};
+  document.getElementById('rna').textContent=v('name');
+  document.getElementById('rdi').textContent=v('discord');
+  document.getElementById('rro').textContent=document.getElementById('rvf').value||'—';
+  document.getElementById('rav').textContent=v('availability');
+  document.getElementById('rex').textContent=v('years_exp');
+  document.getElementById('rre').textContent=v('remuneration');
+}
+// INPUT FOCUS
+document.querySelectorAll('input,textarea,select').forEach(el=>{
+  el.addEventListener('focus',()=>gsap.to(el,{borderColor:'rgba(167,139,250,.5)',duration:.3}));
+  el.addEventListener('blur',()=>gsap.to(el,{borderColor:el.value?'rgba(167,139,250,.25)':'rgba(167,139,250,.12)',duration:.3}));
+});
+// SUBMIT
+document.getElementById('mf').addEventListener('submit',e=>{
+  e.preventDefault();
+  const btn=document.querySelector('.fsub');const orig=btn.innerHTML;btn.innerHTML='⏳ Envoi...';btn.disabled=true;
+  fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:new URLSearchParams(new FormData(e.target)).toString()})
+  .then(()=>{document.getElementById('fb').style.display='none';document.getElementById('ftabs').style.display='none';const sw=document.getElementById('sw');sw.classList.add('show');gsap.from('#sw > *',{y:30,opacity:0,stagger:.15,duration:.9,ease:'power3.out'})})
+  .catch(()=>{btn.innerHTML=orig;btn.disabled=false;alert('Erreur. Réessaie.')});
+});
+</script>
+</body>
+</html>
