@@ -922,9 +922,14 @@
       text-transform: uppercase;
       letter-spacing: 2px;
       margin-bottom: 28px;
-      opacity: 0;
       position: relative;
       z-index: 2
+    }
+
+    /* Opacité sur les lignes : le parent ne doit pas rester à 0 (sinon les enfants restent invisibles) */
+    .ph-title .l1,
+    .ph-title .l2 {
+      opacity: 0
     }
 
     .ph-title .l1 {
