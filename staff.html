@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ORIGIN'S ESPORTS — Notre Équipe</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Orbitron:wght@400;700;900&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+/* ── RESET & ROOT (same tokens) ── */
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;cursor:none}
+:root{
+  --c:#00d4ff;--c2:#0055ff;--red:#ff2040;--gold:#ffd060;
+  --bg:#020810;--bg2:#040e1c;
+  --glass:rgba(0,180,255,0.04);
+  --bd:rgba(0,212,255,0.12);--bd2:rgba(255,255,255,0.06);
+  --tx:#e8f3ff;--mt:#4a7fa5;--mi:#7aaccc;
+  --fd:'Orbitron',sans-serif;--fb:'Syne',sans-serif;--fm:'JetBrains Mono',monospace;
+  --expo:cubic-bezier(0.16,1,0.3,1);
+}
+html{overflow-x:hidden}
+body{font-family:var(--fb);background:var(--bg);color:var(--tx);overflow-x:hidden;line-height:1.7}
+@media(max-width:900px){*,*::before,*::after{cursor:auto!important}.cursor,.cursor-ring{display:none!important}}
+::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:rgba(0,212,255,.15);border-radius:3px}::-webkit-scrollbar-thumb:hover{background:var(--c)}
+
+/* LOADER */
+#loader{position:fixed;inset:0;z-index:9999;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:28px;overflow:hidden}
+.l-grid{position:absolute;inset:0;background-image:repeating-linear-gradient(0deg,transparent,transparent 59px,rgba(0,212,255,.03) 60px),repeating-linear-gradient(90deg,transparent,transparent 59px,rgba(0,212,255,.03) 60px);animation:lgd 8s linear infinite}
+@keyframes lgd{from{transform:translateY(0)}to{transform:translateY(60px)}}
+.l-brand{font-family:var(--fd);font-size:clamp(1.1rem,3vw,1.6rem);font-weight:900;letter-spacing:8px;color:transparent;-webkit-text-stroke:1px rgba(0,212,255,.35);text-transform:uppercase;position:relative;z-index:1}
+.l-brand em{color:var(--c);-webkit-text-stroke:0;font-style:normal}
+.l-wrap{width:240px;position:relative;z-index:1}
+.l-bg{height:1px;background:rgba(255,255,255,.06)}
+.l-fill{height:1px;background:linear-gradient(90deg,var(--c2),var(--c));width:0%;box-shadow:0 0 14px var(--c);position:relative;top:-1px}
+.l-pct{font-family:var(--fm);font-size:.6rem;color:var(--mt);letter-spacing:4px;text-align:right;margin-top:8px;position:relative;z-index:1}
+
+/* CANVAS + NOISE + AMBIENT */
+#bgc{position:fixed;inset:0;z-index:0;pointer-events:none}
+.noise{position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.025;background:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E") 0 0/200px 200px}
+.amb{position:fixed;inset:0;z-index:0;pointer-events:none}
+
+/* CURSOR */
+.cursor{position:fixed;z-index:9998;width:8px;height:8px;background:var(--c);border-radius:50%;transform:translate(-50%,-50%);pointer-events:none;box-shadow:0 0 10px var(--c);transition:width .15s,height .15s,background .15s,border-radius .15s}
+.cursor-ring{position:fixed;z-index:9997;width:40px;height:40px;border:1px solid rgba(0,212,255,.35);border-radius:50%;transform:translate(-50%,-50%);pointer-events:none;transition:width .35s var(--expo),height .35s var(--expo),border-color .3s,opacity .3s}
+.c-lbl{position:fixed;z-index:9997;pointer-events:none;font-family:var(--fm);font-size:.5rem;color:var(--c);letter-spacing:2px;transform:translate(16px,16px);white-space:nowrap;opacity:0;transition:opacity .2s}
+body.ch .cursor{width:5px;height:5px;background:#fff}
+body.ch .cursor-ring{width:55px;height:55px;border-color:var(--c)}
+body.cc .cursor-ring{width:72px;height:72px;border-color:var(--red)}
+body.cv .cursor-ring{width:72px;height:72px}
+body.cv .c-lbl{opacity:1}
+
+/* HEADER */
+.hdr{position:fixed;top:0;left:0;width:100%;z-index:1000;padding:28px 6%;display:flex;justify-content:space-between;align-items:center;transition:padding .5s var(--expo),background .5s,border-color .5s;border-bottom:1px solid transparent}
+.hdr.on{padding:14px 6%;background:rgba(2,8,16,.88);backdrop-filter:blur(28px);border-bottom-color:var(--bd)}
+.logo{font-family:var(--fd);font-size:.95rem;font-weight:900;color:#fff;text-decoration:none;letter-spacing:4px;display:flex;align-items:center;gap:10px}
+.lpip{width:7px;height:7px;background:var(--c);border-radius:50%;box-shadow:0 0 10px var(--c);animation:pip 2.5s ease infinite}
+@keyframes pip{0%,100%{transform:scale(1)}50%{transform:scale(1.5);opacity:.5}}
+.logo em{color:var(--c);font-style:normal}
+.nav{display:flex;align-items:center;gap:30px}
+.nav a{font-family:var(--fm);font-size:.62rem;color:var(--mt);text-decoration:none;letter-spacing:2px;text-transform:uppercase;transition:color .3s;position:relative}
+.nav a::after{content:'';position:absolute;bottom:-3px;left:0;width:0;height:1px;background:var(--c);transition:width .35s var(--expo);box-shadow:0 0 8px var(--c)}
+.nav a:hover{color:#fff}.nav a:hover::after,.nav a.on::after{width:100%}.nav a.on{color:var(--c)}
+.npill{font-family:var(--fd);font-size:.58rem;font-weight:700;padding:10px 22px;border:1px solid var(--c);color:var(--c);text-decoration:none;letter-spacing:2px;text-transform:uppercase;border-radius:3px;transition:all .3s}
+.npill:hover{background:var(--c);color:#000;box-shadow:0 0 24px rgba(0,212,255,.25)}
+@media(max-width:768px){.nav a:not(.npill){display:none}}
+
+/* PAGE HEADER */
+.page-hero{min-height:55vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:160px 6% 80px;position:relative;z-index:10;overflow:hidden}
+.page-hero::before{content:'';position:absolute;inset:0;background-image:repeating-linear-gradient(0deg,transparent,transparent 79px,rgba(0,212,255,.02) 80px),repeating-linear-gradient(90deg,transparent,transparent 79px,rgba(0,212,255,.02) 80px);pointer-events:none;mask-image:radial-gradient(ellipse 80% 80% at 50% 50%,#000,transparent)}
+.ph-eye{font-family:var(--fm);font-size:.62rem;color:var(--c);letter-spacing:5px;text-transform:uppercase;display:flex;align-items:center;gap:18px;margin-bottom:32px;opacity:0}
+.ph-eye::before,.ph-eye::after{content:'';width:50px;height:1px;background:linear-gradient(90deg,transparent,var(--c))}
+.ph-eye::after{background:linear-gradient(90deg,var(--c),transparent)}
+.ph-title{font-family:var(--fd);font-size:clamp(3rem,9vw,8rem);font-weight:900;line-height:.9;text-transform:uppercase;letter-spacing:-2px;margin-bottom:28px;opacity:0}
+.ph-title .line1{display:block;
+  background:linear-gradient(170deg,#fff 20%,rgba(255,255,255,.35) 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.ph-title .line2{display:block;
+  background:linear-gradient(125deg,var(--c) 0%,var(--c2) 60%,#fff 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  filter:drop-shadow(0 0 22px rgba(0,212,255,.3))}
+.ph-sub{font-style:italic;font-size:clamp(1rem,2vw,1.35rem);color:var(--mi);max-width:600px;opacity:0;line-height:1.65}
+.ph-sub em{color:var(--c);font-style:normal}
+
+/* SECTIONS */
+section{position:relative;z-index:10}
+.si{max-width:1300px;margin:0 auto;padding:100px 6%}
+.ey{display:inline-flex;align-items:center;gap:14px;font-family:var(--fm);font-size:.62rem;color:var(--c);letter-spacing:4px;text-transform:uppercase;margin-bottom:22px}
+.ey::after{content:'';width:60px;height:1px;background:var(--bd)}
+.st{font-family:var(--fd);font-size:clamp(2rem,4vw,3.5rem);font-weight:900;text-transform:uppercase;letter-spacing:1px;line-height:1.05;margin-bottom:18px;color:#fff}
+.st .hl{color:transparent;-webkit-text-stroke:1.5px var(--c);position:relative;display:inline-block}
+.st .hl::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:2px;background:linear-gradient(90deg,var(--c),var(--c2));box-shadow:0 0 12px var(--c);transition:width 1.2s var(--expo)}
+.st .hl.li::after{width:100%}
+.ss{font-size:1rem;color:var(--mi);max-width:640px;margin-bottom:70px;line-height:1.8}
+.rv{opacity:0;transform:translateY(48px)}
+.rvl{opacity:0;transform:translateX(-48px)}
+.rvr{opacity:0;transform:translateX(48px)}
+
+/* STAFF CARDS — full detailed */
+.sc-grid{display:grid;gap:2px;background:var(--bd);border:1px solid var(--bd);border-radius:20px;overflow:hidden}
+
+.sc-full{
+  display:grid;grid-template-columns:280px 1fr;
+  background:rgba(2,10,22,.92);position:relative;overflow:hidden;
+  transition:background .4s;
+}
+.sc-full:hover{background:rgba(0,18,42,.9)}
+@media(max-width:800px){.sc-full{grid-template-columns:1fr}}
+
+/* animated gradient border on hover */
+.sc-full::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,var(--c),transparent);
+  transform:scaleX(0);transform-origin:left;transition:transform .6s var(--expo);
+}
+.sc-full:hover::before{transform:scaleX(1)}
+
+/* photo side */
+.scf-photo{position:relative;overflow:hidden;background:rgba(0,12,30,.6);min-height:320px}
+.scf-img{width:100%;height:100%;object-fit:cover;
+  filter:saturate(.12) contrast(1.15) brightness(.9);
+  transition:filter .8s,transform .8s;display:block;min-height:320px}
+.sc-full:hover .scf-img{filter:saturate(.85) contrast(1.05) brightness(1);transform:scale(1.04)}
+.scf-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(to right,transparent 50%,rgba(2,10,22,.8) 100%);
+}
+@media(max-width:800px){.scf-overlay{background:linear-gradient(to bottom,transparent 50%,rgba(2,10,22,.9) 100%)}}
+/* corner decorations */
+.scf-corner{
+  position:absolute;top:16px;left:16px;
+  width:30px;height:30px;
+  border-top:1.5px solid var(--c);border-left:1.5px solid var(--c);
+  opacity:.5;transition:opacity .4s,width .4s,height .4s;
+}
+.sc-full:hover .scf-corner{opacity:1;width:40px;height:40px}
+.scf-corner2{
+  position:absolute;bottom:16px;right:16px;
+  width:30px;height:30px;
+  border-bottom:1.5px solid var(--c);border-right:1.5px solid var(--c);
+  opacity:.5;transition:opacity .4s,width .4s,height .4s;
+}
+.sc-full:hover .scf-corner2{opacity:1;width:40px;height:40px}
+
+/* body side */
+.scf-body{padding:52px 56px;display:flex;flex-direction:column;justify-content:center;position:relative}
+@media(max-width:800px){.scf-body{padding:32px 28px}}
+
+.scf-num{
+  position:absolute;top:24px;right:28px;
+  font-family:var(--fd);font-size:5rem;font-weight:900;
+  color:transparent;-webkit-text-stroke:1px rgba(0,212,255,.05);
+  line-height:1;pointer-events:none;
+}
+.scf-role{font-family:var(--fm);font-size:.62rem;color:var(--c);letter-spacing:4px;text-transform:uppercase;margin-bottom:12px}
+.scf-name{font-family:var(--fd);font-size:clamp(2rem,4vw,3.2rem);font-weight:900;color:#fff;letter-spacing:2px;text-transform:uppercase;line-height:1;margin-bottom:24px}
+.scf-bio{color:var(--mi);font-size:.92rem;line-height:1.85;margin-bottom:20px}
+
+/* achievement badges */
+.scf-badges{display:flex;flex-wrap:wrap;gap:8px;margin-top:24px}
+.badge{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:6px 14px;border:1px solid rgba(0,212,255,.2);border-radius:3px;
+  font-family:var(--fm);font-size:.58rem;color:var(--c);letter-spacing:2px;
+  background:rgba(0,212,255,.04);transition:all .3s;
+}
+.badge:hover{border-color:var(--c);background:rgba(0,212,255,.1);box-shadow:0 0 14px rgba(0,212,255,.1)}
+.badge.gold{color:var(--gold);border-color:rgba(255,208,96,.2);background:rgba(255,208,96,.04)}
+.badge.gold:hover{border-color:var(--gold);background:rgba(255,208,96,.1);box-shadow:0 0 14px rgba(255,208,96,.1)}
+
+/* social links */
+.scf-socials{display:flex;gap:14px;margin-top:28px}
+.soc-btn{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:9px 18px;border:1px solid rgba(255,255,255,.08);border-radius:5px;
+  font-family:var(--fm);font-size:.6rem;color:var(--mi);letter-spacing:1.5px;
+  text-decoration:none;text-transform:uppercase;transition:all .3s;
+}
+.soc-btn:hover{border-color:var(--c);color:var(--c);background:rgba(0,212,255,.06)}
+
+/* divider between cards */
+.sc-div{height:1px;background:var(--bd)}
+
+/* ─── PHILOSOPHY SECTION ─── */
+.phil-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:var(--bd);border:1px solid var(--bd);border-radius:16px;overflow:hidden}
+@media(max-width:900px){.phil-grid{grid-template-columns:1fr}}
+.phil-card{background:rgba(2,10,22,.92);padding:48px 44px;position:relative;overflow:hidden;transition:background .4s}
+.phil-card:hover{background:rgba(0,18,50,.8)}
+.phil-card::before{content:attr(data-n);position:absolute;top:12px;right:16px;font-family:var(--fd);font-size:5rem;font-weight:900;color:transparent;-webkit-text-stroke:1px rgba(0,212,255,.04);line-height:1}
+.phil-ico{width:48px;height:48px;margin-bottom:24px;display:flex;align-items:center;justify-content:center;border:1px solid var(--bd);border-radius:10px;font-size:1.4rem;background:var(--glass);transition:border-color .3s,box-shadow .3s}
+.phil-card:hover .phil-ico{border-color:rgba(0,212,255,.4);box-shadow:0 0 20px rgba(0,212,255,.08)}
+.phil-card h4{font-family:var(--fd);font-size:.8rem;font-weight:700;color:var(--c);text-transform:uppercase;letter-spacing:3px;margin-bottom:14px}
+.phil-card p{color:var(--mi);font-size:.88rem;line-height:1.8}
+
+/* CTA SECTION */
+.cta-section{text-align:center;padding:120px 6%;position:relative;z-index:10}
+.cta-inner{max-width:800px;margin:0 auto}
+.cta-pre{font-family:var(--fm);font-size:.65rem;color:var(--c);letter-spacing:5px;margin-bottom:28px;text-transform:uppercase}
+.cta-title{font-family:var(--fd);font-size:clamp(2rem,6vw,5rem);font-weight:900;color:#fff;text-transform:uppercase;line-height:.95;letter-spacing:-1px;margin-bottom:28px}
+.cta-title .hl{color:transparent;-webkit-text-stroke:1.5px var(--c)}
+.cta-sub{color:var(--mi);font-size:1.05rem;margin-bottom:52px;line-height:1.7}
+.cta-btns{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+.btn-p{display:inline-flex;align-items:center;gap:10px;padding:18px 44px;background:linear-gradient(135deg,var(--c),var(--c2));color:#000;font-family:var(--fd);font-weight:900;font-size:.68rem;letter-spacing:3px;text-transform:uppercase;text-decoration:none;border:none;border-radius:4px;position:relative;overflow:hidden;cursor:pointer;box-shadow:0 8px 40px rgba(0,212,255,.2);transition:transform .35s var(--expo),box-shadow .35s var(--expo)}
+.btn-p::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.25),transparent);opacity:0;transition:opacity .3s}
+.btn-p:hover{transform:translateY(-4px);box-shadow:0 18px 60px rgba(0,212,255,.35)}.btn-p:hover::before{opacity:1}
+.btn-g{display:inline-flex;align-items:center;gap:10px;padding:18px 44px;background:transparent;color:#fff;font-family:var(--fd);font-weight:700;font-size:.68rem;letter-spacing:3px;text-transform:uppercase;text-decoration:none;border:1px solid rgba(255,255,255,.14);border-radius:4px;cursor:pointer;transition:all .3s}
+.btn-g:hover{border-color:rgba(255,255,255,.35);background:rgba(255,255,255,.04)}
+
+/* FOOTER */
+footer{position:relative;z-index:10;border-top:1px solid var(--bd);padding:60px 6%;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:20px}
+.fb2{font-family:var(--fd);font-size:.9rem;font-weight:900;color:#fff;letter-spacing:4px}
+.fb2 em{color:var(--c);font-style:normal}
+.fl{display:flex;gap:28px}
+.fl a{font-family:var(--fm);font-size:.58rem;color:var(--mt);text-decoration:none;letter-spacing:2px;transition:color .3s}
+.fl a:hover{color:var(--c)}
+.fc{font-family:var(--fm);font-size:.58rem;color:var(--mt);letter-spacing:2px}
+</style>
+</head>
+<body>
+
+<div id="loader">
+  <div class="l-grid"></div>
+  <div class="l-brand">ORIGIN'S&nbsp;<em>ESPORTS</em></div>
+  <div class="l-wrap">
+    <div class="l-bg"></div>
+    <div class="l-fill" id="lf"></div>
+    <div class="l-pct" id="lp">0%</div>
+  </div>
+</div>
+
+<div class="cursor" id="cur"></div>
+<div class="cursor-ring" id="curR"></div>
+<div class="c-lbl" id="cLbl"></div>
+
+<canvas id="bgc"></canvas>
+<div class="noise"></div>
+<div class="amb" id="amb"></div>
+
+<header class="hdr" id="hdr">
+  <a class="logo" href="index.html">
+    <span class="lpip"></span>ORIGIN'S&nbsp;<em>ESPORTS</em>
+  </a>
+  <nav class="nav">
+    <a href="index.html#vision" class="ht">Vision</a>
+    <a href="staff.html" class="ht on">Staff</a>
+    <a href="recrutement.html" class="npill ht hcta">Postuler</a>
+  </nav>
+</header>
+
+<!-- PAGE HERO -->
+<section class="page-hero">
+  <div class="ph-eye" id="phEye">Les Architectes — Origin's Esports</div>
+  <h1 class="ph-title" id="phTitle">
+    <span class="line1">NOTRE</span>
+    <span class="line2">ÉQUIPE</span>
+  </h1>
+  <p class="ph-sub" id="phSub">Trois profils complémentaires, une seule vision : <em>élever le niveau</em> de chaque joueur qui rejoint la structure.</p>
+</section>
+
+<!-- STAFF CARDS -->
+<section id="staff">
+  <div class="si">
+    <div class="ey rv">01 — Les Dirigeants</div>
+    <h2 class="st rv">Les <span class="hl">CEO</span></h2>
+    <p class="ss rv">Chaque membre de l'équipe dirigeante apporte une expertise unique. Ensemble, ils couvrent le mental, le technique et l'humain.</p>
+
+    <div class="sc-grid">
+
+      <!-- HALAYKO -->
+      <div class="sc-full rv" id="halayko">
+        <div class="scf-photo">
+          <img src="images/halayko.jpg" alt="Halayko" class="scf-img"
+            onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22280%22 height=%22400%22><rect fill=%22%23040e1c%22 width=%22100%25%22 height=%22100%25%22/><text x=%2250%25%22 y=%2250%25%22 fill=%22%234a7fa5%22 font-size=%22120%22 font-family=%22sans-serif%22 text-anchor=%22middle%22 dominant-baseline=%22middle%22>H</text></svg>'">
+          <div class="scf-overlay"></div>
+          <div class="scf-corner"></div>
+          <div class="scf-corner2"></div>
+        </div>
+        <div class="scf-body">
+          <div class="scf-num">01</div>
+          <div class="scf-role">CEO & Coach Mental</div>
+          <div class="scf-name">HALAYKO</div>
+          <p class="scf-bio">Diplômé en management du sport. Mon objectif est simple : faire progresser les joueurs au-delà du gameplay. Le vrai niveau se joue dans la gestion du stress, la prise de décision, la confiance et la régularité.</p>
+          <p class="scf-bio">J'ai réalisé un Tour de France à vélo en 33 jours. Cette expérience m'a appris ce qui relie le physique et le psychologique. J'apporte une exigence constructive et une culture de la progression qui transcende le jeu vidéo.</p>
+          <div class="scf-badges">
+            <span class="badge gold">🚴 Tour de France 33j</span>
+            <span class="badge">Management Sport</span>
+            <span class="badge">Performance Mentale</span>
+            <span class="badge">Gestion du Stress</span>
+          </div>
+          <div class="scf-socials">
+            <a href="#" class="soc-btn ht">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.748l7.73-8.835L1.254 2.25H8.08l4.253 5.622 5.911-5.622Zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+              Twitter / X
+            </a>
+            <a href="#" class="soc-btn ht">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 2H3v16c0 1.1.9 2 2 2h14a2 2 0 002-2V2zM9 9h6M9 13h6"/></svg>
+              Discord
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="sc-div"></div>
+
+      <!-- FREAK -->
+      <div class="sc-full rv" id="freak">
+        <div class="scf-photo">
+          <img src="images/freak2.jpg" alt="Freak" class="scf-img"
+            onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22280%22 height=%22400%22><rect fill=%22%23040e1c%22 width=%22100%25%22 height=%22100%25%22/><text x=%2250%25%22 y=%2250%25%22 fill=%22%234a7fa5%22 font-size=%22120%22 font-family=%22sans-serif%22 text-anchor=%22middle%22 dominant-baseline=%22middle%22>F</text></svg>'">
+          <div class="scf-overlay"></div>
+          <div class="scf-corner"></div>
+          <div class="scf-corner2"></div>
+        </div>
+        <div class="scf-body">
+          <div class="scf-num">02</div>
+          <div class="scf-role">CEO & Directeur Technique</div>
+          <div class="scf-name">FREAK</div>
+          <p class="scf-bio">Naël, 20 ans. J'ai consacré plusieurs milliers d'heures à Fortnite compétitif, obtenant une 2ème place en LAN régionale. J'ai affronté des joueurs comme Astral, Podasai ou Noahreyli. J'identifie rapidement les erreurs et propose des axes d'amélioration concrets.</p>
+          <p class="scf-bio">En parallèle, je suis en BTS SIO (informatique). J'interviens sur l'aspect technique et compétitif. Mon but : structurer une équipe avec une vraie exigence de mentalité pour des joueurs prêts à travailler.</p>
+          <div class="scf-badges">
+            <span class="badge gold">🏆 2ème LAN Régionale</span>
+            <span class="badge">BTS SIO</span>
+            <span class="badge">Analyse Mécanique</span>
+            <span class="badge">Stratégie Compétitive</span>
+          </div>
+          <div class="scf-socials">
+            <a href="#" class="soc-btn ht">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.748l7.73-8.835L1.254 2.25H8.08l4.253 5.622 5.911-5.622Zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+              Twitter / X
+            </a>
+            <a href="#" class="soc-btn ht">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M21 2a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2h14l4 4V2z"/></svg>
+              Discord
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="sc-div"></div>
+
+      <!-- YOHANN -->
+      <div class="sc-full rv" id="yohann">
+        <div class="scf-photo">
+          <img src="images/yohan.jpg" alt="Yohann" class="scf-img"
+            onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22280%22 height=%22400%22><rect fill=%22%23040e1c%22 width=%22100%25%22 height=%22100%25%22/><text x=%2250%25%22 y=%2250%25%22 fill=%22%234a7fa5%22 font-size=%22120%22 font-family=%22sans-serif%22 text-anchor=%22middle%22 dominant-baseline=%22middle%22>Y</text></svg>'">
+          <div class="scf-overlay"></div>
+          <div class="scf-corner"></div>
+          <div class="scf-corner2"></div>
+        </div>
+        <div class="scf-body">
+          <div class="scf-num">03</div>
+          <div class="scf-role">CEO & Responsable Accompagnement</div>
+          <div class="scf-name">YOHANN</div>
+          <p class="scf-bio">28 ans, passionné de sport et de sports collectifs depuis toujours. Je serai là pour vous accompagner dans votre parcours au sein de la structure, développer vos compétences, soutenir la cohésion et l'esprit d'équipe.</p>
+          <p class="scf-bio">Être solidaires les uns des autres, dans les moments forts comme dans les moments plus difficiles, est essentiel. Mon objectif est de vous transmettre la détermination d'aller au bout de l'effort. Cela passera par l'exigence, la discipline, l'intelligence et l'engagement.</p>
+          <div class="scf-badges">
+            <span class="badge">Sports Collectifs</span>
+            <span class="badge">Cohésion d'Équipe</span>
+            <span class="badge">Développement Personnel</span>
+            <span class="badge">28 ans d'expérience sportive</span>
+          </div>
+          <div class="scf-socials">
+            <a href="#" class="soc-btn ht">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.748l7.73-8.835L1.254 2.25H8.08l4.253 5.622 5.911-5.622Zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+              Twitter / X
+            </a>
+            <a href="#" class="soc-btn ht">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M21 2a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2h14l4 4V2z"/></svg>
+              Discord
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- PHILOSOPHIE -->
+<section id="phil">
+  <div class="si">
+    <div class="ey rv">02 — Nos Valeurs</div>
+    <h2 class="st rv">Notre <span class="hl">Philosophie</span></h2>
+    <p class="ss rv">Les principes qui guident chaque décision, chaque entraînement, chaque échange au sein de la structure.</p>
+    <div class="phil-grid">
+      <div class="phil-card rv" data-n="I">
+        <div class="phil-ico">🧠</div>
+        <h4>Mental First</h4>
+        <p>La performance durable commence dans la tête. Nous travaillons autant le mental que la mécanique. Gestion du stress, focus, résilience — ce sont des compétences qui s'entraînent.</p>
+      </div>
+      <div class="phil-card rv" data-n="II" style="transition-delay:.08s">
+        <div class="phil-ico">📈</div>
+        <h4>Progression Continue</h4>
+        <p>Pas de plafond. Chaque joueur est analysé, suivi, et accompagné vers son meilleur niveau. L'amélioration est un processus systématique, pas un accident.</p>
+      </div>
+      <div class="phil-card rv" data-n="III" style="transition-delay:.16s">
+        <div class="phil-ico">🤝</div>
+        <h4>Collectif Avant Tout</h4>
+        <p>L'esport individuel n'existe pas vraiment. La communication, la confiance et la solidarité sont des fondamentaux non négociables dans notre structure.</p>
+      </div>
+      <div class="phil-card rv" data-n="IV" style="transition-delay:.08s">
+        <div class="phil-ico">⚖️</div>
+        <h4>Exigence & Bienveillance</h4>
+        <p>Nous sommes exigeants parce que nous croyons au potentiel de chacun. Mais l'exigence sans bienveillance détruit. Notre culture conjugue les deux.</p>
+      </div>
+      <div class="phil-card rv" data-n="V" style="transition-delay:.16s">
+        <div class="phil-ico">🏆</div>
+        <h4>Ambition Compétitive</h4>
+        <p>Nous visons les tops FNCS, les LAN majeures, les performances qui comptent. Rejoindre Origin's Esports, c'est rejoindre un projet sérieux, pas une structure amateur.</p>
+      </div>
+      <div class="phil-card rv" data-n="VI" style="transition-delay:.24s">
+        <div class="phil-ico">🔬</div>
+        <h4>Analyse & Data</h4>
+        <p>Les décisions chez nous sont basées sur des données concrètes. VoD review, stats, tracker — tout est utilisé pour identifier les axes de progression de chaque joueur.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="cta-inner rv">
+    <div class="cta-pre">Prêt à franchir le cap ?</div>
+    <h2 class="cta-title">Rejoin the <span class="hl">Roster</span></h2>
+    <p class="cta-sub">Tu as le niveau, la mentalité et l'ambition ? Soumets ta candidature. L'équipe de recrutement analysera ton dossier sous 72h.</p>
+    <div class="cta-btns">
+      <a href="recrutement.html" class="btn-p hcta">
+        Postuler maintenant
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+      <a href="index.html" class="btn-g ht">← Retour à l'accueil</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="fb2">ORIGIN'S <em>ESPORTS</em></div>
+  <div class="fl">
+    <a href="index.html" class="ht">Accueil</a>
+    <a href="staff.html" class="ht">Staff</a>
+    <a href="recrutement.html" class="ht">Postuler</a>
+  </div>
+  <div class="fc">© 2026 — TOUS DROITS RÉSERVÉS</div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script>
+/* THREE.JS 3D GLOSSY SPHERES */
+(function(){const s=document.createElement('script');s.src='https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js';s.onload=initP;document.head.appendChild(s)})();
+function initP(){
+  const cv=document.getElementById('bgc');
+  const rr=new THREE.WebGLRenderer({canvas:cv,antialias:true,alpha:true});
+  rr.setPixelRatio(Math.min(devicePixelRatio,1.5));rr.setSize(innerWidth,innerHeight);
+  const sc=new THREE.Scene();
+  const cm=new THREE.PerspectiveCamera(50,innerWidth/innerHeight,0.1,200);
+  cm.position.z=14;
+  
+  const am=new THREE.AmbientLight(0x0f1525, 2);sc.add(am);
+  const dl1=new THREE.DirectionalLight(0x00d4ff, 3);dl1.position.set(5,5,5);sc.add(dl1);
+  const dl2=new THREE.DirectionalLight(0x0055ff, 2);dl2.position.set(-5,-5,0);sc.add(dl2);
+  const pl=new THREE.PointLight(0xff2040, 2.5, 30);pl.position.set(0,3,-2);sc.add(pl);
+
+  const N=120;
+  const geo=new THREE.SphereGeometry(0.35, 32, 32);
+  const mat=new THREE.MeshStandardMaterial({
+    color:0xffffff, roughness:0.12, metalness:0.85,
+    emissive:0x001133, emissiveIntensity:0.6
+  });
+  
+  const mesh=new THREE.InstancedMesh(geo,mat,N);
+  const du=new THREE.Object3D(), cO=new THREE.Color();
+  const arr=[];
+  
+  for(let i=0;i<N;i++){
+    const x=(Math.random()-.5)*32;
+    const y=(Math.random()-.5)*24;
+    const z=(Math.random()-.5)*20 - 5;
+    const s=Math.random()*1.8 + 0.3;
+    const t=Math.random();
+    if(t<0.4) cO.setHex(0x00d4ff);
+    else if(t<0.7) cO.setHex(0x0055ff);
+    else if(t<0.85) cO.setHex(0xff2040);
+    else cO.setHex(0xffffff);
+    
+    du.position.set(x,y,z); du.scale.set(s,s,s); du.updateMatrix();
+    mesh.setMatrixAt(i,du.matrix);
+    mesh.setColorAt(i,cO);
+    arr.push({x,y,z,s,v:(Math.random()-.5)*0.015+0.006,r:Math.random()*Math.PI*2});
+  }
+  mesh.instanceMatrix.needsUpdate=true;
+  mesh.instanceColor.needsUpdate=true;
+  sc.add(mesh);
+  
+  let pmx=0,pmy=0;
+  document.addEventListener('mousemove',e=>{pmx=(e.clientX/innerWidth-.5)*2;pmy=-(e.clientY/innerHeight-.5)*2});
+  const cl=new THREE.Clock();
+  
+  (function a(){
+    requestAnimationFrame(a);
+    const et=cl.getElapsedTime();
+    for(let i=0;i<N;i++){
+      const d=arr[i];
+      d.y+=d.v; if(d.y>14) d.y=-14;
+      du.position.set(d.x + Math.sin(et*0.4+d.r)*1.2, d.y, d.z + Math.cos(et*0.4+d.r)*0.6);
+      du.scale.setScalar(d.s);
+      du.updateMatrix();
+      mesh.setMatrixAt(i,du.matrix);
+    }
+    mesh.instanceMatrix.needsUpdate=true;
+    cm.position.x+=(pmx*3 - cm.position.x)*0.04;
+    cm.position.y+=(pmy*2 - cm.position.y)*0.04;
+    cm.lookAt(0,0,0);
+    rr.render(sc,cm);
+  })();
+  window.addEventListener('resize',()=>{cm.aspect=innerWidth/innerHeight;cm.updateProjectionMatrix();rr.setSize(innerWidth,innerHeight)});
+}
+
+/* LOADER */
+gsap.registerPlugin(ScrollTrigger);
+const lf=document.getElementById('lf');const lp2=document.getElementById('lp');
+let pc=0;const li=setInterval(()=>{pc+=Math.random()*20+6;if(pc>=100){pc=100;clearInterval(li)}lf.style.width=pc+'%';lp2.textContent=Math.round(pc)+'%'},100);
+window.addEventListener('load',()=>{
+  clearInterval(li);lf.style.width='100%';lp2.textContent='100%';
+  gsap.to('#loader',{opacity:0,duration:.8,delay:.2,ease:'power2.inOut',onComplete:()=>{
+    document.getElementById('loader').style.display='none';pageIn()}});
+});
+
+/* CURSOR */
+const cur2=document.getElementById('cur');const curR=document.getElementById('curR');const cLbl=document.getElementById('cLbl');
+let mx2=innerWidth/2,my2=innerHeight/2,rx=mx2,ry=my2;
+document.addEventListener('mousemove',e=>{mx2=e.clientX;my2=e.clientY;gsap.set(cur2,{x:mx2,y:my2})});
+(function cr(){requestAnimationFrame(cr);rx+=(mx2-rx)*.11;ry+=(my2-ry)*.11;gsap.set(curR,{x:rx,y:ry});gsap.set(cLbl,{x:mx2+18,y:my2+18})})();
+document.querySelectorAll('.ht,a,button').forEach(e=>{e.addEventListener('mouseenter',()=>document.body.classList.add('ch'));e.addEventListener('mouseleave',()=>document.body.classList.remove('ch'))});
+document.querySelectorAll('.hcta').forEach(e=>{e.addEventListener('mouseenter',()=>{document.body.classList.remove('ch');document.body.classList.add('cc')});e.addEventListener('mouseleave',()=>document.body.classList.remove('cc'))});
+document.querySelectorAll('.sc-full').forEach(e=>{e.addEventListener('mouseenter',()=>{document.body.classList.add('cv');cLbl.textContent='VIEW'});e.addEventListener('mouseleave',()=>{document.body.classList.remove('cv');cLbl.textContent=''})});
+
+/* AMBIENT */
+const amb2=document.getElementById('amb');let ax=50,ay=20;
+document.addEventListener('mousemove',e=>{ax+=(e.clientX/innerWidth*100-ax)*.025;ay+=(e.clientY/innerHeight*100-ay)*.025;
+  amb2.style.background=`radial-gradient(ellipse 80% 60% at ${ax}% ${ay-20}%,rgba(0,100,180,0.13) 0%,transparent 65%)`});
+
+/* PAGE HERO INTRO */
+function pageIn(){
+  const tl=gsap.timeline({defaults:{ease:'expo.out'}});
+  tl.to('#phEye',{opacity:1,y:0,duration:1})
+    .to('#phTitle',{opacity:1,y:0,duration:1.2},'-=.5')
+    .to('#phSub',{opacity:1,y:0,duration:1},'-=.5');
+}
+
+/* HEADER SCROLL */
+ScrollTrigger.create({start:80,onEnter:()=>document.getElementById('hdr').classList.add('on'),onLeaveBack:()=>document.getElementById('hdr').classList.remove('on')});
+
+/* REVEALS */
+gsap.utils.toArray('.rv').forEach(el=>{gsap.fromTo(el,{y:55,opacity:0},{y:0,opacity:1,duration:1.1,ease:'power4.out',scrollTrigger:{trigger:el,start:'top 88%',once:true}})});
+gsap.utils.toArray('.rvl').forEach(el=>{gsap.fromTo(el,{x:-65,opacity:0},{x:0,opacity:1,duration:1.2,ease:'power4.out',scrollTrigger:{trigger:el,start:'top 88%',once:true}})});
+gsap.utils.toArray('.rvr').forEach(el=>{gsap.fromTo(el,{x:65,opacity:0},{x:0,opacity:1,duration:1.2,ease:'power4.out',scrollTrigger:{trigger:el,start:'top 88%',once:true}})});
+gsap.utils.toArray('.st .hl').forEach(el=>{ScrollTrigger.create({trigger:el,start:'top 80%',once:true,onEnter:()=>el.classList.add('li')})});
+
+/* STAGGER STAFF CARDS */
+gsap.utils.toArray('.sc-full').forEach((c,i)=>{gsap.fromTo(c,{y:70,opacity:0},{y:0,opacity:1,duration:1.1,ease:'power4.out',delay:i*.1,scrollTrigger:{trigger:c,start:'top 90%',once:true}})});
+
+/* STAGGER PHIL CARDS */
+gsap.utils.toArray('.phil-card').forEach((c,i)=>{gsap.fromTo(c,{y:50,opacity:0},{y:0,opacity:1,duration:.9,ease:'power4.out',delay:i*.07,scrollTrigger:{trigger:c,start:'top 90%',once:true}})});
+
+/* MAGNETIC */
+document.querySelectorAll('.btn-p,.npill').forEach(b=>{
+  b.addEventListener('mousemove',e=>{const r=b.getBoundingClientRect();const dx=e.clientX-r.left-r.width/2;const dy=e.clientY-r.top-r.height/2;gsap.to(b,{x:dx*.22,y:dy*.22,duration:.45,ease:'power2.out'})});
+  b.addEventListener('mouseleave',()=>gsap.to(b,{x:0,y:0,duration:.7,ease:'elastic.out(1,.4)'}));
+});
+
+/* ANCHOR SCROLL (hash links from index.html) */
+window.addEventListener('load',()=>{
+  const hash=window.location.hash;
+  if(hash){const el=document.querySelector(hash);if(el)setTimeout(()=>el.scrollIntoView({behavior:'smooth',block:'start'}),600)}
+});
+</script>
+</body>
+</html>
