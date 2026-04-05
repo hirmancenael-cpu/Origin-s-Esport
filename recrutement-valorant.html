@@ -1,2326 +1,791 @@
 <!DOCTYPE html>
 <html lang="fr">
-
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ORIGIN'S ESPORTS — Recrutement Valorant</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link
-    href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Orbitron:wght@400;700;900&family=JetBrains+Mono:wght@300;400;500&display=swap"
-    rel="stylesheet">
-  <style>
-    /* ── ROOT ── */
-    *,
-    *::before,
-    *::after {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      cursor: none
-    }
-
-    :root {
-      --c: #fd4556;
-      --c2: #bd1f2e;
-      --c3: #ff6b7a;
-      --neon: #ffffff;
-      --neon-dim: rgba(255, 255, 255, 0.55);
-      --crgb: 253, 69, 86;
-      --bg: #050508;
-      --bg2: #0a0a0f;
-      --glass: rgba(255, 70, 85, 0.05);
-      --bd: rgba(253, 69, 86, 0.22);
-      --bd2: rgba(255, 255, 255, 0.08);
-      --tx: #f2f0ed;
-      --mt: #7a4a52;
-      --mi: #b8989e;
-      --fd: 'Orbitron', sans-serif;
-      --fb: 'Syne', sans-serif;
-      --fm: 'JetBrains Mono', monospace;
-      --expo: cubic-bezier(0.16, 1, 0.3, 1);
-      --snap: cubic-bezier(0.25, 0.1, 0.25, 1);
-    }
-
-    html {
-      overflow-x: hidden
-    }
-
-    body {
-      font-family: var(--fb);
-      background: var(--bg);
-      color: var(--tx);
-      overflow-x: hidden;
-      line-height: 1.7
-    }
-
-    @media(max-width:900px) {
-
-      *,
-      *::before,
-      *::after {
-        cursor: auto !important
-      }
-
-      .cursor,
-      .cursor-ring {
-        display: none !important
-      }
-    }
-
-    ::-webkit-scrollbar {
-      width: 5px
-    }
-
-    ::-webkit-scrollbar-track {
-      background: var(--bg)
-    }
-
-    ::-webkit-scrollbar-thumb {
-      background: rgba(255, 70, 85, .2);
-      border-radius: 3px
-    }
-
-    ::-webkit-scrollbar-thumb:hover {
-      background: var(--c)
-    }
-
-    /* LOADER */
-    #loader {
-      position: fixed;
-      inset: 0;
-      z-index: 9999;
-      background: var(--bg);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 28px;
-      overflow: hidden
-    }
-
-    .l-grid {
-      position: absolute;
-      inset: 0;
-      background-image: repeating-linear-gradient(0deg, transparent, transparent 59px, rgba(255, 70, 85, .03) 60px), repeating-linear-gradient(90deg, transparent, transparent 59px, rgba(255, 70, 85, .03) 60px);
-      animation: lgd 8s linear infinite
-    }
-
-    @keyframes lgd {
-      from {
-        transform: translateY(0)
-      }
-
-      to {
-        transform: translateY(60px)
-      }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      .l-grid {
-        animation: none
-      }
-    }
-
-    .l-brand {
-      font-family: var(--fd);
-      font-size: clamp(1rem, 3vw, 1.5rem);
-      font-weight: 900;
-      letter-spacing: 8px;
-      color: transparent;
-      -webkit-text-stroke: 1px rgba(255, 70, 85, .3);
-      text-transform: uppercase;
-      z-index: 1
-    }
-
-    .l-brand em {
-      color: var(--c);
-      -webkit-text-stroke: 0;
-      font-style: normal
-    }
-
-    .l-wrap {
-      width: 240px;
-      z-index: 1
-    }
-
-    .l-bg {
-      height: 1px;
-      background: rgba(255, 255, 255, .06)
-    }
-
-    .l-fill {
-      height: 1px;
-      background: linear-gradient(90deg, var(--c2), var(--c), var(--c3));
-      width: 0%;
-      box-shadow: 0 0 14px var(--c);
-      position: relative;
-      top: -1px
-    }
-
-    .l-pct {
-      font-family: var(--fm);
-      font-size: .6rem;
-      color: var(--mt);
-      letter-spacing: 4px;
-      text-align: right;
-      margin-top: 8px;
-      z-index: 1
-    }
-
-    .l-tag {
-      font-family: var(--fm);
-      font-size: .52rem;
-      color: rgba(255, 70, 85, .3);
-      letter-spacing: 3px;
-      z-index: 1
-    }
-
-    /* BG — stack tactique */
-    #val-bg-stack {
-      position: fixed;
-      inset: 0;
-      z-index: 0;
-      pointer-events: none;
-      overflow: hidden;
-      background: radial-gradient(ellipse 100% 70% at 50% 0%, rgba(253, 69, 86, 0.07) 0%, transparent 55%),
-        linear-gradient(180deg, #060609 0%, #030304 100%)
-    }
-
-    #bgc {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none
-    }
-
-    .val-tactical-grid {
-      position: absolute;
-      inset: -1px;
-      z-index: 1;
-      background-image:
-        linear-gradient(0deg, rgba(253, 69, 86, 0.04) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(253, 69, 86, 0.04) 1px, transparent 1px);
-      background-size: 48px 48px;
-      mask-image: radial-gradient(ellipse 75% 65% at 50% 45%, #000 0%, transparent 72%);
-      animation: valGridDrift 24s linear infinite;
-      opacity: 0.85
-    }
-
-    @keyframes valGridDrift {
-      from {
-        transform: translate(0, 0)
-      }
-
-      to {
-        transform: translate(48px, 48px)
-      }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      .val-tactical-grid {
-        animation: none
-      }
-    }
-
-    #val-hud-lines {
-      position: absolute;
-      inset: 0;
-      z-index: 2;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      opacity: 0.35
-    }
-
-    .val-scan-sweep {
-      position: fixed;
-      inset: 0;
-      z-index: 3;
-      pointer-events: none;
-      background: linear-gradient(transparent 0%, rgba(255, 255, 255, 0.02) 50%, transparent 100%);
-      background-size: 100% 4px;
-      animation: valScanMove 5.5s linear infinite;
-      mix-blend-mode: overlay;
-      opacity: 0.5
-    }
-
-    @keyframes valScanMove {
-      from {
-        background-position: 0 -20vh
-      }
-
-      to {
-        background-position: 0 120vh
-      }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      .val-scan-sweep {
-        animation: none;
-        opacity: 0.2
-      }
-    }
-
-    .val-glitch-overlay {
-      position: fixed;
-      inset: 0;
-      z-index: 4;
-      pointer-events: none;
-      opacity: 0;
-      mix-blend-mode: screen;
-      background: repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(253, 69, 86, 0.02) 3px, rgba(253, 69, 86, 0.02) 4px);
-      animation: valGlitchTick 6s steps(1) infinite
-    }
-
-    @keyframes valGlitchTick {
-
-      0%,
-      94%,
-      100% {
-        opacity: 0;
-        transform: translate(0, 0)
-      }
-
-      95% {
-        opacity: 0.06;
-        transform: translate(-2px, 0)
-      }
-
-      96% {
-        opacity: 0.03;
-        transform: translate(1px, 1px)
-      }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      .val-glitch-overlay {
-        animation: none;
-        opacity: 0.02
-      }
-    }
-
-    #val-particles {
-      position: absolute;
-      inset: 0;
-      z-index: 2;
-      pointer-events: none;
-      display: grid;
-      grid-template-columns: repeat(16, 1fr);
-      grid-template-rows: repeat(10, 1fr);
-      gap: 0;
-      padding: 4% 6%;
-      mask-image: radial-gradient(ellipse 80% 70% at 50% 40%, #000, transparent)
-    }
-
-    .val-node {
-      width: 3px;
-      height: 3px;
-      margin: auto;
-      background: var(--c);
-      border-radius: 0;
-      opacity: 0.15;
-      box-shadow: 0 0 6px rgba(253, 69, 86, 0.4);
-      transition: opacity 0.12s linear, transform 0.12s var(--snap), background 0.12s linear
-    }
-
-    .val-node.on {
-      opacity: 0.85;
-      background: #fff;
-      box-shadow: 0 0 10px var(--c), 0 0 20px rgba(253, 69, 86, 0.35);
-      transform: scale(1.15)
-    }
-
-    .val-chrome {
-      position: fixed;
-      inset: 0;
-      z-index: 2;
-      pointer-events: none;
-      border: 1px solid rgba(255, 255, 255, 0.04);
-      margin: 12px;
-      border-radius: 2px;
-      box-shadow: inset 0 0 80px rgba(0, 0, 0, 0.5);
-      mask-image: linear-gradient(180deg, #000 0%, transparent 18%, transparent 82%, #000 100%)
-    }
-
-    .val-vignette {
-      position: fixed;
-      inset: 0;
-      z-index: 2;
-      pointer-events: none;
-      background: radial-gradient(ellipse 90% 75% at 50% 50%, transparent 40%, rgba(0, 0, 0, 0.55) 100%)
-    }
-
-    .noise {
-      position: fixed;
-      inset: 0;
-      z-index: 5;
-      pointer-events: none;
-      opacity: .028;
-      background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E") 0 0/200px 200px
-    }
-
-    .amb {
-      position: fixed;
-      inset: 0;
-      z-index: 4;
-      pointer-events: none
-    }
-
-    /* CURSOR */
-    .cursor {
-      position: fixed;
-      z-index: 9998;
-      width: 8px;
-      height: 8px;
-      background: var(--c);
-      border-radius: 50%;
-      transform: translate(-50%, -50%);
-      pointer-events: none;
-      box-shadow: 0 0 10px var(--c);
-      transition: width .15s, height .15s, background .15s, border-radius .15s
-    }
-
-    .cursor-ring {
-      position: fixed;
-      z-index: 9997;
-      width: 40px;
-      height: 40px;
-      border: 1px solid rgba(255, 70, 85, .4);
-      border-radius: 50%;
-      transform: translate(-50%, -50%);
-      pointer-events: none;
-      transition: width .35s var(--expo), height .35s var(--expo), border-color .3s, opacity .3s
-    }
-
-    body.ch .cursor {
-      width: 5px;
-      height: 5px;
-      background: #fff
-    }
-
-    body.ch .cursor-ring {
-      width: 55px;
-      height: 55px;
-      border-color: var(--c)
-    }
-
-    body.cc .cursor-ring {
-      width: 72px;
-      height: 72px;
-      border-color: var(--c);
-      border-width: 2px
-    }
-
-    body.ct .cursor {
-      width: 2px;
-      height: 22px;
-      border-radius: 2px
-    }
-
-    body.ct .cursor-ring {
-      opacity: 0
-    }
-
-    /* HEADER */
-    .hdr {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      z-index: 1000;
-      padding: 26px 6%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      transition: padding .5s var(--expo), background .5s, border-color .5s;
-      border-bottom: 1px solid transparent
-    }
-
-    .hdr.on {
-      padding: 14px 6%;
-      background: rgba(5, 5, 8, .94);
-      backdrop-filter: blur(24px);
-      border-bottom-color: rgba(253, 69, 86, .25)
-    }
-
-    .logo {
-      font-family: var(--fd);
-      font-size: .9rem;
-      font-weight: 900;
-      color: #fff;
-      text-decoration: none;
-      letter-spacing: 4px;
-      display: flex;
-      align-items: center;
-      gap: 10px
-    }
-
-    .lpip {
-      width: 7px;
-      height: 7px;
-      background: var(--c);
-      border-radius: 50%;
-      box-shadow: 0 0 10px var(--c);
-      animation: pip 2.5s ease infinite
-    }
-
-    @keyframes pip {
-
-      0%,
-      100% {
-        transform: scale(1)
-      }
-
-      50% {
-        transform: scale(1.5);
-        opacity: .5
-      }
-    }
-
-    .logo em {
-      color: var(--c);
-      font-style: normal
-    }
-
-    .nav {
-      display: flex;
-      align-items: center;
-      gap: 28px
-    }
-
-    .nav a {
-      font-family: var(--fm);
-      font-size: .6rem;
-      color: var(--mt);
-      text-decoration: none;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      transition: color .3s;
-      position: relative
-    }
-
-    .nav a::after {
-      content: '';
-      position: absolute;
-      bottom: -3px;
-      left: 0;
-      width: 0;
-      height: 1px;
-      background: var(--c);
-      transition: width .35s var(--expo);
-      box-shadow: 0 0 8px var(--c)
-    }
-
-    .nav a:hover {
-      color: #fff
-    }
-
-    .nav a:hover::after,
-    .nav a.on::after {
-      width: 100%
-    }
-
-    .nav a.on {
-      color: var(--c)
-    }
-
-    .npill {
-      font-family: var(--fd);
-      font-size: .58rem;
-      font-weight: 700;
-      padding: 10px 22px;
-      border: 1px solid var(--c);
-      color: var(--c);
-      text-decoration: none;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      border-radius: 3px;
-      transition: all .3s
-    }
-
-    .npill:hover {
-      background: var(--c);
-      color: #000;
-      box-shadow: 0 0 24px rgba(255, 70, 85, .35)
-    }
-
-    @media(max-width:768px) {
-      .nav a:not(.npill) {
-        display: none
-      }
-    }
-
-    /* PAGE HERO */
-    .page-hero {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 140px 6% 100px;
-      position: relative;
-      z-index: 10;
-      overflow: hidden
-    }
-
-    .page-hero::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background-image:
-        repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(253, 69, 86, .035) 40px),
-        repeating-linear-gradient(90deg, transparent, transparent 39px, rgba(255, 255, 255, .02) 40px);
-      pointer-events: none;
-      mask-image: radial-gradient(ellipse 85% 75% at 50% 45%, #000 20%, transparent 75%)
-    }
-
-    .val-hero-frame {
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      transform: translate(-50%, -50%);
-      width: min(92vw, 720px);
-      height: min(70vh, 520px);
-      pointer-events: none;
-      z-index: 0;
-      border: 1px solid rgba(255, 255, 255, 0.06);
-      clip-path: polygon(0 12px, 12px 0, calc(100% - 12px) 0, 100% 12px, 100% calc(100% - 12px), calc(100% - 12px) 100%, 12px 100%, 0 calc(100% - 12px));
-      box-shadow: inset 0 0 0 1px rgba(253, 69, 86, 0.12), 0 0 60px rgba(253, 69, 86, 0.06)
-    }
-
-    .val-hero-frame::before,
-    .val-hero-frame::after {
-      content: '';
-      position: absolute;
-      width: 28px;
-      height: 28px;
-      border: 2px solid var(--c);
-      opacity: 0.75
-    }
-
-    .val-hero-frame::before {
-      top: -1px;
-      left: -1px;
-      border-right: none;
-      border-bottom: none;
-      box-shadow: -2px -2px 20px rgba(253, 69, 86, 0.25)
-    }
-
-    .val-hero-frame::after {
-      bottom: -1px;
-      right: -1px;
-      border-left: none;
-      border-top: none;
-      box-shadow: 2px 2px 20px rgba(253, 69, 86, 0.25)
-    }
-
-    .val-corner-tr,
-    .val-corner-bl {
-      position: absolute;
-      width: 28px;
-      height: 28px;
-      border: 2px solid rgba(255, 255, 255, 0.35);
-      pointer-events: none
-    }
-
-    .val-corner-tr {
-      top: -1px;
-      right: -1px;
-      border-left: none;
-      border-bottom: none
-    }
-
-    .val-corner-bl {
-      bottom: -1px;
-      left: -1px;
-      border-right: none;
-      border-top: none
-    }
-
-    .val-crosshair {
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      width: 120px;
-      height: 120px;
-      transform: translate(-50%, -50%);
-      pointer-events: none;
-      opacity: 0.2;
-      z-index: 1
-    }
-
-    .val-crosshair::before,
-    .val-crosshair::after {
-      content: '';
-      position: absolute;
-      background: rgba(255, 255, 255, 0.5)
-    }
-
-    .val-crosshair::before {
-      left: 50%;
-      top: 10%;
-      width: 1px;
-      height: 80%;
-      transform: translateX(-50%)
-    }
-
-    .val-crosshair::after {
-      top: 50%;
-      left: 10%;
-      height: 1px;
-      width: 80%;
-      transform: translateY(-50%)
-    }
-
-    .ph-eye {
-      font-family: var(--fm);
-      font-size: .58rem;
-      color: var(--neon-dim);
-      letter-spacing: 6px;
-      text-transform: uppercase;
-      display: flex;
-      align-items: center;
-      gap: 18px;
-      margin-bottom: 28px;
-      opacity: 0;
-      position: relative;
-      z-index: 3
-    }
-
-    .ph-eye b {
-      color: var(--c);
-      font-weight: 500
-    }
-
-    .ph-eye::before,
-    .ph-eye::after {
-      content: '';
-      width: 50px;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, var(--c))
-    }
-
-    .ph-eye::after {
-      background: linear-gradient(90deg, var(--c), transparent)
-    }
-
-    .ph-icon-wrap {
-      position: relative;
-      z-index: 3;
-      margin-bottom: 20px;
-      opacity: 0;
-      width: 88px;
-      height: 88px;
-      display: flex;
-      align-items: center;
-      justify-content: center
-    }
-
-    .ph-icon {
-      font-size: 2.2rem;
-      line-height: 1;
-      filter: drop-shadow(0 0 24px rgba(253, 69, 86, .55));
-      position: relative;
-      z-index: 1
-    }
-
-    .ph-icon-ring {
-      position: absolute;
-      inset: 0;
-      border: 1px solid rgba(253, 69, 86, 0.45);
-      border-radius: 4px;
-      transform: rotate(45deg);
-      box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.06) inset, 0 0 30px rgba(253, 69, 86, 0.15)
-    }
-
-    .ph-icon-ring::before {
-      content: '';
-      position: absolute;
-      inset: 6px;
-      border: 1px dashed rgba(255, 255, 255, 0.15);
-      border-radius: 2px
-    }
-
-    .ph-title {
-      font-family: var(--fd);
-      font-size: clamp(3rem, 9vw, 8rem);
-      font-weight: 900;
-      line-height: .88;
-      text-transform: uppercase;
-      letter-spacing: -2px;
-      margin-bottom: 24px;
-      opacity: 0;
-      position: relative;
-      z-index: 3
-    }
-
-    .ph-title .l1 {
-      display: block;
-      background: linear-gradient(170deg, #fff 30%, rgba(255, 255, 255, .35));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent
-    }
-
-    .ph-title .l2 {
-      display: block;
-      background: linear-gradient(135deg, var(--c3) 0%, var(--c) 50%, var(--c2) 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      filter: drop-shadow(0 0 24px rgba(255, 70, 85, .4))
-    }
-
-    .ph-sub {
-      font-style: normal;
-      font-size: clamp(1rem, 2vw, 1.25rem);
-      color: var(--mi);
-      max-width: 560px;
-      opacity: 0;
-      line-height: 1.65;
-      position: relative;
-      z-index: 3;
-      font-weight: 400
-    }
-
-    .ph-sub em {
-      color: var(--c);
-      font-style: normal
-    }
-
-    .ph-tags {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-      justify-content: center;
-      margin-top: 32px;
-      opacity: 0;
-      position: relative;
-      z-index: 3
-    }
-
-    .ph-tag {
-      padding: 8px 14px;
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      border-radius: 2px;
-      font-family: var(--fm);
-      font-size: .52rem;
-      color: var(--neon-dim);
-      letter-spacing: 3px;
-      background: rgba(0, 0, 0, 0.35);
-      transition: border-color 0.12s var(--snap), color 0.12s var(--snap), background 0.12s var(--snap), box-shadow 0.12s var(--snap), transform 0.12s var(--snap);
-      position: relative;
-      clip-path: polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px)
-    }
-
-    .ph-tag::before {
-      content: '';
-      position: absolute;
-      left: 0;
-      top: 0;
-      width: 6px;
-      height: 1px;
-      background: var(--c)
-    }
-
-    .ph-tag:hover {
-      border-color: var(--c);
-      color: #fff;
-      background: rgba(253, 69, 86, 0.08);
-      box-shadow: 0 0 0 1px rgba(253, 69, 86, 0.25);
-      transform: translateY(-1px)
-    }
-
-    /* SECTION */
-    section {
-      position: relative;
-      z-index: 10
-    }
-
-    .si {
-      max-width: 1000px;
-      margin: 0 auto;
-      padding: 80px 6%
-    }
-
-    .ey {
-      display: inline-flex;
-      align-items: center;
-      gap: 14px;
-      font-family: var(--fm);
-      font-size: .62rem;
-      color: var(--c);
-      letter-spacing: 4px;
-      text-transform: uppercase;
-      margin-bottom: 22px
-    }
-
-    .ey::after {
-      content: '';
-      width: 60px;
-      height: 1px;
-      background: var(--bd)
-    }
-
-    .st {
-      font-family: var(--fd);
-      font-size: clamp(1.8rem, 4vw, 3rem);
-      font-weight: 900;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      line-height: 1.05;
-      margin-bottom: 18px;
-      color: #fff
-    }
-
-    .st .hl {
-      color: transparent;
-      -webkit-text-stroke: 1.5px var(--c);
-      position: relative;
-      display: inline-block
-    }
-
-    .st .hl::after {
-      content: '';
-      position: absolute;
-      bottom: -4px;
-      left: 0;
-      width: 0;
-      height: 2px;
-      background: linear-gradient(90deg, var(--c), var(--c2));
-      box-shadow: 0 0 12px var(--c);
-      transition: width 1.2s var(--expo)
-    }
-
-    .st .hl.li::after {
-      width: 100%
-    }
-
-    .ss {
-      font-size: 1rem;
-      color: var(--mi);
-      max-width: 640px;
-      margin-bottom: 60px;
-      line-height: 1.8
-    }
-
-    .rv {
-      opacity: 0;
-      transform: translateY(48px)
-    }
-
-    .rvs {
-      opacity: 0;
-      transform: scale(.93)
-    }
-
-    /* FORM SHELL — cadre type loadout */
-    .fsh {
-      background: linear-gradient(165deg, rgba(12, 12, 16, .97), rgba(5, 5, 8, .95));
-      backdrop-filter: blur(28px);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 0;
-      overflow: hidden;
-      position: relative;
-      box-shadow: 0 50px 100px rgba(0, 0, 0, .75), 0 0 0 1px rgba(253, 69, 86, 0.08) inset;
-      clip-path: polygon(0 16px, 16px 0, calc(100% - 16px) 0, 100% 16px, 100% calc(100% - 16px), calc(100% - 16px) 100%, 16px 100%, 0 calc(100% - 16px));
-      transition: box-shadow 0.15s var(--snap), border-color 0.15s var(--snap)
-    }
-
-    .fsh:hover {
-      border-color: rgba(253, 69, 86, 0.2);
-      box-shadow: 0 50px 100px rgba(0, 0, 0, .78), 0 0 40px rgba(253, 69, 86, 0.06)
-    }
-
-    .fsh::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 2px;
-      background: linear-gradient(90deg, transparent, var(--c2) 25%, var(--c) 50%, var(--c3) 75%, transparent);
-      z-index: 2
-    }
-
-    .fsh::after {
-      content: '';
-      position: absolute;
-      top: 12px;
-      right: 12px;
-      width: 40px;
-      height: 40px;
-      border-top: 1px solid rgba(253, 69, 86, 0.35);
-      border-right: 1px solid rgba(253, 69, 86, 0.35);
-      pointer-events: none;
-      z-index: 2;
-      opacity: 0.6
-    }
-
-    /* STEP TABS */
-    .ftabs {
-      display: flex;
-      border-bottom: 1px solid var(--bd);
-      overflow-x: auto;
-      scrollbar-width: none
-    }
-
-    .ftabs::-webkit-scrollbar {
-      display: none
-    }
-
-    .ftab {
-      flex: 1;
-      min-width: 90px;
-      padding: 20px 10px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 6px;
-      position: relative;
-      cursor: pointer;
-      transition: background .3s;
-      border-right: 1px solid var(--bd)
-    }
-
-    .ftab:last-child {
-      border-right: none
-    }
-
-    .ftab::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      height: 2px;
-      background: var(--c);
-      box-shadow: 0 0 10px var(--c);
-      transform: scaleX(0);
-      transform-origin: left;
-      transition: transform .22s cubic-bezier(0.25, 0.46, 0.45, 0.94)
-    }
-
-    .ftab.active {
-      background: rgba(255, 70, 85, .03)
-    }
-
-    .ftab.active::after {
-      transform: scaleX(1)
-    }
-
-    .ftab.done::after {
-      transform: scaleX(1);
-      background: rgba(255, 70, 85, .3);
-      box-shadow: none
-    }
-
-    .tn {
-      font-family: var(--fm);
-      font-size: .58rem;
-      color: var(--mt);
-      letter-spacing: 1px;
-      transition: color .3s
-    }
-
-    .tl {
-      font-family: var(--fd);
-      font-size: .46rem;
-      font-weight: 700;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      color: var(--mt);
-      transition: color .3s
-    }
-
-    .tck {
-      font-size: .75rem;
-      opacity: 0;
-      transition: opacity .3s;
-      color: var(--c)
-    }
-
-    .ftab.active .tn,
-    .ftab.active .tl {
-      color: #fff
-    }
-
-    .ftab.done .tn,
-    .ftab.done .tl,
-    .ftab.done .tck {
-      color: var(--c)
-    }
-
-    .ftab.done .tck {
-      opacity: 1
-    }
-
-    /* FORM BODY */
-    .fbody {
-      padding: 56px
-    }
-
-    @media(max-width:700px) {
-      .fbody {
-        padding: 28px 20px
-      }
-    }
-
-    .fpnl {
-      display: none;
-      will-change: transform, opacity
-    }
-
-    .fpnl.active {
-      display: block
-    }
-
-    .ph2 {
-      margin-bottom: 44px
-    }
-
-    .ph2 h3 {
-      font-family: var(--fd);
-      font-size: 1.35rem;
-      font-weight: 900;
-      color: #fff;
-      text-transform: uppercase;
-      letter-spacing: 3px;
-      line-height: 1.2
-    }
-
-    .ph2 p {
-      color: var(--mt);
-      font-size: .8rem;
-      margin-top: 8px;
-      font-family: var(--fm)
-    }
-
-    .fpl {
-      height: 2px;
-      background: rgba(255, 255, 255, .04);
-      margin-bottom: 48px;
-      border-radius: 2px;
-      overflow: hidden
-    }
-
-    .fpb {
-      height: 100%;
-      background: linear-gradient(90deg, var(--c2), var(--c), var(--c3));
-      box-shadow: 0 0 12px var(--c);
-      transition: width .6s var(--expo);
-      width: 20%
-    }
-
-    .r2 {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 22px
-    }
-
-    .r3 {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 18px
-    }
-
-    @media(max-width:600px) {
-
-      .r2,
-      .r3 {
-        grid-template-columns: 1fr
-      }
-    }
-
-    .fg {
-      margin-bottom: 26px;
-      position: relative
-    }
-
-    .fg label {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      font-family: var(--fm);
-      font-size: .6rem;
-      color: var(--mt);
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      margin-bottom: 10px
-    }
-
-    .fg label .rq {
-      color: #ff6b35
-    }
-
-    .fg label .op {
-      color: var(--mt);
-      opacity: .5;
-      font-size: .55rem;
-      margin-left: auto
-    }
-
-    input[type=text],
-    input[type=number],
-    input[type=url],
-    input[type=email],
-    select,
-    textarea {
-      width: 100%;
-      padding: 14px 18px;
-      background: rgba(255, 255, 255, .08);
-      border: 1px solid rgba(255, 70, 85, .25);
-      border-radius: 7px;
-      color: #fff;
-      font-family: var(--fb);
-      font-size: .95rem;
-      outline: none;
-      transition: border-color .3s, background .3s, box-shadow .3s
-    }
-
-    input::placeholder,
-    textarea::placeholder {
-      color: rgba(255, 255, 255, .4)
-    }
-
-    input:focus,
-    select:focus,
-    textarea:focus {
-      border-color: var(--c);
-      background: rgba(30, 14, 0, .5);
-      box-shadow: 0 0 0 3px rgba(255, 70, 85, .07), 0 0 24px rgba(255, 70, 85, .08)
-    }
-
-    input.vl {
-      border-color: rgba(0, 255, 150, .3)
-    }
-
-    input.iv {
-      border-color: rgba(255, 20, 20, .4)
-    }
-
-    .fm2 {
-      font-family: var(--fm);
-      font-size: .58rem;
-      letter-spacing: 1px;
-      margin-top: 6px;
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height .2s
-    }
-
-    .fm2.sh {
-      max-height: 20px
-    }
-
-    .fm2.er {
-      color: #ff6b35
-    }
-
-    .fm2.ok2 {
-      color: #00ff9d
-    }
-
-    select {
-      appearance: none;
-      cursor: pointer;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fd4556' stroke-width='1.5' stroke-linecap='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
-      background-repeat: no-repeat;
-      background-position: right 14px center;
-      background-size: 16px;
-      padding-right: 44px
-    }
-
-    select option {
-      background: #1a0e00
-    }
-
-    textarea {
-      resize: vertical;
-      min-height: 110px;
-      line-height: 1.65
-    }
-
-    /* ROLE TAGS */
-    .rtg {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px
-    }
-
-    .rt {
-      padding: 10px 18px;
-      border: 1px solid rgba(255, 255, 255, .07);
-      border-radius: 6px;
-      font-family: var(--fm);
-      font-size: .6rem;
-      color: var(--mt);
-      cursor: pointer;
-      transition: all .25s;
-      letter-spacing: 1.5px;
-      text-transform: uppercase
-    }
-
-    .rt:hover {
-      border-color: rgba(255, 70, 85, .3);
-      color: var(--mi)
-    }
-
-    .rt.sel {
-      border-color: var(--c);
-      color: var(--c);
-      background: rgba(255, 70, 85, .08);
-      box-shadow: 0 0 14px rgba(255, 70, 85, .1)
-    }
-
-    /* PLATFORM */
-    .plg {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 12px
-    }
-
-    @media(max-width:600px) {
-      .plg {
-        grid-template-columns: 1fr
-      }
-    }
-
-    .plb {
-      padding: 18px 12px;
-      background: rgba(0, 0, 0, .35);
-      border: 1px solid rgba(255, 255, 255, .06);
-      border-radius: 10px;
-      text-align: center;
-      cursor: pointer;
-      transition: all .3s
-    }
-
-    .plb .pi {
-      font-size: 1.5rem;
-      display: block;
-      margin-bottom: 8px
-    }
-
-    .plb span {
-      font-family: var(--fm);
-      font-size: .6rem;
-      color: var(--mt);
-      letter-spacing: 1px;
-      display: block
-    }
-
-    .plb small {
-      font-size: .52rem;
-      color: rgba(138, 96, 48, .4);
-      display: block;
-      margin-top: 3px
-    }
-
-    .plb:hover,
-    .plb.sel {
-      border-color: rgba(255, 70, 85, .4);
-      background: rgba(255, 70, 85, .07)
-    }
-
-    .plb.sel {
-      box-shadow: 0 0 20px rgba(255, 70, 85, .1)
-    }
-
-    .plb.sel span {
-      color: var(--c)
-    }
-
-    /* CHECKBOXES */
-    .cg {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 11px;
-      margin-top: 12px
-    }
-
-    @media(max-width:600px) {
-      .cg {
-        grid-template-columns: 1fr
-      }
-    }
-
-    .ci {
-      display: flex;
-      align-items: center;
-      gap: 13px;
-      padding: 13px 16px;
-      background: rgba(0, 0, 0, .3);
-      border: 1px solid rgba(255, 255, 255, .05);
-      border-radius: 8px;
-      cursor: pointer;
-      transition: all .25s;
-      user-select: none
-    }
-
-    .ci:hover {
-      border-color: rgba(255, 70, 85, .25);
-      background: rgba(255, 40, 60, .07)
-    }
-
-    .ci.ck {
-      border-color: rgba(255, 70, 85, .35);
-      background: rgba(255, 70, 85, .06)
-    }
-
-    .ci input {
-      display: none
-    }
-
-    .cb {
-      width: 20px;
-      height: 20px;
-      flex-shrink: 0;
-      border: 1px solid rgba(255, 255, 255, .15);
-      border-radius: 4px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: rgba(0, 0, 0, .3);
-      transition: all .25s;
-      position: relative
-    }
-
-    .ci.ck .cb {
-      background: var(--c);
-      border-color: var(--c);
-      box-shadow: 0 0 12px rgba(255, 70, 85, .3)
-    }
-
-    .cb::after {
-      content: '';
-      width: 5px;
-      height: 9px;
-      border-right: 2px solid #000;
-      border-bottom: 2px solid #000;
-      transform: rotate(45deg) scale(0) translateY(-1px);
-      transition: transform .2s
-    }
-
-    .ci.ck .cb::after {
-      transform: rotate(45deg) scale(1) translateY(-1px)
-    }
-
-    .ci span {
-      font-size: .88rem;
-      color: var(--mi);
-      transition: color .25s;
-      font-weight: 500
-    }
-
-    .ci.ck span {
-      color: #fff
-    }
-
-    /* RATING STARS */
-    .stars-row {
-      display: flex;
-      gap: 8px;
-      margin-top: 10px
-    }
-
-    .star {
-      width: 36px;
-      height: 36px;
-      border: 1px solid rgba(255, 255, 255, .08);
-      border-radius: 6px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.1rem;
-      cursor: pointer;
-      transition: all .25s;
-      background: rgba(0, 0, 0, .3)
-    }
-
-    .star:hover,
-    .star.on {
-      border-color: var(--c);
-      background: rgba(255, 70, 85, .12);
-      box-shadow: 0 0 10px rgba(255, 70, 85, .15)
-    }
-
-    /* FORM NAV */
-    .fnav {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      margin-top: 48px;
-      padding-top: 32px;
-      border-top: 1px solid rgba(255, 255, 255, .05)
-    }
-
-    .fsi {
-      font-family: var(--fm);
-      font-size: .58rem;
-      color: var(--mt);
-      letter-spacing: 2px
-    }
-
-    .fbk {
-      padding: 14px 24px;
-      background: transparent;
-      border: 1px solid rgba(255, 255, 255, .1);
-      border-radius: 6px;
-      color: var(--mt);
-      font-family: var(--fd);
-      font-size: .58rem;
-      font-weight: 700;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      cursor: pointer;
-      transition: all .25s;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      width: auto;
-      margin: 0
-    }
-
-    .fbk:hover {
-      border-color: rgba(255, 255, 255, .25);
-      color: #fff;
-      background: rgba(255, 255, 255, .03);
-      transform: none;
-      box-shadow: none;
-      filter: none
-    }
-
-    .ffwd {
-      margin-left: auto;
-      padding: 16px 34px;
-      background: linear-gradient(135deg, var(--c), var(--c2));
-      border: none;
-      border-radius: 6px;
-      color: #000;
-      font-family: var(--fd);
-      font-weight: 900;
-      font-size: .62rem;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      box-shadow: 0 6px 28px rgba(255, 70, 85, .25);
-      transition: transform .35s var(--expo), box-shadow .35s var(--expo);
-      width: auto;
-      margin: 0 0 0 auto
-    }
-
-    .ffwd:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 14px 48px rgba(255, 70, 85, .4);
-      filter: none
-    }
-
-    .fsub {
-      background: linear-gradient(135deg, #ff4500, #cc2200);
-      box-shadow: 0 6px 28px rgba(255, 40, 60, .25)
-    }
-
-    .fsub:hover {
-      box-shadow: 0 14px 48px rgba(255, 40, 60, .45)
-    }
-
-    /* RECAP */
-    .rcg {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 11px;
-      margin-bottom: 28px
-    }
-
-    @media(max-width:600px) {
-      .rcg {
-        grid-template-columns: 1fr
-      }
-    }
-
-    .rci {
-      padding: 14px 18px;
-      background: rgba(0, 0, 0, .35);
-      border: 1px solid rgba(255, 255, 255, .08);
-      border-radius: 0;
-      clip-path: polygon(0 8px, 8px 0, calc(100% - 8px) 0, 100% 8px, 100% calc(100% - 8px), calc(100% - 8px) 100%, 8px 100%, 0 calc(100% - 8px));
-      box-shadow: inset 3px 0 0 rgba(253, 69, 86, 0.28)
-    }
-
-    .rck {
-      font-family: var(--fm);
-      font-size: .55rem;
-      color: var(--mt);
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      margin-bottom: 5px
-    }
-
-    .rcv {
-      font-size: .88rem;
-      color: #fff;
-      font-weight: 600
-    }
-
-    /* SUCCESS */
-    .sw {
-      display: none;
-      text-align: center;
-      padding: 80px 40px
-    }
-
-    .sw.show {
-      display: block
-    }
-
-    .swi {
-      font-size: 3.5rem;
-      margin-bottom: 20px;
-      filter: drop-shadow(0 0 20px rgba(255, 70, 85, .5))
-    }
-
-    .swt {
-      font-family: var(--fd);
-      font-size: 1.8rem;
-      font-weight: 900;
-      color: var(--c);
-      letter-spacing: 4px;
-      text-transform: uppercase;
-      margin-bottom: 14px
-    }
-
-    .swm {
-      color: var(--mi);
-      font-size: 1rem;
-      line-height: 1.8;
-      max-width: 460px;
-      margin: 0 auto
-    }
-
-    .swc {
-      display: inline-block;
-      margin-top: 24px;
-      font-family: var(--fm);
-      font-size: .62rem;
-      color: var(--c);
-      letter-spacing: 3px;
-      border: 1px dashed rgba(255, 70, 85, .3);
-      padding: 10px 22px;
-      border-radius: 4px
-    }
-
-    /* FOOTER */
-    footer {
-      position: relative;
-      z-index: 10;
-      border-top: 1px solid var(--bd);
-      padding: 50px 6%;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 16px
-    }
-
-    .fb2 {
-      font-family: var(--fd);
-      font-size: .85rem;
-      font-weight: 900;
-      color: #fff;
-      letter-spacing: 4px
-    }
-
-    .fb2 em {
-      color: var(--c);
-      font-style: normal
-    }
-
-    .fl {
-      display: flex;
-      gap: 24px
-    }
-
-    .fl a {
-      font-family: var(--fm);
-      font-size: .58rem;
-      color: var(--mt);
-      text-decoration: none;
-      letter-spacing: 2px;
-      transition: color .3s
-    }
-
-    .fl a:hover {
-      color: var(--c)
-    }
-
-    .fc {
-      font-family: var(--fm);
-      font-size: .58rem;
-      color: var(--mt);
-      letter-spacing: 2px
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ORIGIN'S ESPORTS — Recrutement Valorant</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ══════════════════════════════════════════
+   VALORANT — TACTICAL INTERFACE SYSTEM
+   Palette : #FF4655 · #0F1923 · #ECE8E1 · #768079
+   Style : Riot UI / Agent Select / HUD
+══════════════════════════════════════════ */
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;cursor:none}
+:root{
+  --red:#FF4655;--red2:#bd2333;--red3:#ff6b77;
+  --bg:#0F1923;--bg2:#141D26;--bg3:#1a2535;
+  --white:#ECE8E1;--gray:#768079;--gray2:#4a5055;--gray3:#2a3040;
+  --bd:rgba(255,70,85,0.3);--bdn:rgba(236,232,225,0.08);--bdg:rgba(118,128,121,0.25);
+  --fd:'Rajdhani',sans-serif;--fm:'DM Mono',monospace;
+  --t1:cubic-bezier(0.25,0,0,1);--t2:cubic-bezier(0.4,0,0.2,1);
+}
+html{overflow-x:hidden;scroll-behavior:auto}
+body{font-family:var(--fd);background:var(--bg);color:var(--white);overflow-x:hidden;line-height:1.6;font-weight:400}
+@media(max-width:900px){*,*::before,*::after{cursor:auto!important}.cursor,.cursor-ring{display:none!important}}
+::-webkit-scrollbar{width:3px}::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--red)}
+
+/* CURSOR — CROSSHAIR */
+.cursor{
+  position:fixed;z-index:9998;pointer-events:none;
+  width:20px;height:20px;
+  transform:translate(-50%,-50%);
+  transition:opacity .2s;
+}
+.cursor::before,.cursor::after{content:'';position:absolute;background:var(--red)}
+.cursor::before{width:8px;height:1px;top:50%;left:50%;transform:translate(-50%,-50%)}
+.cursor::after{width:1px;height:8px;top:50%;left:50%;transform:translate(-50%,-50%)}
+.cursor-ring{
+  position:fixed;z-index:9997;pointer-events:none;
+  width:20px;height:20px;transform:translate(-50%,-50%);
+  border:1px solid rgba(255,70,85,.45);
+  transition:width .15s var(--t1),height .15s var(--t1),border-color .15s,opacity .2s;
+}
+body.ch .cursor-ring{width:32px;height:32px;border-color:rgba(255,70,85,.7)}
+body.cc .cursor-ring{width:40px;height:40px;border-color:var(--red);border-width:2px}
+body.ct .cursor::before{width:1px;height:16px}
+body.ct .cursor::after{display:none}
+body.ct .cursor-ring{opacity:0}
+
+/* LOADER */
+#loader{
+  position:fixed;inset:0;z-index:9999;background:var(--bg);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:0;
+}
+.l-frame{
+  width:420px;max-width:90vw;
+  border:1px solid var(--bd);
+  position:relative;
+}
+.l-frame::before{content:'';position:absolute;top:-1px;right:-1px;width:16px;height:16px;background:var(--bg);border-left:1px solid var(--bd);border-bottom:1px solid var(--bd)}
+.l-frame::after{content:'';position:absolute;bottom:-1px;left:-1px;width:16px;height:16px;background:var(--bg);border-right:1px solid var(--bd);border-top:1px solid var(--bd)}
+.l-head{
+  padding:16px 20px;border-bottom:1px solid rgba(255,70,85,.15);
+  display:flex;justify-content:space-between;align-items:center;
+}
+.l-brand{font-family:var(--fd);font-size:.75rem;font-weight:700;letter-spacing:4px;color:var(--white);text-transform:uppercase}
+.l-brand em{color:var(--red);font-style:normal}
+.l-status{font-family:var(--fm);font-size:.55rem;color:var(--red);letter-spacing:2px;display:flex;align-items:center;gap:6px}
+.l-dot{width:5px;height:5px;background:var(--red);border-radius:50%;animation:ldot 1s ease-in-out infinite}
+@keyframes ldot{0%,100%{opacity:1}50%{opacity:.2}}
+.l-body{padding:20px}
+.l-pct-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.l-label{font-family:var(--fm);font-size:.58rem;color:var(--gray);letter-spacing:2px;text-transform:uppercase}
+.l-num{font-family:var(--fm);font-size:.7rem;color:var(--red);letter-spacing:1px}
+.l-track{height:1px;background:var(--bdn);position:relative;overflow:visible}
+.l-fill{height:1px;background:var(--red);width:0%;position:absolute;top:0;left:0;transition:width .1s linear}
+.l-fill::after{content:'';position:absolute;right:-3px;top:-2px;width:5px;height:5px;background:var(--red);border-radius:50%;box-shadow:0 0 6px var(--red)}
+.l-lines{margin-top:16px;display:flex;flex-direction:column;gap:4px}
+.l-line{font-family:var(--fm);font-size:.52rem;color:var(--gray2);letter-spacing:1px;opacity:0;transform:translateX(-8px);transition:opacity .3s,transform .3s}
+.l-line.vis{opacity:1;transform:translateX(0)}
+.l-line em{color:var(--gray);font-style:normal}
+
+/* BG */
+.bg-grid{
+  position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;
+}
+.bg-grid::before{
+  content:'';position:absolute;inset:0;
+  background-image:
+    linear-gradient(rgba(236,232,225,.025) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(236,232,225,.025) 1px,transparent 1px);
+  background-size:60px 60px;
+}
+.bg-grid::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,transparent 48%,rgba(255,70,85,.02) 49%,rgba(255,70,85,.02) 51%,transparent 52%);
+  background-size:120px 120px;
+}
+.scan-line{
+  position:fixed;z-index:1;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(255,70,85,.4) 30%,rgba(255,70,85,.6) 50%,rgba(255,70,85,.4) 70%,transparent);
+  animation:scan 6s linear infinite;
+  pointer-events:none;top:0;
+  will-change:transform;
+}
+@keyframes scan{0%{transform:translateY(0)}100%{transform:translateY(100vh)}}
+
+/* HUD */
+.hud-corners{position:fixed;inset:0;z-index:2;pointer-events:none}
+.hud-tl,.hud-tr,.hud-bl,.hud-br{position:absolute;width:40px;height:40px}
+.hud-tl{top:16px;left:16px;border-top:1px solid rgba(255,70,85,.3);border-left:1px solid rgba(255,70,85,.3)}
+.hud-tr{top:16px;right:16px;border-top:1px solid rgba(255,70,85,.3);border-right:1px solid rgba(255,70,85,.3)}
+.hud-bl{bottom:16px;left:16px;border-bottom:1px solid rgba(255,70,85,.3);border-left:1px solid rgba(255,70,85,.3)}
+.hud-br{bottom:16px;right:16px;border-bottom:1px solid rgba(255,70,85,.3);border-right:1px solid rgba(255,70,85,.3)}
+.particle{position:fixed;z-index:1;pointer-events:none;width:2px;height:2px;background:var(--red);border-radius:50%;animation:pfloat var(--pd,8s) var(--pd2,0s) linear infinite}
+@keyframes pfloat{0%{transform:translateY(100vh) translateX(0);opacity:0}10%{opacity:.6}90%{opacity:.4}100%{transform:translateY(-10vh) translateX(var(--pdx,20px));opacity:0}}
+.p1{left:15%;--pd:9s;--pd2:0s;--pdx:15px}
+.p2{left:35%;--pd:11s;--pd2:2s;--pdx:-20px}
+.p3{left:55%;--pd:7s;--pd2:4s;--pdx:10px}
+.p4{left:72%;--pd:13s;--pd2:1s;--pdx:-15px}
+.p5{left:88%;--pd:8s;--pd2:6s;--pdx:25px}
+
+/* HEADER */
+.hdr{
+  position:fixed;top:0;left:0;width:100%;z-index:1000;
+  padding:0 5%;height:60px;
+  display:flex;justify-content:space-between;align-items:center;
+  border-bottom:1px solid transparent;
+  transition:background .2s var(--t1),border-color .2s var(--t1);
+}
+.hdr.on{
+  background:rgba(15,25,35,.96);
+  backdrop-filter:blur(8px);
+  border-bottom-color:rgba(255,70,85,.2);
+}
+.hdr::before{
+  content:'';position:absolute;bottom:-1px;left:0;width:0;height:1px;
+  background:var(--red);transition:width .4s var(--t1);
+}
+.hdr.on::before{width:40%}
+
+.logo{
+  font-family:var(--fd);font-size:.85rem;font-weight:700;
+  color:var(--white);text-decoration:none;letter-spacing:5px;
+  text-transform:uppercase;
+  display:flex;align-items:center;gap:12px;position:relative;
+}
+.logo-mark{
+  width:22px;height:22px;
+  border:1px solid var(--red);
+  display:flex;align-items:center;justify-content:center;
+  position:relative;transform:rotate(45deg);
+  transition:background .2s;
+}
+.logo-mark::after{content:'';width:6px;height:6px;background:var(--red);display:block}
+.logo:hover .logo-mark{background:rgba(255,70,85,.15)}
+.logo em{color:var(--red);font-style:normal}
+
+.nav{display:flex;align-items:center;gap:32px}
+.nav a{
+  font-family:var(--fm);font-size:.58rem;color:var(--gray);
+  text-decoration:none;letter-spacing:2px;text-transform:uppercase;
+  transition:color .15s;position:relative;padding:4px 0;
+}
+.nav a::after{content:'';position:absolute;bottom:0;left:0;width:0;height:1px;background:var(--red);transition:width .2s var(--t1)}
+.nav a:hover{color:var(--white)}.nav a:hover::after{width:100%}
+.nav a.on{color:var(--red)}
+
+.npill{
+  font-family:var(--fd);font-size:.7rem;font-weight:700;letter-spacing:3px;
+  padding:8px 20px;border:1px solid var(--red);color:var(--red);
+  text-decoration:none;text-transform:uppercase;
+  position:relative;overflow:hidden;
+  transition:color .2s var(--t1);
+}
+.npill::before{content:'';position:absolute;inset:0;background:var(--red);transform:translateX(-102%);transition:transform .2s var(--t1)}
+.npill:hover{color:#000}.npill:hover::before{transform:translateX(0)}
+.npill span{position:relative;z-index:1}
+
+/* HERO */
+.page-hero{
+  min-height:100vh;
+  display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-end;
+  padding:0 6% 8vh;
+  position:relative;z-index:10;overflow:hidden;
+}
+.hero-vlines{
+  position:absolute;inset:0;pointer-events:none;
+  display:flex;justify-content:space-between;padding:0 6%;
+}
+.hero-vline{width:1px;background:rgba(236,232,225,.04);height:100%}
+.hero-num{
+  position:absolute;right:6%;bottom:4vh;
+  font-family:var(--fd);font-size:clamp(12rem,25vw,22rem);font-weight:700;
+  color:transparent;-webkit-text-stroke:1px rgba(236,232,225,.04);
+  line-height:1;pointer-events:none;user-select:none;
+  letter-spacing:-8px;
+}
+
+/* TITRE AJOUTÉ — RECRUTEMENT VALORANT */
+.hero-main-title{
+  font-family:var(--fd);
+  font-size:clamp(2.8rem,7vw,4.5rem);
+  font-weight:700;
+  text-transform:uppercase;
+  letter-spacing:-2px;
+  color:var(--red);
+  margin-bottom:8px;
+  line-height:1;
+}
+
+/* Le reste du hero title (l'ancien) */
+.hero-title{
+  font-family:var(--fd);
+  font-size:clamp(3.5rem,10vw,9rem);
+  font-weight:700;line-height:.85;
+  text-transform:uppercase;letter-spacing:-2px;
+  margin-bottom:20px;opacity:0;
+  position:relative;z-index:2;
+}
+.hero-title .l1{display:block;color:var(--white)}
+.hero-title .l2{display:block;color:var(--red);position:relative}
+.hero-title .l2::after{
+  content:'';position:absolute;bottom:-4px;left:0;width:0;height:2px;
+  background:var(--red);transition:width .5s .8s var(--t1);
+}
+.hero-title.vis .l2::after{width:100%}
+
+.hero-tag{
+  font-family:var(--fm);font-size:.58rem;color:var(--red);
+  letter-spacing:4px;text-transform:uppercase;
+  display:flex;align-items:center;gap:12px;
+  margin-bottom:24px;opacity:0;
+}
+.hero-tag::before{content:'';width:24px;height:1px;background:var(--red)}
+
+.hero-sub{
+  font-family:var(--fm);font-size:.78rem;font-weight:300;
+  color:var(--gray);max-width:480px;line-height:1.8;
+  margin-bottom:32px;opacity:0;letter-spacing:.5px;
+}
+.hero-sub em{color:var(--white);font-style:normal;font-weight:500}
+
+.hero-meta{
+  display:flex;align-items:center;gap:0;opacity:0;
+}
+.hmeta{
+  font-family:var(--fm);font-size:.58rem;color:var(--gray);
+  letter-spacing:2px;text-transform:uppercase;padding:10px 20px;
+  border:1px solid var(--bdn);border-right:none;
+  position:relative;transition:border-color .2s,color .2s;
+}
+.hmeta:last-child{border-right:1px solid var(--bdn)}
+.hmeta:first-child{border-left:none}
+.hmeta.accent{color:var(--red);border-color:rgba(255,70,85,.25)}
+
+#hScr{
+  position:absolute;right:6%;bottom:8vh;
+  display:flex;flex-direction:column;align-items:center;gap:6px;
+  font-family:var(--fm);font-size:.48rem;color:var(--gray2);letter-spacing:3px;
+  text-transform:uppercase;opacity:0;z-index:10;
+  writing-mode:vertical-rl;transform:rotate(180deg);
+}
+.scr-line{width:1px;height:50px;background:linear-gradient(to bottom,transparent,var(--red));animation:scra 2s ease-in-out infinite;margin:4px 0}
+@keyframes scra{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+
+/* SECTIONS + FORM (identique à ton code original) */
+section{position:relative;z-index:10}
+.si{max-width:1000px;margin:0 auto;padding:80px 6%}
+.sec-tag{display:inline-flex;align-items:center;gap:12px;font-family:var(--fm);font-size:.58rem;color:var(--red);letter-spacing:4px;text-transform:uppercase;margin-bottom:16px}
+.sec-tag::before{content:'//';color:var(--gray2);margin-right:4px}
+.sec-tag::after{content:'';flex:1;height:1px;background:var(--bdg);min-width:40px}
+.sec-title{font-family:var(--fd);font-size:clamp(2rem,5vw,4rem);font-weight:700;text-transform:uppercase;letter-spacing:1px;line-height:.95;margin-bottom:12px;color:var(--white)}
+.sec-title .hl{color:var(--red);position:relative;display:inline-block}
+.sec-desc{font-family:var(--fm);font-size:.72rem;color:var(--gray);max-width:560px;margin-bottom:48px;line-height:1.8;letter-spacing:.3px}
+.rv{opacity:0;transform:translateY(20px)}
+.rvs{opacity:0}
+
+.fsh{background:var(--bg2);border:1px solid rgba(236,232,225,.08);position:relative;overflow:hidden}
+.fsh::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--red)}
+.fsh::after{content:'';position:absolute;top:-1px;right:-1px;width:24px;height:24px;background:var(--bg);border-left:1px solid rgba(236,232,225,.08);border-bottom:1px solid rgba(236,232,225,.08)}
+.fpanel-header{padding:0;border-bottom:1px solid rgba(236,232,225,.06);display:flex;align-items:stretch}
+.fpanel-title{padding:16px 24px;font-family:var(--fm);font-size:.58rem;color:var(--red);letter-spacing:3px;text-transform:uppercase;border-right:1px solid rgba(236,232,225,.06);display:flex;align-items:center;gap:8px}
+.fpanel-title::before{content:'';width:6px;height:6px;background:var(--red);border-radius:50%}
+.fpanel-id{padding:16px 24px;margin-left:auto;font-family:var(--fm);font-size:.55rem;color:var(--gray2);letter-spacing:2px;display:flex;align-items:center}
+.ftabs{display:flex;border-bottom:1px solid rgba(236,232,225,.06);overflow-x:auto;scrollbar-width:none}
+.ftabs::-webkit-scrollbar{display:none}
+.ftab{flex:1;min-width:80px;padding:16px 10px;display:flex;flex-direction:column;align-items:center;gap:4px;position:relative;cursor:pointer;border-right:1px solid rgba(236,232,225,.06);transition:background .15s}
+.ftab:last-child{border-right:none}
+.ftab::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:var(--red);transform:scaleX(0);transform-origin:left;transition:transform .2s var(--t1)}
+.ftab.active{background:rgba(255,70,85,.04)}.ftab.active::after{transform:scaleX(1)}
+.ftab.done::after{transform:scaleX(1);background:var(--gray2)}
+.tn{font-family:var(--fm);font-size:.52rem;color:var(--gray2);letter-spacing:1px;transition:color .15s}
+.tl{font-family:var(--fd);font-size:.65rem;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--gray2);transition:color .15s}
+.tck{font-family:var(--fm);font-size:.52rem;opacity:0;transition:opacity .15s;color:var(--red);margin-top:2px}
+.ftab.active .tn,.ftab.active .tl{color:var(--white)}
+.ftab.done .tn,.ftab.done .tl{color:var(--gray)}.ftab.done .tck{opacity:1;color:var(--gray)}
+.fbody{padding:40px 40px 48px}
+@media(max-width:700px){.fbody{padding:24px 20px 32px}}
+.fpnl{display:none;will-change:transform,opacity}.fpnl.active{display:block}
+.fpl{height:1px;background:rgba(236,232,225,.06);margin-bottom:36px;overflow:visible;position:relative}
+.fpb{height:1px;background:var(--red);width:20%;transition:width .4s var(--t1);position:relative}
+.fpb::after{content:'';position:absolute;right:-3px;top:-2px;width:5px;height:5px;background:var(--red);border-radius:50%}
+.ph2{margin-bottom:36px;padding-bottom:24px;border-bottom:1px solid rgba(236,232,225,.06)}
+.ph2 h3{font-family:var(--fd);font-size:1.5rem;font-weight:700;color:var(--white);text-transform:uppercase;letter-spacing:3px;line-height:1;display:flex;align-items:center;gap:10px}
+.ph2 h3::before{content:'';width:16px;height:2px;background:var(--red);flex-shrink:0}
+.ph2 p{font-family:var(--fm);font-size:.58rem;color:var(--gray);margin-top:10px;letter-spacing:1px}
+.r2{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.r3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px}
+@media(max-width:600px){.r2,.r3{grid-template-columns:1fr}}
+.fg{margin-bottom:24px;position:relative}
+.fg label{display:flex;align-items:center;gap:6px;font-family:var(--fm);font-size:.58rem;color:var(--gray);letter-spacing:2px;text-transform:uppercase;margin-bottom:8px}
+.fg label .rq{color:var(--red)}.fg label .op{color:var(--gray2);font-size:.52rem;margin-left:auto}
+input[type=text],input[type=number],input[type=url],input[type=email],select,textarea{width:100%;padding:12px 16px;background:rgba(15,25,35,.8);border:1px solid rgba(236,232,225,.1);border-bottom:1px solid rgba(236,232,225,.2);color:var(--white);font-family:var(--fm);font-size:.8rem;outline:none;border-radius:0;transition:border-color .15s,background .15s;letter-spacing:.5px}
+input::placeholder,textarea::placeholder{color:var(--gray2);font-size:.72rem}
+input:focus,select:focus,textarea:focus{border-color:rgba(255,70,85,.4);border-bottom-color:var(--red);background:rgba(255,70,85,.03)}
+.fm2{font-family:var(--fm);font-size:.52rem;letter-spacing:1px;margin-top:4px;max-height:0;overflow:hidden;transition:max-height .15s}
+.fm2.sh{max-height:20px}.fm2.er{color:#ff6060}.fm2.ok2{color:#00d96e}
+select{appearance:none;cursor:pointer;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23FF4655' stroke-width='1.5'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;background-size:14px;padding-right:40px}
+select option{background:var(--bg2)}
+textarea{resize:vertical;min-height:100px;line-height:1.65;font-size:.78rem}
+.rtg{display:flex;flex-wrap:wrap;gap:8px}
+.rt{padding:8px 16px;border:1px solid rgba(236,232,225,.1);border-bottom:1px solid rgba(236,232,225,.2);font-family:var(--fm);font-size:.6rem;color:var(--gray);cursor:pointer;transition:all .15s;letter-spacing:2px;text-transform:uppercase;position:relative;background:transparent}
+.rt:hover{border-color:rgba(255,70,85,.4);color:var(--white);background:rgba(255,70,85,.04)}
+.rt.sel{border-color:var(--red);border-bottom-color:var(--red);color:var(--red);background:rgba(255,70,85,.07)}
+.rt.sel::before{content:'';position:absolute;bottom:-1px;left:0;right:0;height:1px;background:var(--red)}
+.plg{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+@media(max-width:600px){.plg{grid-template-columns:1fr}}
+.plb{padding:16px 12px;background:rgba(15,25,35,.8);border:1px solid rgba(236,232,225,.1);border-bottom:2px solid transparent;text-align:center;cursor:pointer;transition:border-color .15s,background .15s}
+.plb .pi{font-size:1.3rem;display:block;margin-bottom:8px;opacity:.6;transition:opacity .15s}
+.plb span{font-family:var(--fd);font-size:.7rem;font-weight:600;color:var(--gray);letter-spacing:1px;display:block;text-transform:uppercase}
+.plb small{font-family:var(--fm);font-size:.5rem;color:var(--gray2);display:block;margin-top:3px;letter-spacing:1px}
+.plb:hover{border-bottom-color:rgba(255,70,85,.4);background:rgba(255,70,85,.04)}
+.plb:hover .pi{opacity:1}
+.plb.sel{border-bottom-color:var(--red);background:rgba(255,70,85,.06)}.plb.sel span{color:var(--white)}.plb.sel .pi{opacity:1}
+.cg{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+@media(max-width:600px){.cg{grid-template-columns:1fr}}
+.ci{display:flex;align-items:center;gap:12px;padding:11px 14px;background:rgba(15,25,35,.7);border:1px solid rgba(236,232,225,.08);cursor:pointer;transition:all .15s;user-select:none}
+.ci:hover{border-color:rgba(255,70,85,.3);background:rgba(255,70,85,.04)}
+.ci.ck{border-color:rgba(255,70,85,.4);border-bottom-color:var(--red);background:rgba(255,70,85,.06)}
+.ci input{display:none}
+.cb{width:16px;height:16px;flex-shrink:0;border:1px solid rgba(236,232,225,.2);display:flex;align-items:center;justify-content:center;background:transparent;transition:all .15s;position:relative}
+.ci.ck .cb{background:var(--red);border-color:var(--red)}
+.cb::after{content:'';width:4px;height:7px;border-right:1.5px solid #000;border-bottom:1.5px solid #000;transform:rotate(45deg) scale(0) translateY(-1px);transition:transform .15s}
+.ci.ck .cb::after{transform:rotate(45deg) scale(1) translateY(-1px)}
+.ci span{font-family:var(--fm);font-size:.65rem;color:var(--gray);transition:color .15s;letter-spacing:.5px}
+.ci.ck span{color:var(--white)}
+.stars-row{display:flex;gap:6px;margin-top:10px}
+.star{width:32px;height:32px;border:1px solid rgba(236,232,225,.1);border-bottom:1px solid rgba(236,232,225,.2);display:flex;align-items:center;justify-content:center;font-size:.9rem;cursor:pointer;transition:all .15s;background:rgba(15,25,35,.8);font-family:var(--fm);font-size:.7rem;color:var(--gray2);letter-spacing:0}
+.star:hover,.star.on{border-bottom-color:var(--red);background:rgba(255,70,85,.08);color:var(--red)}
+.fnav{display:flex;align-items:center;gap:16px;margin-top:40px;padding-top:24px;border-top:1px solid rgba(236,232,225,.06)}
+.fsi{font-family:var(--fm);font-size:.55rem;color:var(--gray2);letter-spacing:2px}
+.fbk{padding:11px 22px;background:transparent;border:1px solid rgba(236,232,225,.15);color:var(--gray);font-family:var(--fd);font-size:.7rem;font-weight:600;letter-spacing:3px;text-transform:uppercase;cursor:pointer;transition:all .15s;display:flex;align-items:center;gap:8px}
+.fbk:hover{border-color:rgba(236,232,225,.3);color:var(--white);background:rgba(236,232,225,.04)}
+.ffwd{margin-left:auto;padding:12px 28px;background:var(--red);border:1px solid var(--red);color:#fff;font-family:var(--fd);font-weight:700;font-size:.75rem;letter-spacing:4px;text-transform:uppercase;cursor:pointer;display:flex;align-items:center;gap:10px;transition:background .15s,box-shadow .15s;position:relative;overflow:hidden}
+.ffwd::before{content:'';position:absolute;inset:0;background:#fff;transform:translateX(-102%);transition:transform .2s var(--t1);opacity:.08}
+.ffwd:hover{background:var(--red2)}
+.ffwd:hover::before{transform:translateX(0)}
+.fsub{background:var(--red)}
+.rcg{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:24px}
+@media(max-width:600px){.rcg{grid-template-columns:1fr}}
+.rci{padding:12px 16px;background:rgba(15,25,35,.8);border:1px solid rgba(236,232,225,.08);border-left:2px solid var(--red)}
+.rck{font-family:var(--fm);font-size:.52rem;color:var(--gray);letter-spacing:2px;text-transform:uppercase;margin-bottom:4px}
+.rcv{font-family:var(--fd);font-size:.9rem;color:var(--white);font-weight:600;letter-spacing:1px}
+.sw{display:none;text-align:center;padding:60px 40px}.sw.show{display:block}
+.swi{font-size:2.5rem;margin-bottom:20px;display:block}
+.swt{font-family:var(--fd);font-size:2rem;font-weight:700;color:var(--white);letter-spacing:5px;text-transform:uppercase;margin-bottom:12px}
+.swt em{color:var(--red);font-style:normal}
+.swm{font-family:var(--fm);color:var(--gray);font-size:.72rem;line-height:2;max-width:400px;margin:0 auto}
+.swc{display:inline-block;margin-top:24px;font-family:var(--fm);font-size:.6rem;color:var(--red);letter-spacing:3px;border:1px solid rgba(255,70,85,.3);padding:10px 24px}
+footer{position:relative;z-index:10;border-top:1px solid rgba(236,232,225,.06);padding:32px 6%;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px}
+.fb2{font-family:var(--fd);font-size:.8rem;font-weight:700;color:var(--white);letter-spacing:4px}
+.fb2 em{color:var(--red);font-style:normal}
+.fl{display:flex;gap:28px}
+.fl a{font-family:var(--fm);font-size:.55rem;color:var(--gray);text-decoration:none;letter-spacing:2px;transition:color .15s}
+.fl a:hover{color:var(--red)}
+.fc{font-family:var(--fm);font-size:.52rem;color:var(--gray2);letter-spacing:2px}
+</style>
 </head>
-
 <body>
-  <div id="loader">
-    <div class="l-grid"></div>
-    <div class="l-brand">ORIGIN'S&nbsp;<em>ESPORTS</em>&nbsp;·&nbsp;VALORANT</div>
-    <div class="l-wrap">
-      <div class="l-bg"></div>
-      <div class="l-fill" id="lf"></div>
-      <div class="l-pct" id="lp">0%</div>
+
+<!-- LOADER -->
+<div id="loader">
+  <div class="l-frame">
+    <div class="l-head">
+      <div class="l-brand">ORIGIN'S&nbsp;<em>ESPORTS</em></div>
+      <div class="l-status"><span class="l-dot"></span>CONNECTING</div>
     </div>
-    <div class="l-tag">Section Valorant — Chargement en cours</div>
-  </div>
-  <svg class="val-filters" aria-hidden="true" width="0" height="0" style="position:absolute">
-    <defs>
-      <filter id="valHudBlur" x="-5%" y="-5%" width="110%" height="110%">
-        <feGaussianBlur in="SourceGraphic" stdDeviation="0.3" />
-      </filter>
-    </defs>
-  </svg>
-
-  <div class="cursor" id="cur"></div>
-  <div class="cursor-ring" id="curR"></div>
-
-  <div id="val-bg-stack">
-    <canvas id="bgc"></canvas>
-    <div class="val-tactical-grid" aria-hidden="true"></div>
-    <svg id="val-hud-lines" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"></svg>
-    <div id="val-particles" aria-hidden="true"></div>
-  </div>
-  <div class="val-chrome" aria-hidden="true"></div>
-  <div class="val-vignette" aria-hidden="true"></div>
-  <div class="val-scan-sweep" aria-hidden="true"></div>
-  <div class="val-glitch-overlay" aria-hidden="true"></div>
-  <div class="noise"></div>
-  <div class="amb" id="amb"></div>
-
-  <header class="hdr" id="hdr">
-    <a class="logo" href="index.html"><span class="lpip"></span>ORIGIN'S&nbsp;<em>ESPORTS</em></a>
-    <nav class="nav">
-      <a href="recrutement.html" class="ht">← Toutes les sections</a>
-      <a href="recrutement-valorant.html" class="ht">Valorant</a>
-      <a href="recrutement-rocketleague.html" class="ht">Rocket League</a>
-      <a href="staff-recrutement.html" class="ht npill hcta">Staff</a>
-    </nav>
-  </header>
-
-  <section class="page-hero" id="hero">
-    <div class="val-hero-frame" id="valHeroFrame" data-prx="0.4">
-      <div class="val-crosshair" aria-hidden="true"></div>
-      <span class="val-corner-tr" aria-hidden="true"></span>
-      <span class="val-corner-bl" aria-hidden="true"></span>
-    </div>
-    <div class="ph-eye" id="phEye"><b>VALORANT</b> — Section compétitive · 2026</div>
-    <div class="ph-icon-wrap" id="phIconWrap">
-      <div class="ph-icon-ring" aria-hidden="true"></div>
-      <div class="ph-icon" id="phIcon">🎯</div>
-    </div>
-    <h1 class="ph-title" id="phTitle">
-      <span class="l1">RECRUTEMENT</span>
-      <span class="l2">VALORANT</span>
-    </h1>
-    <p class="ph-sub" id="phSub">Ranked Radiant, Tournois Pro. On recherche des joueurs avec le <em>niveau ET la
-        mentalité</em>.</p>
-    <div class="ph-tags" id="phTags">
-      <span class="ph-tag">5v5 Tactical</span>
-      <span class="ph-tag">Ranked Radiant</span>
-      <span class="ph-tag">Pro Series</span>
-      <span class="ph-tag">PC / Console</span>
-      <span class="ph-tag">5 places disponibles</span>
-    </div>
-  </section>
-
-  <section>
-    <div class="si">
-      <div class="ey rv">Candidature Joueur</div>
-      <h2 class="st rv">Formulaire <span class="hl">Valorant</span></h2>
-      <p class="ss rv">Remplis chaque étape avec précision. Nos recruteurs analysent chaque dossier individuellement.
-      </p>
-
-      <div class="fsh rvs">
-        <div class="ftabs" id="ftabs">
-          <div class="ftab active" onclick="gS(1)">
-            <div class="tn">01</div>
-            <div class="tl">Profil</div>
-            <div class="tck">✓</div>
-          </div>
-          <div class="ftab" onclick="gS(2)">
-            <div class="tn">02</div>
-            <div class="tl">Stats</div>
-            <div class="tck">✓</div>
-          </div>
-          <div class="ftab" onclick="gS(3)">
-            <div class="tn">03</div>
-            <div class="tl">Historique</div>
-            <div class="tck">✓</div>
-          </div>
-          <div class="ftab" onclick="gS(4)">
-            <div class="tn">04</div>
-            <div class="tl">Motivation</div>
-            <div class="tck">✓</div>
-          </div>
-          <div class="ftab" onclick="gS(5)">
-            <div class="tn">05</div>
-            <div class="tl">Review</div>
-            <div class="tck">✓</div>
-          </div>
-        </div>
-        <div class="sw" id="sw">
-          <div class="swi">🎯</div>
-          <div class="swt">Candidature Envoyée</div>
-          <div class="swm">Ton dossier Valorant a été transmis à notre staff.<br>Réponse sous 72h via Discord.</div>
-          <div class="swc">// STAY SHARP.</div>
-        </div>
-        <div class="fbody" id="fb">
-          <div class="fpl">
-            <div class="fpb" id="fpb"></div>
-          </div>
-          <form id="mf" name="candidature-valorant" method="POST" data-netlify="true" netlify-honeypot="bot-field">
-            <input type="hidden" name="form-name" value="candidature-valorant" />
-            <input type="hidden" name="game" value="Valorant">
-            <input type="hidden" name="platform_val" id="pv">
-            <input type="hidden" name="role_val" id="rvf">
-            <p class="hidden" style="display: none;"><label>Ne pas remplir : <input name="bot-field"></label></p>
-
-            <!-- STEP 1 — PROFIL -->
-            <div class="fpnl active" id="p1">
-              <div class="ph2">
-                <h3>Profil Joueur</h3>
-                <p>Tes informations de base</p>
-              </div>
-              <div class="r2">
-                <div class="fg"><label>Pseudo Riot <span class="rq">*</span></label><input type="text" name="epic_name"
-                    placeholder="Pseudo" required id="fe">
-                  <div class="fm2" id="me"></div>
-                </div>
-                <div class="fg"><label>Âge <span class="rq">*</span></label><input type="number" name="age"
-                    placeholder="18" min="13" max="35" required></div>
-              </div>
-              <div class="r2">
-                <div class="fg"><label>Discord Tag <span class="rq">*</span></label><input type="text" name="discord"
-                    placeholder="pseudo#0000" required></div>
-                <div class="fg"><label>Twitter / X <span class="op">optionnel</span></label><input type="url"
-                    name="twitter" placeholder="https://x.com/..."></div>
-              </div>
-              <div class="fg"><label>Nationalité</label><input type="text" name="nationality"
-                  placeholder="Française, Belge, Suisse..."></div>
-              <div class="fg"><label>Plateforme <span class="rq">*</span></label>
-                <div class="plg">
-                  <div class="plb" onclick="sP(this,'PC 240FPS+')"><span class="pi">🖥️</span><span>PC
-                      High-End</span><small>240 FPS+</small></div>
-                  <div class="plb" onclick="sP(this,'PC 144FPS')"><span class="pi">💻</span><span>PC
-                      Standard</span><small>144 FPS</small></div>
-                  <div class="plb" onclick="sP(this,'Console Next-Gen')"><span
-                      class="pi">🎮</span><span>Console</span><small>PS5 / Xbox Series</small></div>
-                </div>
-              </div>
-              <div class="fnav">
-                <div class="fsi">01 / 05</div><button type="button" class="ffwd hcta" onclick="nS()">Continuer <svg
-                    width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                    <path d="M5 12h14M12 5l7 7-7 7" />
-                  </svg></button>
-              </div>
-            </div>
-
-            <!-- STEP 2 — STATS -->
-            <div class="fpnl" id="p2">
-              <div class="ph2">
-                <h3>Statistiques Valorant</h3>
-                <p>Tes données compétitives</p>
-              </div>
-              <div class="r2">
-                <div class="fg"><label>Rang Valorant <span class="rq">*</span></label><input type="number"
-                    name="rank_val" placeholder="Radiant, Immortal 3..." required></div>
-                <div class="fg"><label>Heures compétitives <span class="rq">*</span></label><input type="number"
-                    name="comp_hours" placeholder="Ex: 1200h compét." required></div>
-              </div>
-              <div class="r3">
-                <div class="fg"><label>K/D Ratio</label><input type="number" name="kd" placeholder="3.2" step="0.1"
-                    min="0"></div>
-                <div class="fg"><label>Win Rate %</label><input type="number" name="wr" placeholder="12" min="0"
-                    max="100"></div>
-                <div class="fg"><label>Heures jouées</label><input type="number" name="hrs" placeholder="3000" min="0">
-                </div>
-              </div>
-              <div class="fg"><label>Lien Valorant Tracker <span class="rq">*</span></label><input type="url"
-                  name="tracker_link" placeholder="https://tracker.gg/valorant/..." required></div>
-              <div class="fg"><label>Rôle principal <span class="rq">*</span></label>
-                <div class="rtg">
-                  <div class="rt" onclick="sR(this,'Duelliste')">Duelliste</div>
-                  <div class="rt" onclick="sR(this,'Controller')">Controller</div>
-                  <div class="rt" onclick="sR(this,'Sentinelle')">Sentinelle</div>
-                  <div class="rt" onclick="sR(this,'Initiateur')">Initiateur</div>
-                  <div class="rt" onclick="sR(this,'Flex')">Flex</div>
-                </div>
-              </div>
-              <div class="fg"><label>Highlights (YouTube / Twitch) <span class="op">optionnel</span></label><input
-                  type="url" name="highlight_link" placeholder="https://..."></div>
-              <div class="fnav">
-                <button type="button" class="fbk ht" onclick="pS()"><svg width="14" height="14" viewBox="0 0 24 24"
-                    fill="none" stroke="currentColor" stroke-width="2.5">
-                    <path d="M19 12H5M12 19l-7-7 7-7" />
-                  </svg>Retour</button>
-                <div class="fsi">02 / 05</div>
-                <button type="button" class="ffwd hcta" onclick="nS()">Continuer <svg width="14" height="14"
-                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                    <path d="M5 12h14M12 5l7 7-7 7" />
-                  </svg></button>
-              </div>
-            </div>
-
-            <!-- STEP 3 — HISTORIQUE -->
-            <div class="fpnl" id="p3">
-              <div class="ph2">
-                <h3>Historique Compétitif</h3>
-                <p>Ton parcours et tes meilleurs résultats</p>
-              </div>
-              <div class="fg"><label>Meilleures performances <span class="rq">*</span></label><textarea
-                  name="performances" rows="3"
-                  placeholder="Top Ranked, tournois, compétitions... Détaille avec dates et résultats."
-                  required></textarea></div>
-              <div class="r2">
-                <div class="fg"><label>Meilleur rang atteint</label>
-                  <select name="rank_peak">
-                    <option value="">—</option>
-                    <option>Radiant Top 500</option>
-                    <option>Radiant</option>
-                    <option>Immortal 3</option>
-                    <option>Immortal 2</option>
-                    <option>Immortal 1</option>
-                  </select>
-                </div>
-                <div class="fg"><label>Expérience LAN</label>
-                  <select name="lan_exp">
-                    <option value="">Aucune</option>
-                    <option>1–2 LAN régionales</option>
-                    <option>3–5 LAN</option>
-                    <option>6+ LAN</option>
-                    <option>LAN majeure</option>
-                  </select>
-                </div>
-              </div>
-              <div class="fg"><label>Anciennes structures <span class="rq">*</span></label><textarea
-                  name="historique_teams" rows="2" placeholder="Teams précédentes, durées, rôles..."
-                  required></textarea></div>
-              <div class="fg"><label>Lien POV / VOD de gameplay <span class="rq">*</span></label><input type="url"
-                  name="pov_link" placeholder="YouTube, Twitch VOD, Google Drive..." required></div>
-              <div class="fnav">
-                <button type="button" class="fbk ht" onclick="pS()"><svg width="14" height="14" viewBox="0 0 24 24"
-                    fill="none" stroke="currentColor" stroke-width="2.5">
-                    <path d="M19 12H5M12 19l-7-7 7-7" />
-                  </svg>Retour</button>
-                <div class="fsi">03 / 05</div>
-                <button type="button" class="ffwd hcta" onclick="nS()">Continuer <svg width="14" height="14"
-                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                    <path d="M5 12h14M12 5l7 7-7 7" />
-                  </svg></button>
-              </div>
-            </div>
-
-            <!-- STEP 4 — MOTIVATION -->
-            <div class="fpnl" id="p4">
-              <div class="ph2">
-                <h3>Motivation & Engagements</h3>
-                <p>Ce qui te définit au-delà des stats</p>
-              </div>
-              <div class="fg"><label>Pourquoi Origin's Esports ? <span class="rq">*</span></label><textarea
-                  name="motivation" rows="4" placeholder="Ta motivation, tes objectifs, ce que tu peux apporter..."
-                  required></textarea></div>
-              <div class="r2">
-                <div class="fg"><label>Objectif à 6 mois</label><textarea name="goals_6m" rows="2"
-                    placeholder="Radiant, VCT Challengers, ladder..."></textarea></div>
-                <div class="fg"><label>Objectif à 1 an</label><textarea name="goals_1y" rows="2"
-                    placeholder="VCT, équipe tier 2–1, LAN..."></textarea></div>
-              </div>
-              <div class="r2">
-                <div class="fg"><label>Disponibilités / semaine</label>
-                  <select name="availability">
-                    <option value="">Sélectionner...</option>
-                    <option>20–30h</option>
-                    <option>30–40h</option>
-                    <option>40–50h</option>
-                    <option>50h+</option>
-                  </select>
-                </div>
-                <div class="fg"><label>Fuseau horaire</label>
-                  <select name="timezone">
-                    <option value="">Sélectionner...</option>
-                    <option>EU — France (CET/CEST)</option>
-                    <option>EU — UK (GMT/BST)</option>
-                    <option>EU — Est</option>
-                    <option>NA — Est</option>
-                    <option>NA — Ouest</option>
-                    <option>MENA</option>
-                  </select>
-                </div>
-              </div>
-              <div class="fg"><label>Engagements <span class="rq">*</span></label>
-                <div class="cg">
-                  <label class="ci" onclick="tC(this)"><input type="checkbox" name="mature" required>
-                    <div class="cb"></div><span>Mature & discipliné</span>
-                  </label>
-                  <label class="ci" onclick="tC(this)"><input type="checkbox" name="scrims" required>
-                    <div class="cb"></div><span>Dispo pour scrims quotidiens</span>
-                  </label>
-                  <label class="ci" onclick="tC(this)"><input type="checkbox" name="lan" required>
-                    <div class="cb"></div><span>Prêt à voyager en LAN</span>
-                  </label>
-                  <label class="ci" onclick="tC(this)"><input type="checkbox" name="tryout" required>
-                    <div class="cb"></div><span>Accepte la phase de test</span>
-                  </label>
-                </div>
-              </div>
-              <div class="fnav">
-                <button type="button" class="fbk ht" onclick="pS()"><svg width="14" height="14" viewBox="0 0 24 24"
-                    fill="none" stroke="currentColor" stroke-width="2.5">
-                    <path d="M19 12H5M12 19l-7-7 7-7" />
-                  </svg>Retour</button>
-                <div class="fsi">04 / 05</div>
-                <button type="button" class="ffwd hcta" onclick="nS()">Review <svg width="14" height="14"
-                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                    <path d="M5 12h14M12 5l7 7-7 7" />
-                  </svg></button>
-              </div>
-            </div>
-
-            <!-- STEP 5 — REVIEW -->
-            <div class="fpnl" id="p5">
-              <div class="ph2">
-                <h3>Récapitulatif</h3>
-                <p>Vérifie avant d'envoyer ta candidature</p>
-              </div>
-              <div class="rcg" id="rcg">
-                <div class="rci">
-                  <div class="rck">Pseudo Riot</div>
-                  <div class="rcv" id="re">—</div>
-                </div>
-                <div class="rci">
-                  <div class="rck">Plateforme</div>
-                  <div class="rcv" id="rpl">—</div>
-                </div>
-                <div class="rci">
-                  <div class="rck">Rang déclaré</div>
-                  <div class="rcv" id="rpr">—</div>
-                </div>
-                <div class="rci">
-                  <div class="rck">Rôle</div>
-                  <div class="rcv" id="rro">—</div>
-                </div>
-                <div class="rci">
-                  <div class="rck">Heures comp.</div>
-                  <div class="rcv" id="rea">—</div>
-                </div>
-                <div class="rci">
-                  <div class="rck">Peak rank</div>
-                  <div class="rcv" id="rfn">—</div>
-                </div>
-              </div>
-              <div class="fnav">
-                <button type="button" class="fbk ht" onclick="pS()"><svg width="14" height="14" viewBox="0 0 24 24"
-                    fill="none" stroke="currentColor" stroke-width="2.5">
-                    <path d="M19 12H5M12 19l-7-7 7-7" />
-                  </svg>Modifier</button>
-                <div class="fsi">05 / 05</div>
-                <button type="submit" class="ffwd fsub hcta">🎯 Envoyer la Candidature</button>
-              </div>
-            </div>
-          </form>
-        </div>
+    <div class="l-body">
+      <div class="l-pct-row">
+        <span class="l-label">System Init</span>
+        <span class="l-num" id="lp">0%</span>
+      </div>
+      <div class="l-track"><div class="l-fill" id="lf"></div></div>
+      <div class="l-lines" id="llines">
+        <div class="l-line">→ <em>VALORANT MODULE</em> loading...</div>
+        <div class="l-line">→ <em>AGENT DATABASE</em> syncing...</div>
+        <div class="l-line">→ <em>TACTICAL INTERFACE</em> ready</div>
       </div>
     </div>
-  </section>
+  </div>
+</div>
 
-  <footer>
-    <div class="fb2">ORIGIN'S <em>ESPORTS</em> · <span style="color:var(--c)">VALORANT</span></div>
-    <div class="fl"><a href="recrutement.html" class="ht">← Toutes les sections</a><a href="index.html"
-        class="ht">Accueil</a></div>
-  <div class="fs" style="display:flex;gap:20px;flex-wrap:wrap;justify-content:center;margin: 10px 0;">
-    <a href="https://x.com/originssport?s=21&amp;t=obBPKKkXGFiuTGdN5IV35A" target="_blank" class="ht" style="font-family:var(--fm);font-size:.58rem;color:var(--mt);text-decoration:none;letter-spacing:2px;transition:color .3s" onmouseover="this.style.color='var(--c)'" onmouseout="this.style.color='var(--mt)'">X</a>
-    <a href="https://www.instagram.com/origins.esport.pro/" target="_blank" class="ht" style="font-family:var(--fm);font-size:.58rem;color:var(--mt);text-decoration:none;letter-spacing:2px;transition:color .3s" onmouseover="this.style.color='var(--c)'" onmouseout="this.style.color='var(--mt)'">INSTAGRAM</a>
-    <a href="https://www.tiktok.com/@origins.esport?_r=1&amp;_t=ZN-94lWSR8TOQo" target="_blank" class="ht" style="font-family:var(--fm);font-size:.58rem;color:var(--mt);text-decoration:none;letter-spacing:2px;transition:color .3s" onmouseover="this.style.color='var(--c)'" onmouseout="this.style.color='var(--mt)'">TIKTOK</a>
-    <a href="https://www.twitch.tv/originsesport_" target="_blank" class="ht" style="font-family:var(--fm);font-size:.58rem;color:var(--mt);text-decoration:none;letter-spacing:2px;transition:color .3s" onmouseover="this.style.color='var(--c)'" onmouseout="this.style.color='var(--mt)'">TWITCH</a>
-    <a href="https://discord.gg/d5Fg67AMTV" target="_blank" class="ht" style="font-family:var(--fm);font-size:.58rem;color:var(--mt);text-decoration:none;letter-spacing:2px;transition:color .3s" onmouseover="this.style.color='var(--c)'" onmouseout="this.style.color='var(--mt)'">DISCORD</a>
-    <a href="mailto:origins.esport.pro@gmail.com" class="ht" style="font-family:var(--fm);font-size:.58rem;color:var(--mt);text-decoration:none;letter-spacing:2px;transition:color .3s" onmouseover="this.style.color='var(--c)'" onmouseout="this.style.color='var(--mt)'">CONTACT</a>
+<!-- CURSOR -->
+<div class="cursor" id="cur"></div>
+<div class="cursor-ring" id="curR"></div>
+
+<!-- BG -->
+<div class="bg-grid"></div>
+<div class="scan-line"></div>
+<div class="hud-corners">
+  <div class="hud-tl"></div>
+  <div class="hud-tr"></div>
+  <div class="hud-bl"></div>
+  <div class="hud-br"></div>
+</div>
+<div class="particle p1"></div>
+<div class="particle p2"></div>
+<div class="particle p3"></div>
+<div class="particle p4"></div>
+<div class="particle p5"></div>
+
+<!-- HEADER -->
+<header class="hdr" id="hdr">
+  <a class="logo" href="index.html">
+    <div class="logo-mark"></div>
+    ORIGIN'S&nbsp;<em>ESPORTS</em>
+  </a>
+  <nav class="nav">
+    <a href="recrutement.html" class="ht">← Sections</a>
+    <a href="recrutement-lol.html" class="ht">LoL</a>
+    <a href="recrutement-fortnite.html" class="ht">Fortnite</a>
+    <a href="recrutement-rocketleague.html" class="ht">Rocket League</a>
+    <a href="staff-recrutement.html" class="ht npill"><span>Staff</span></a>
+  </nav>
+</header>
+
+<!-- HERO -->
+<section class="page-hero" id="hero">
+  <div class="hero-vlines">
+    <div class="hero-vline"></div>
+    <div class="hero-vline"></div>
+    <div class="hero-vline"></div>
+    <div class="hero-vline"></div>
+    <div class="hero-vline"></div>
   </div>
 
-    <div class="fc">© 2026 — TOUS DROITS RÉSERVÉS</div>
-  </footer>
+  <!-- TITRE AJOUTÉ -->
+  <div class="hero-main-title">RECRUTEMENT VALORANT</div>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-  <script>
-    gsap.registerPlugin(ScrollTrigger);
+  <div class="hero-num">26</div>
 
-    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const COLS = 16, ROWS = 10;
+  <div class="hero-tag" id="phTag">Section Compétitive — Valorant 2026</div>
 
-    (function initHudSvg() {
-      function draw() {
-        const svg = document.getElementById('val-hud-lines');
-        if (!svg) return;
-        const w = innerWidth, h = innerHeight, cx = w / 2, cy = h * 0.4;
-        const parts = [];
-        for (let r = 1; r <= 5; r++) {
-          const rx = r * Math.min(w, h) * 0.1, ry = r * Math.min(w, h) * 0.045;
-          parts.push(`<ellipse cx="${cx}" cy="${cy}" rx="${rx}" ry="${ry}" fill="none" stroke="rgba(253,69,86,0.22)" stroke-width="1"/>`);
-        }
-        parts.push(`<line x1="0" y1="${cy}" x2="${w}" y2="${cy}" stroke="rgba(255,255,255,0.07)" stroke-width="1"/>`);
-        parts.push(`<line x1="${cx}" y1="0" x2="${cx}" y2="${h}" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>`);
-        const L = Math.min(100, w * 0.08);
-        parts.push(`<polyline points="0,${L} 0,0 ${L},0" fill="none" stroke="rgba(253,69,86,0.35)" stroke-width="1"/>`);
-        parts.push(`<polyline points="${w - L},0 ${w},0 ${w},${L}" fill="none" stroke="rgba(253,69,86,0.35)" stroke-width="1"/>`);
-        parts.push(`<polyline points="${w},${h - L} ${w},${h} ${w - L},${h}" fill="none" stroke="rgba(253,69,86,0.28)" stroke-width="1"/>`);
-        parts.push(`<polyline points="0,${h - L} 0,${h} ${L},${h}" fill="none" stroke="rgba(253,69,86,0.28)" stroke-width="1"/>`);
-        for (let i = 1; i < 6; i++) {
-          const ty = cy + (i - 3) * 22;
-          parts.push(`<line x1="${cx - 12}" y1="${ty}" x2="${cx + 12}" y2="${ty}" stroke="rgba(255,255,255,0.12)" stroke-width="1"/>`);
-        }
-        svg.setAttribute('viewBox', `0 0 ${w} ${h}`);
-        svg.innerHTML = parts.join('');
-      }
-      draw();
-      window.addEventListener('resize', draw);
-    })();
+  <h1 class="hero-title" id="phTitle">
+    <span class="l1">RECRUTEMENT</span>
+    <span class="l2">VALORANT</span>
+  </h1>
 
-    (function initGridNodes() {
-      const host = document.getElementById('val-particles');
-      if (!host) return;
-      host.innerHTML = '';
-      for (let i = 0; i < COLS * ROWS; i++) {
-        const d = document.createElement('div');
-        d.className = 'val-node';
-        d.dataset.i = String(i);
-        host.appendChild(d);
-      }
-      if (reduceMotion) return;
-      const nodes = host.querySelectorAll('.val-node');
-      const tl = gsap.timeline({ repeat: -1 });
-      const order = [];
-      for (let wave = 0; wave < ROWS + COLS - 1; wave++) {
-        for (let r = 0; r < ROWS; r++) {
-          const c = wave - r;
-          if (c >= 0 && c < COLS) order.push(r * COLS + c);
-        }
-      }
-      order.forEach((idx, step) => {
-        tl.call(() => {
-          nodes.forEach(n => n.classList.remove('on'));
-          const n = nodes[idx];
-          if (n) n.classList.add('on');
-        }, null, step * 0.045);
-      });
-      tl.to({}, { duration: 0.35 });
-    })();
+  <p class="hero-sub" id="phSub">
+    Ranked Radiant, Pro Series. On recherche des joueurs avec le <em>niveau ET la mentalité</em>.
+  </p>
 
-    // THREE — sol tactique, volumes wireframe fixes, balayage radar
-    (function () {
-      const s = document.createElement('script');
-      s.src = 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js';
-      s.onload = () => {
-        const cv = document.getElementById('bgc');
-        if (!cv) return;
-        const rr = new THREE.WebGLRenderer({ canvas: cv, antialias: true, alpha: true, powerPreference: 'high-performance' });
-        rr.setPixelRatio(Math.min(devicePixelRatio, 1.75));
-        rr.setSize(innerWidth, innerHeight);
-        const sc = new THREE.Scene();
-        sc.fog = new THREE.FogExp2(0x030304, 0.024);
-        const cm = new THREE.PerspectiveCamera(52, innerWidth / innerHeight, 0.5, 220);
-        cm.position.set(0, 7, 32);
+  <div class="hero-meta" id="phMeta">
+    <div class="hmeta accent">5 Postes ouverts</div>
+    <div class="hmeta">5v5 Tactique</div>
+    <div class="hmeta">Ranked Radiant</div>
+    <div class="hmeta">PC</div>
+  </div>
 
-        const red = new THREE.Color(0xfd4556);
-        const dim = new THREE.Color(0x1a0a0c);
-        const gr = new THREE.GridHelper(220, 88, red, dim);
-        gr.material.transparent = true;
-        gr.material.opacity = 0.28;
-        gr.position.y = -2.2;
-        sc.add(gr);
+  <div id="hScr">Scroll<div class="scr-line"></div></div>
+</section>
 
-        const boxBase = new THREE.BoxGeometry(3.5, 7, 3.5);
-        const edges = new THREE.EdgesGeometry(boxBase);
-        const wireGrp = new THREE.Group();
-        for (let i = 0; i < 8; i++) {
-          const ang = (i / 8) * Math.PI * 2;
-          const mat = new THREE.LineBasicMaterial({ color: i % 2 ? 0xffffff : 0xfd4556, transparent: true, opacity: i % 2 ? 0.12 : 0.22 });
-          const wire = new THREE.LineSegments(edges, mat);
-          wire.position.set(Math.cos(ang) * 38, 1.2, Math.sin(ang) * 38 - 18);
-          wire.userData.ry = 0.004 + i * 0.0004;
-          wireGrp.add(wire);
-        }
-        sc.add(wireGrp);
+<!-- FORM SECTION -->
+<section>
+  <div class="si">
+    <div class="sec-tag rv">Candidature Joueur</div>
+    <h2 class="sec-title rv">Formulaire <span class="hl">Valorant</span></h2>
+    <p class="sec-desc rv">// Remplis chaque étape avec précision — nos recruteurs analysent chaque dossier individuellement.</p>
 
-        const sweepGeo = new THREE.BufferGeometry().setFromPoints([
-          new THREE.Vector3(0, 0.05, 0),
-          new THREE.Vector3(0, 0.05, -48)
-        ]);
-        const sweep = new THREE.Line(sweepGeo, new THREE.LineBasicMaterial({ color: 0xfd4556, transparent: true, opacity: 0.55 }));
-        sweep.position.set(0, -1.2, -8);
-        sc.add(sweep);
+    <div class="fsh rvs">
+      <div class="fpanel-header">
+        <div class="fpanel-title">DOSSIER CANDIDATURE</div>
+        <div class="fpanel-id" id="fpid">ID : VAL-2026-000</div>
+      </div>
 
-        const linePts = [];
-        for (let x = -5; x <= 5; x++) {
-          const px = x * 14;
-          linePts.push(px, 0.2, -55, px, 0.2, 35);
-        }
-        const colGeo = new THREE.BufferGeometry();
-        colGeo.setAttribute('position', new THREE.Float32BufferAttribute(linePts, 3));
-        const colMat = new THREE.LineBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.04 });
-        const columns = new THREE.LineSegments(colGeo, colMat);
-        columns.position.y = -1;
-        sc.add(columns);
+      <div class="ftabs" id="ftabs">
+        <div class="ftab active" onclick="gS(1)"><div class="tn">01</div><div class="tl">Profil</div><div class="tck">✓</div></div>
+        <div class="ftab" onclick="gS(2)"><div class="tn">02</div><div class="tl">Stats</div><div class="tck">✓</div></div>
+        <div class="ftab" onclick="gS(3)"><div class="tn">03</div><div class="tl">Historique</div><div class="tck">✓</div></div>
+        <div class="ftab" onclick="gS(4)"><div class="tn">04</div><div class="tl">Motivation</div><div class="tck">✓</div></div>
+        <div class="ftab" onclick="gS(5)"><div class="tn">05</div><div class="tl">Review</div><div class="tck">✓</div></div>
+      </div>
 
-        let mx = 0, my = 0, tx = 0, ty = 0, t = 0;
-        document.addEventListener('mousemove', e => {
-          mx = (e.clientX / innerWidth - 0.5) * 2;
-          my = -(e.clientY / innerHeight - 0.5) * 2;
-        });
+      <div class="sw" id="sw">
+        <div class="swi">🎯</div>
+        <div class="swt">DOSSIER <em>TRANSMIS</em></div>
+        <div class="swm">Ton dossier Valorant a été transmis à notre staff.<br>Réponse sous 72h via Discord.</div>
+        <div class="swc">// DOSSIER VAL-2026 — ENREGISTRÉ</div>
+      </div>
 
-        function loop() {
-          requestAnimationFrame(loop);
-          t += 0.016;
-          tx += (mx - tx) * 0.06;
-          ty += (my - ty) * 0.06;
-          cm.position.x = tx * 2.2;
-          cm.position.y = 7 + ty * 1.4;
-          cm.lookAt(tx * 1.2, 0, -15);
+      <div class="fbody" id="fb">
+        <div class="fpl"><div class="fpb" id="fpb"></div></div>
+        <form id="mf" name="candidature-valorant" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+          <input type="hidden" name="form-name" value="candidature-valorant">
+          <input type="hidden" name="game" value="Valorant">
+          <input type="hidden" name="platform_val" id="pv">
+          <input type="hidden" name="role_val" id="rvf">
+          <p style="display:none"><label>Ne pas remplir : <input name="bot-field"></label></p>
 
-          gr.position.z = (t * 3.2) % 2.5;
-          sweep.rotation.y = t * 0.35;
-          wireGrp.children.forEach(w => { w.rotation.y += w.userData.ry; });
+          <!-- STEP 1 -->
+          <div class="fpnl active" id="p1">
+            <div class="ph2"><h3>Profil Joueur</h3><p>// tes informations de base</p></div>
+            <div class="r2">
+              <div class="fg"><label>Pseudo Riot <span class="rq">*</span></label><input type="text" name="epic_name" placeholder="TenZ#VAL" required id="fe"><div class="fm2" id="me"></div></div>
+              <div class="fg"><label>Âge <span class="rq">*</span></label><input type="number" name="age" placeholder="18" min="13" max="35" required></div>
+            </div>
+            <div class="r2">
+              <div class="fg"><label>Discord Tag <span class="rq">*</span></label><input type="text" name="discord" placeholder="pseudo#0000" required></div>
+              <div class="fg"><label>Twitter / X <span class="op">optionnel</span></label><input type="url" name="twitter" placeholder="https://x.com/..."></div>
+            </div>
+            <div class="fg"><label>Nationalité</label><input type="text" name="nationality" placeholder="Française, Belge, Suisse..."></div>
+            <div class="fg"><label>Plateforme <span class="rq">*</span></label>
+              <div class="plg">
+                <div class="plb" onclick="sP(this,'PC 240FPS+')"><span class="pi">🖥️</span><span>PC High-End</span><small>240 FPS+</small></div>
+                <div class="plb" onclick="sP(this,'PC 144FPS')"><span class="pi">💻</span><span>PC Standard</span><small>144 FPS</small></div>
+                <div class="plb" onclick="sP(this,'Console')"><span class="pi">🎮</span><span>Console</span><small>PS5 / Xbox</small></div>
+              </div>
+            </div>
+            <div class="fnav"><div class="fsi">01 / 05</div><button type="button" class="ffwd hcta" onclick="nS()">Continuer <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button></div>
+          </div>
 
-          rr.render(sc, cm);
-        }
-        loop();
-        window.addEventListener('resize', () => {
-          cm.aspect = innerWidth / innerHeight;
-          cm.updateProjectionMatrix();
-          rr.setSize(innerWidth, innerHeight);
-        });
-      };
-      document.head.appendChild(s);
-    })();
+          <!-- STEP 2 -->
+          <div class="fpnl" id="p2">
+            <div class="ph2"><h3>Statistiques Valorant</h3><p>// tes données compétitives</p></div>
+            <div class="r2">
+              <div class="fg"><label>Rang actuel <span class="rq">*</span></label><input type="text" name="rank_val" placeholder="Radiant, Immortal 3..." required></div>
+              <div class="fg"><label>Heures compétitives <span class="rq">*</span></label><input type="number" name="comp_hours" placeholder="1200" required></div>
+            </div>
+            <div class="r3">
+              <div class="fg"><label>K/D Ratio</label><input type="number" name="kd" placeholder="1.4" step="0.1" min="0"></div>
+              <div class="fg"><label>Win Rate %</label><input type="number" name="wr" placeholder="55" min="0" max="100"></div>
+              <div class="fg"><label>Heures totales</label><input type="number" name="hrs" placeholder="2000" min="0"></div>
+            </div>
+            <div class="fg"><label>Lien Tracker.gg <span class="rq">*</span></label><input type="url" name="tracker_link" placeholder="https://tracker.gg/valorant/profile/..." required></div>
+            <div class="fg"><label>Rôle principal <span class="rq">*</span></label>
+              <div class="rtg">
+                <div class="rt" onclick="sR(this,'Duelliste')">Duelliste</div>
+                <div class="rt" onclick="sR(this,'Controller')">Controller</div>
+                <div class="rt" onclick="sR(this,'Sentinelle')">Sentinelle</div>
+                <div class="rt" onclick="sR(this,'Initiateur')">Initiateur</div>
+                <div class="rt" onclick="sR(this,'Flex')">Flex</div>
+              </div>
+            </div>
+            <div class="fg"><label>Highlights <span class="op">optionnel</span></label><input type="url" name="highlight_link" placeholder="https://..."></div>
+            <div class="fnav">
+              <button type="button" class="fbk ht" onclick="pS()"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Retour</button>
+              <div class="fsi">02 / 05</div>
+              <button type="button" class="ffwd hcta" onclick="nS()">Continuer <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button>
+            </div>
+          </div>
 
-    let pc = 0;
-    const li = setInterval(() => { pc += Math.random() * 18 + 5; if (pc >= 100) { pc = 100; clearInterval(li); } document.getElementById('lf').style.width = pc + '%'; document.getElementById('lp').textContent = Math.round(pc) + '%'; }, 100);
-    window.addEventListener('load', () => {
-      clearInterval(li);
-      document.getElementById('lf').style.width = '100%';
-      document.getElementById('lp').textContent = '100%';
-      gsap.to('#loader', { opacity: 0, duration: 0.45, delay: 0.12, ease: 'power2.inOut', onComplete: () => { document.getElementById('loader').style.display = 'none'; heroIn(); } });
-    });
+          <!-- STEP 3 -->
+          <div class="fpnl" id="p3">
+            <div class="ph2"><h3>Historique Compétitif</h3><p>// ton parcours et tes meilleurs résultats</p></div>
+            <div class="fg"><label>Meilleures performances <span class="rq">*</span></label><textarea name="performances" rows="3" placeholder="Tournois, Pro Series, Ranked peak... Détaille avec dates et résultats." required></textarea></div>
+            <div class="r2">
+              <div class="fg"><label>Rang peak</label>
+                <select name="rank_peak">
+                  <option value="">Sélectionner</option>
+                  <option>Radiant Top 500</option>
+                  <option>Radiant</option>
+                  <option>Immortal 3</option>
+                  <option>Immortal 2</option>
+                  <option>Immortal 1</option>
+                  <option>Ascendant</option>
+                </select>
+              </div>
+              <div class="fg"><label>Expérience LAN</label>
+                <select name="lan_exp">
+                  <option value="">Aucune</option>
+                  <option>1–2 LAN régionales</option>
+                  <option>3–5 LAN</option>
+                  <option>6+ LAN</option>
+                  <option>LAN VCT / Challengers</option>
+                </select>
+              </div>
+            </div>
+            <div class="fg"><label>Anciennes structures <span class="rq">*</span></label><textarea name="historique_teams" rows="2" placeholder="Teams précédentes, durées, rôles..." required></textarea></div>
+            <div class="fg"><label>VOD / POD gameplay <span class="rq">*</span></label><input type="url" name="pov_link" placeholder="YouTube, Twitch, Drive..." required></div>
+            <div class="fnav">
+              <button type="button" class="fbk ht" onclick="pS()"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Retour</button>
+              <div class="fsi">03 / 05</div>
+              <button type="button" class="ffwd hcta" onclick="nS()">Continuer <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button>
+            </div>
+          </div>
 
-    function heroIn() {
-      gsap.set('#phEye', { y: 14 });
-      gsap.set('#phIconWrap', { scale: 0.88 });
-      gsap.set('#phTitle', { y: 22 });
-      gsap.set('#phSub', { y: 16 });
-      gsap.set('#phTags', { y: 10 });
-      const tl = gsap.timeline({ defaults: { ease: 'expo.out' } });
-      tl.to('#phEye', { opacity: 1, y: 0, duration: 0.45, ease: 'power2.out' })
-        .to('#phIconWrap', { opacity: 1, scale: 1, duration: 0.4, ease: 'power2.out' }, '-=0.22')
-        .to('#phTitle', { opacity: 1, y: 0, duration: 0.55, ease: 'expo.out' }, '-=0.28')
-        .to('#phSub', { opacity: 1, y: 0, duration: 0.42, ease: 'power2.out' }, '-=0.32')
-        .set('#phTags', { opacity: 1 }, '-=0.2')
-        .from('.ph-tag', { opacity: 0, y: 10, duration: 0.22, stagger: 0.04, ease: 'power2.out' }, '<');
-    }
+          <!-- STEP 4 -->
+          <div class="fpnl" id="p4">
+            <div class="ph2"><h3>Motivations & Mentalité</h3><p>// ce qui fait un vrai agent</p></div>
+            <div class="fg"><label>Pourquoi Origins ? <span class="rq">*</span></label><textarea name="motivation" rows="4" placeholder="Explique pourquoi tu veux rejoindre notre section Valorant et ce que tu peux apporter à l'équipe." required></textarea></div>
+            <div class="fg"><label>Disponibilités hebdomadaires <span class="rq">*</span></label>
+              <div class="cg">
+                <label class="ci" onclick="tC(this)"><input type="checkbox" name="dispo" value="Soir semaine"><div class="cb"></div><span>Lundi–Vendredi soir</span></label>
+                <label class="ci" onclick="tC(this)"><input type="checkbox" name="dispo" value="Week-end journée"><div class="cb"></div><span>Week-end journée</span></label>
+                <label class="ci" onclick="tC(this)"><input type="checkbox" name="dispo" value="Week-end soir"><div class="cb"></div><span>Week-end soir</span></label>
+                <label class="ci" onclick="tC(this)"><input type="checkbox" name="dispo" value="Full-time"><div class="cb"></div><span>Full-time disponible</span></label>
+              </div>
+            </div>
+            <div class="fg"><label>Points forts <span class="rq">*</span></label>
+              <div class="cg">
+                <label class="ci" onclick="tC(this)"><input type="checkbox" name="strengths" value="Aim"><div class="cb"></div><span>Aim / Précision</span></label>
+                <label class="ci" onclick="tC(this)"><input type="checkbox" name="strengths" value="Game sense"><div class="cb"></div><span>Game sense</span></label>
+                <label class="ci" onclick="tC(this)"><input type="checkbox" name="strengths" value="Info calling"><div class="cb"></div><span>Info calling</span></label>
+                <label class="ci" onclick="tC(this)"><input type="checkbox" name="strengths" value="Clutch"><div class="cb"></div><span>Clutch / Pression</span></label>
+              </div>
+            </div>
+            <div class="fg"><label>Niveau communication (1–5)</label>
+              <div class="stars-row">
+                <div class="star" onclick="setStar(1)">01</div>
+                <div class="star" onclick="setStar(2)">02</div>
+                <div class="star" onclick="setStar(3)">03</div>
+                <div class="star" onclick="setStar(4)">04</div>
+                <div class="star" onclick="setStar(5)">05</div>
+              </div>
+              <input type="hidden" name="comm_rating" id="sr">
+            </div>
+            <div class="fg"><label>Informations complémentaires <span class="op">optionnel</span></label><textarea name="autres" rows="3" placeholder="Autre chose que tu veux ajouter ?"></textarea></div>
+            <div class="fnav">
+              <button type="button" class="fbk ht" onclick="pS()"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Retour</button>
+              <div class="fsi">04 / 05</div>
+              <button type="button" class="ffwd hcta" onclick="nS()">Review <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button>
+            </div>
+          </div>
 
-    const cur2 = document.getElementById('cur'), curR = document.getElementById('curR');
-    let mx = innerWidth / 2, my = innerHeight / 2, rx = mx, ry = my;
-    document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; gsap.set(cur2, { x: mx, y: my }); });
-    (function cr() { requestAnimationFrame(cr); rx += (mx - rx) * 0.14; ry += (my - ry) * 0.14; gsap.set(curR, { x: rx, y: ry }); })();
-    document.querySelectorAll('.ht,a,button').forEach(e => { e.addEventListener('mouseenter', () => document.body.classList.add('ch')); e.addEventListener('mouseleave', () => document.body.classList.remove('ch')); });
-    document.querySelectorAll('.hcta').forEach(e => { e.addEventListener('mouseenter', () => { document.body.classList.remove('ch'); document.body.classList.add('cc'); }); e.addEventListener('mouseleave', () => document.body.classList.remove('cc')); });
-    document.querySelectorAll('input,textarea,select').forEach(e => { e.addEventListener('focus', () => document.body.classList.add('ct')); e.addEventListener('blur', () => document.body.classList.remove('ct')); });
+          <!-- STEP 5 -->
+          <div class="fpnl" id="p5">
+            <div class="ph2"><h3>Récapitulatif</h3><p>// vérifie ton dossier avant envoi</p></div>
+            <div class="rcg">
+              <div class="rci"><div class="rck">Pseudo Riot</div><div class="rcv" id="re">—</div></div>
+              <div class="rci"><div class="rck">Plateforme</div><div class="rcv" id="rpl">—</div></div>
+              <div class="rci"><div class="rck">Rang actuel</div><div class="rcv" id="rpr">—</div></div>
+              <div class="rci"><div class="rck">Rôle</div><div class="rcv" id="rro">—</div></div>
+              <div class="rci"><div class="rck">Rang peak</div><div class="rcv" id="rea">—</div></div>
+              <div class="rci"><div class="rck">Expérience LAN</div><div class="rcv" id="rfn">—</div></div>
+            </div>
+            <div class="fnav">
+              <button type="button" class="fbk ht" onclick="pS()"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Retour</button>
+              <div class="fsi">05 / 05</div>
+              <button type="submit" class="ffwd fsub hcta">Soumettre le dossier <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg></button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
 
-    const amb = document.getElementById('amb');
-    let ax = 50, ay = 22;
-    document.addEventListener('mousemove', e => {
-      const nx = e.clientX / innerWidth * 100, ny = e.clientY / innerHeight * 100;
-      ax += (nx - ax) * 0.028;
-      ay += (ny - ay) * 0.028;
-      if (amb) {
-        amb.style.background =
-          `radial-gradient(ellipse 70% 55% at ${ax}% ${ay - 15}%,rgba(253,69,86,0.09) 0%,transparent 58%),` +
-          `radial-gradient(ellipse 40% 35% at ${100 - ax * 0.5}% ${ny}%,rgba(255,255,255,0.04) 0%,transparent 50%)`;
-      }
-      const xf = e.clientX / innerWidth - 0.5, yf = e.clientY / innerHeight - 0.5;
-      gsap.to('#phTitle', { x: xf * 10, y: yf * 6, duration: 0.85, ease: 'power2.out' });
-      gsap.to('#phSub', { x: xf * 6, duration: 0.9, ease: 'power2.out' });
-      gsap.to('#phIconWrap', { x: xf * 8, y: yf * 5, duration: 0.75, ease: 'power2.out' });
-      gsap.to('#phEye', { x: xf * 5, duration: 0.8, ease: 'power2.out' });
-      gsap.to('#valHeroFrame', { x: xf * 14, y: yf * 10, duration: 1, ease: 'power2.out' });
-      gsap.to('#val-bg-stack', { x: xf * 6, y: yf * 4, duration: 1.1, ease: 'power2.out' });
-    });
+<footer>
+  <div class="fb2">ORIGIN'S&nbsp;<em>ESPORTS</em></div>
+  <div class="fl">
+    <a href="index.html" class="ht">Accueil</a>
+    <a href="recrutement.html" class="ht">Recrutement</a>
+    <a href="staff.html" class="ht">Staff</a>
+  </div>
+  <div class="fc">© 2026 Origin's Esports — VAL.SYS</div>
+</footer>
 
-    ScrollTrigger.create({ start: 80, onEnter: () => document.getElementById('hdr').classList.add('on'), onLeaveBack: () => document.getElementById('hdr').classList.remove('on') });
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script>
+gsap.registerPlugin(ScrollTrigger);
 
-    gsap.utils.toArray('.rv').forEach(el => gsap.fromTo(el, { y: 36, opacity: 0 }, { y: 0, opacity: 1, duration: 0.55, ease: 'expo.out', scrollTrigger: { trigger: el, start: 'top 88%', once: true } }));
-    gsap.utils.toArray('.rvs').forEach(el => gsap.fromTo(el, { y: 24, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, ease: 'expo.out', scrollTrigger: { trigger: el, start: 'top 90%', once: true } }));
-    gsap.utils.toArray('.st .hl').forEach(el => ScrollTrigger.create({ trigger: el, start: 'top 80%', once: true, onEnter: () => el.classList.add('li') }));
+/* LOADER */
+const lines=document.querySelectorAll('.l-line');
+let pc=0,li_i=0;
+const li=setInterval(()=>{
+  pc+=Math.random()*14+4;
+  if(pc>=100){pc=100;clearInterval(li)}
+  document.getElementById('lf').style.width=pc+'%';
+  document.getElementById('lp').textContent=Math.round(pc)+'%';
+  if(pc>30&&li_i===0){lines[0].classList.add('vis');li_i=1}
+  if(pc>65&&li_i===1){lines[1].classList.add('vis');li_i=2}
+  if(pc>90&&li_i===2){lines[2].classList.add('vis');li_i=3}
+},140);
 
-    document.querySelectorAll('.ffwd,.npill').forEach(b => {
-      b.addEventListener('mousemove', e => {
-        const r = b.getBoundingClientRect();
-        const dx = e.clientX - r.left - r.width / 2, dy = e.clientY - r.top - r.height / 2;
-        gsap.to(b, { x: dx * 0.12, y: dy * 0.12, duration: 0.12, ease: 'power2.out' });
-      });
-      b.addEventListener('mouseleave', () => gsap.to(b, { x: 0, y: 0, duration: 0.2, ease: 'power2.out' }));
-    });
-    document.querySelectorAll('.plb, .rt').forEach(el => {
-      el.addEventListener('mouseenter', () => gsap.to(el, { scale: 1.02, duration: 0.1, ease: 'power2.out' }));
-      el.addEventListener('mouseleave', () => gsap.to(el, { scale: 1, duration: 0.12, ease: 'power2.out' }));
-    });
+window.addEventListener('load',()=>{
+  clearInterval(li);
+  document.getElementById('lf').style.width='100%';
+  document.getElementById('lp').textContent='100%';
+  lines.forEach(l=>l.classList.add('vis'));
+  setTimeout(()=>{
+    gsap.to('#loader',{opacity:0,duration:.3,ease:'power2.in',onComplete:()=>{document.getElementById('loader').style.display='none';heroIn();}});
+  },600);
+});
 
-    let cS = 1;
-    const BARS = ['20%', '40%', '60%', '80%', '100%'];
-    function gS(n) {
-      if (n < 1 || n > 5) return;
-      const old = document.getElementById('p' + cS), nw = document.getElementById('p' + n), fwd = n > cS;
-      if (n === 5) upRec();
-      gsap.to(old, {
-        opacity: 0, x: fwd ? -28 : 28, duration: 0.18, ease: 'power2.in', onComplete: () => {
-          old.classList.remove('active'); old.style.cssText = ''; nw.classList.add('active');
-          gsap.fromTo(nw, { opacity: 0, x: fwd ? 28 : -28 }, { opacity: 1, x: 0, duration: 0.32, ease: 'expo.out' });
-        }
-      });
-      document.querySelectorAll('.ftab').forEach((t, i) => { t.classList.remove('active', 'done'); if (i + 1 === n) t.classList.add('active'); else if (i + 1 < n) t.classList.add('done'); });
-      document.getElementById('fpb').style.width = BARS[n - 1]; cS = n;
-      const top = document.querySelector('.fsh').getBoundingClientRect().top;
-      if (top < -30) window.scrollTo({ top: window.scrollY + top - 100, behavior: 'smooth' });
-    }
-    function nS() { gS(cS + 1); }
-    function pS() { gS(cS - 1); }
-    function upRec() {
-      const v = id => { const e = document.querySelector('[name="' + id + '"]'); return e ? e.value || '—' : '—'; };
-      document.getElementById('re').textContent = v('epic_name');
-      document.getElementById('rpl').textContent = document.getElementById('pv').value || '—';
-      document.getElementById('rpr').textContent = v('rank_val');
-      document.getElementById('rro').textContent = document.getElementById('rvf').value || '—';
-      document.getElementById('rea').textContent = v('comp_hours');
-      document.getElementById('rfn').textContent = v('rank_peak') || '—';
-    }
-    function sP(el, val) { document.querySelectorAll('.plb').forEach(b => b.classList.remove('sel')); el.classList.add('sel'); document.getElementById('pv').value = val; }
-    function sR(el, val) { document.querySelectorAll('.rt').forEach(t => t.classList.remove('sel')); el.classList.add('sel'); document.getElementById('rvf').value = val; }
-    function tC(lbl) { setTimeout(() => { lbl.querySelector('input').checked ? lbl.classList.add('ck') : lbl.classList.remove('ck'); }, 10); }
-    document.querySelectorAll('input,textarea,select').forEach(el => {
-      el.addEventListener('focus', () => gsap.to(el, { borderColor: 'rgba(253,69,86,.55)', duration: 0.12, ease: 'power2.out' }));
-      el.addEventListener('blur', () => gsap.to(el, { borderColor: el.value ? 'rgba(253,69,86,.35)' : 'rgba(255,255,255,.12)', duration: 0.12, ease: 'power2.out' }));
-    });
-    document.getElementById('mf').addEventListener('submit', e => {
-      e.preventDefault();
-      const btn = document.querySelector('.fsub'); const orig = btn.innerHTML; btn.innerHTML = '⏳ Envoi...'; btn.disabled = true;
-      fetch('/', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: new URLSearchParams(new FormData(e.target)).toString() })
-        .then(() => { document.getElementById('fb').style.display = 'none'; document.getElementById('ftabs').style.display = 'none'; const sw = document.getElementById('sw'); sw.classList.add('show'); gsap.from('#sw > *', { y: 16, opacity: 0, stagger: 0.08, duration: 0.4, ease: 'expo.out' }); })
-        .catch(() => { btn.innerHTML = orig; btn.disabled = false; alert('Erreur. Réessaie.'); });
-    });
-  </script>
+/* HERO */
+function heroIn(){
+  const id='VAL-2026-'+String(Math.floor(Math.random()*900+100)).padStart(3,'0');
+  document.getElementById('fpid').textContent='ID : '+id;
+
+  const tl=gsap.timeline({defaults:{ease:'power2.out',duration:.35}});
+  tl
+    .fromTo('#phTag',{opacity:0,x:-16},{opacity:1,x:0})
+    .fromTo('#phTitle .l1',{opacity:0,y:30},{opacity:1,y:0,duration:.4},'-=.1')
+    .fromTo('#phTitle .l2',{opacity:0,y:30},{opacity:1,y:0,duration:.4},'-=.2')
+    .fromTo('#phSub',{opacity:0},{opacity:1,duration:.3},'-=.1')
+    .fromTo('#phMeta',{opacity:0,x:-10},{opacity:1,x:0,duration:.3},'-=.1')
+    .fromTo('#hScr',{opacity:0},{opacity:1,duration:.3},'-=.1');
+
+  setTimeout(()=>document.getElementById('phTitle').classList.add('vis'),700);
+}
+
+/* CURSOR + HEADER + SCROLL REVEALS + FORM STEPPER + SUBMIT (identique à ton code) */
+const cur=document.getElementById('cur'),curR=document.getElementById('curR');
+let mx=innerWidth/2,my=innerHeight/2,rx=mx,ry=my;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;gsap.set(cur,{x:mx,y:my});});
+(function track(){requestAnimationFrame(track);rx+=(mx-rx)*.18;ry+=(my-ry)*.18;gsap.set(curR,{x:rx,y:ry});})();
+
+document.querySelectorAll('.ht,a,button').forEach(el=>{el.addEventListener('mouseenter',()=>document.body.classList.add('ch'));el.addEventListener('mouseleave',()=>document.body.classList.remove('ch'));});
+document.querySelectorAll('.hcta').forEach(el=>{el.addEventListener('mouseenter',()=>{document.body.classList.remove('ch');document.body.classList.add('cc')});el.addEventListener('mouseleave',()=>document.body.classList.remove('cc'));});
+document.querySelectorAll('input,textarea,select').forEach(el=>{el.addEventListener('focus',()=>document.body.classList.add('ct'));el.addEventListener('blur',()=>document.body.classList.remove('ct'));});
+
+ScrollTrigger.create({start:60,onEnter:()=>document.getElementById('hdr').classList.add('on'),onLeaveBack:()=>document.getElementById('hdr').classList.remove('on')});
+
+gsap.utils.toArray('.rv').forEach(el=>gsap.fromTo(el,{y:20,opacity:0},{y:0,opacity:1,duration:.4,ease:'power2.out',scrollTrigger:{trigger:el,start:'top 90%',once:true}}));
+gsap.utils.toArray('.rvs').forEach(el=>gsap.fromTo(el,{opacity:0},{opacity:1,duration:.4,ease:'power2.out',scrollTrigger:{trigger:el,start:'top 92%',once:true}}));
+
+/* FORM STEPPER */
+let cS=1;
+const BARS=['20%','40%','60%','80%','100%'];
+
+function gS(n){
+  if(n<1||n>5)return;
+  const old=document.getElementById('p'+cS);
+  const nw=document.getElementById('p'+n);
+  const fwd=n>cS;
+  if(n===5)upRec();
+
+  gsap.to(old,{opacity:0,x:fwd?-24:24,duration:.2,ease:'power2.in',onComplete:()=>{
+    old.classList.remove('active');old.style.cssText='';
+    nw.classList.add('active');
+    gsap.fromTo(nw,{opacity:0,x:fwd?24:-24},{opacity:1,x:0,duration:.3,ease:'power2.out'});
+  }});
+
+  document.querySelectorAll('.ftab').forEach((t,i)=>{t.classList.remove('active','done');if(i+1===n)t.classList.add('active');else if(i+1<n)t.classList.add('done');});
+  document.getElementById('fpb').style.width=BARS[n-1];
+  cS=n;
+  const top=document.querySelector('.fsh').getBoundingClientRect().top;
+  if(top<-20)window.scrollTo({top:window.scrollY+top-80,behavior:'smooth'});
+}
+
+function nS(){gS(cS+1)}
+function pS(){gS(cS-1)}
+
+function upRec(){
+  const v=id=>{const e=document.querySelector('[name="'+id+'"]');return e?e.value||'—':'—'};
+  document.getElementById('re').textContent=v('epic_name');
+  document.getElementById('rpl').textContent=document.getElementById('pv').value||'—';
+  document.getElementById('rpr').textContent=v('rank_val');
+  document.getElementById('rro').textContent=document.getElementById('rvf').value||'—';
+  document.getElementById('rea').textContent=v('rank_peak');
+  document.getElementById('rfn').textContent=v('lan_exp')||'—';
+}
+
+function sP(el,val){document.querySelectorAll('.plb').forEach(b=>b.classList.remove('sel'));el.classList.add('sel');document.getElementById('pv').value=val;}
+function sR(el,val){document.querySelectorAll('.rt').forEach(t=>t.classList.remove('sel'));el.classList.add('sel');document.getElementById('rvf').value=val;}
+function tC(lbl){setTimeout(()=>{lbl.querySelector('input').checked?lbl.classList.add('ck'):lbl.classList.remove('ck');},10);}
+function setStar(n){document.querySelectorAll('.star').forEach((s,i)=>s.classList.toggle('on',i<n));document.getElementById('sr').value=n+'/5';}
+
+/* SUBMIT */
+document.getElementById('mf').addEventListener('submit',e=>{
+  e.preventDefault();
+  const btn=document.querySelector('.fsub');
+  const orig=btn.innerHTML;
+  btn.innerHTML='ENVOI EN COURS...';btn.disabled=true;
+  fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:new URLSearchParams(new FormData(e.target)).toString()})
+  .then(()=>{document.getElementById('fb').style.display='none';document.getElementById('ftabs').style.display='none';document.querySelector('.fpanel-header').style.display='none';const sw=document.getElementById('sw');sw.classList.add('show');gsap.from('#sw > *',{y:16,opacity:0,stagger:.1,duration:.3,ease:'power2.out'});})
+  .catch(()=>{btn.innerHTML=orig;btn.disabled=false;alert('Erreur. Réessaie.');});
+});
+
+/* ADAPTIVE */
+if(navigator.hardwareConcurrency<=2){
+  document.querySelector('.scan-line').style.display='none';
+}
+</script>
 </body>
-
 </html>
