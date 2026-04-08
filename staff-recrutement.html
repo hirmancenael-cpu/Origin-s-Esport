@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ORIGIN'S ESPORTS — Rejoindre le Staff</title>
+<title>ORIGINS ESPORTS — Rejoindre le Staff</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Orbitron:wght@400;700;900&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
@@ -205,7 +205,7 @@ footer{position:relative;z-index:10;border-top:1px solid var(--bd);padding:50px 
 <body>
 <div id="loader">
   <div class="l-grid"></div>
-  <div class="l-brand">ORIGIN'S&nbsp;<em>ESPORTS</em>&nbsp;·&nbsp;STAFF</div>
+  <div class="l-brand">ORIGINS&nbsp;<em>ESPORTS</em>&nbsp;·&nbsp;STAFF</div>
   <div class="l-wrap"><div class="l-bg"></div><div class="l-fill" id="lf"></div><div class="l-pct" id="lp">0%</div></div>
   <div class="l-tag">Recrutement Staff — Chargement en cours</div>
 </div>
@@ -216,7 +216,7 @@ footer{position:relative;z-index:10;border-top:1px solid var(--bd);padding:50px 
 <div class="amb" id="amb"></div>
 
 <header class="hdr" id="hdr">
-  <a class="logo" href="index.html"><span class="lpip"></span>ORIGIN'S&nbsp;<em>ESPORTS</em></a>
+  <a class="logo" href="index.html"><span class="lpip"></span>ORIGINS&nbsp;<em>ESPORTS</em></a>
   <nav class="nav">
     <a href="recrutement.html" class="ht">← Toutes les sections</a>
     <a href="staff.html" class="ht">Notre Équipe</a>
@@ -307,6 +307,7 @@ footer{position:relative;z-index:10;border-top:1px solid var(--bd);padding:50px 
             </div>
             <div class="fg"><label>Section(s) concernée(s)</label>
               <div class="cg" id="gameCg">
+                <label class="ci" onclick="tC(this)"><input type="checkbox" name="game_lol"><div class="cb"></div><span>💠 League of Legends</span></label>
                 <label class="ci" onclick="tC(this)"><input type="checkbox" name="game_fn"><div class="cb"></div><span>⚡ Fortnite</span></label>
                 <label class="ci" onclick="tC(this)"><input type="checkbox" name="game_vl"><div class="cb"></div><span>🎯 Valorant</span></label>
                 <label class="ci" onclick="tC(this)"><input type="checkbox" name="game_rl"><div class="cb"></div><span>🚀 Rocket League</span></label>
@@ -391,7 +392,7 @@ footer{position:relative;z-index:10;border-top:1px solid var(--bd);padding:50px 
 </section>
 
 <footer>
-  <div class="fb2">ORIGIN'S <em>ESPORTS</em> · <span style="color:var(--c)">STAFF</span></div>
+  <div class="fb2">ORIGINS <em>ESPORTS</em> · <span style="color:var(--c)">STAFF</span></div>
   <div class="fl"><a href="recrutement.html" class="ht">← Toutes sections</a><a href="staff.html" class="ht">Notre Équipe</a><a href="index.html" class="ht">Accueil</a></div>
   <div class="fs" style="display:flex;gap:20px;flex-wrap:wrap;justify-content:center;margin: 10px 0;">
     <a href="https://x.com/originssport?s=21&amp;t=obBPKKkXGFiuTGdN5IV35A" target="_blank" class="ht" style="font-family:var(--fm);font-size:.58rem;color:var(--mt);text-decoration:none;letter-spacing:2px;transition:color .3s" onmouseover="this.style.color='var(--c)'" onmouseout="this.style.color='var(--mt)'">X</a>
@@ -502,8 +503,38 @@ ScrollTrigger.create({trigger:'.role-cards',start:'top 85%',once:true,onEnter:()
 }});
 // FORM
 let cS=1;const BARS=['20%','40%','60%','80%','100%'];
+function showNotice(msg) {
+  const existing = document.querySelector('.toast-notice');
+  if (existing) existing.remove();
+  const errorNotif = document.createElement('div');
+  errorNotif.className = 'toast-notice';
+  errorNotif.style.cssText = "position:fixed;bottom:30px;left:50%;transform:translateX(-50%);background:rgba(10,8,24,0.9);color:var(--c);padding:12px 24px;border:1px solid var(--c);font-family:var(--fd);font-size:.7rem;letter-spacing:2px;z-index:10000;box-shadow:0 10px 40px rgba(0,0,0,0.6);text-transform:uppercase;backdrop-filter:blur(10px);pointer-events:none;";
+  errorNotif.textContent = msg;
+  document.body.appendChild(errorNotif);
+  gsap.fromTo(errorNotif, { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4 });
+  setTimeout(() => gsap.to(errorNotif, { y: 20, opacity: 0, duration: 0.4, onComplete: () => errorNotif.remove() }), 4500);
+}
+
 function gS(n){
   if(n<1||n>5)return;
+  
+  // Validation
+  if (n > cS) {
+    const curr = document.getElementById('p' + cS);
+    const inputs = curr.querySelectorAll('input[required], select[required], textarea[required]');
+    let valid = true;
+    inputs.forEach(i => {
+      if (!i.checkValidity()) {
+        valid = false;
+        i.style.borderColor = 'rgba(167,139,250,0.5)';
+        gsap.to(i, { x: 10, duration: 0.1, repeat: 3, yoyo: true });
+      }
+    });
+    if (!valid) {
+      showNotice("CHAMPS REQUIS MANQUANTS OU INVALIDES");
+      return;
+    }
+  }
   const old=document.getElementById('p'+cS);const nw=document.getElementById('p'+n);const fwd=n>cS;
   if(n===5)upRec();
   gsap.to(old,{opacity:0,x:fwd?-35:35,duration:.28,ease:'power2.in',onComplete:()=>{
@@ -538,7 +569,10 @@ document.getElementById('mf').addEventListener('submit',e=>{
   const btn=document.querySelector('.fsub');const orig=btn.innerHTML;btn.innerHTML='⏳ Envoi...';btn.disabled=true;
   fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:new URLSearchParams(new FormData(e.target)).toString()})
   .then(()=>{document.getElementById('fb').style.display='none';document.getElementById('ftabs').style.display='none';const sw=document.getElementById('sw');sw.classList.add('show');gsap.from('#sw > *',{y:30,opacity:0,stagger:.15,duration:.9,ease:'power3.out'})})
-  .catch(()=>{btn.innerHTML=orig;btn.disabled=false;alert('Erreur. Réessaie.')});
+  .catch(()=>{
+    btn.innerHTML=orig;btn.disabled=false;
+    showNotice("ERREUR DE RÉCEPTION. RÉESSAYEZ L'ENVOI.");
+  });
 });
 </script>
 </body>

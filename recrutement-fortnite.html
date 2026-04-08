@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ORIGIN'S ESPORTS — Recrutement Fortnite</title>
+<title>ORIGINS ESPORTS — Recrutement Fortnite</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,500;0,700;1,900&family=JetBrains+Mono:wght@400;700&family=Syne:wght@400;600;700;800&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
 <style>
@@ -628,7 +628,7 @@ footer{
 
 <!-- ═══════════════ HEADER ═══════════════ -->
 <header class="hdr" id="hdr">
-  <a class="logo" href="index.html"><span class="lpip"></span>ORIGIN'S&nbsp;<em>ESPORTS</em></a>
+  <a class="logo" href="index.html"><span class="lpip"></span>ORIGINS&nbsp;<em>ESPORTS</em></a>
   <nav class="nav">
     <a href="recrutement.html" class="ht">← Toutes les sections</a>
     <a href="recrutement-valorant.html" class="ht">Valorant</a>
@@ -639,7 +639,7 @@ footer{
 
 <!-- ═══════════════ HERO + CHEST ═══════════════ -->
 <section class="page-hero" id="hero-section">
-  <div class="fn-badge"><span>Saison Compétitive 2026 — Chapter 6</span></div>
+  <div class="fn-badge"><span>Saison Compétitive 2026 — Chapter 7</span></div>
   <h1 class="ph-title">Rejoins la <span>SQUAD</span></h1>
   <p class="ph-sub">FNCS · Cash Cups · Scrims quotidiens.<br>Ouvre le coffre pour accéder au formulaire de recrutement.</p>
 
@@ -808,7 +808,7 @@ footer{
 
         <!-- STEP 5 : Validation -->
         <div class="fpnl" id="p5">
-          <div class="ph2"><h3><span class="step-icon">✅</span>Validation</h3></div>
+          <div class="ph2"><h3><span class="step-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>Validation</h3></div>
           <div class="fg">
             <label class="ci ht" onclick="tC(this)"><input type="checkbox" name="regles" required><div class="cb"></div><span>J'accepte le règlement de la structure</span></label>
             <label class="ci ht" onclick="tC(this)"><input type="checkbox" name="tryout" required><div class="cb"></div><span>Je suis prêt à passer les tryouts (scrims + évaluation)</span></label>
@@ -828,7 +828,7 @@ footer{
 </div><!-- /form-section -->
 
 <footer>
-  <div class="fb2">ORIGIN'S <em>ESPORTS</em> · <span style="color:var(--fn-blue)">FORTNITE</span></div>
+  <div class="fb2">ORIGINS <em>ESPORTS</em> · <span style="color:var(--fn-blue)">FORTNITE</span></div>
   <div class="fl">
     <a href="recrutement.html" class="ht">← Toutes les sections</a>
     <a href="index.html" class="ht">Accueil</a>
@@ -839,7 +839,7 @@ footer{
     <a href="https://www.tiktok.com/@origins.esport?_r=1&_t=ZN-94lWSR8TOQo" target="_blank" class="ht">TIKTOK</a>
     <a href="https://www.twitch.tv/originsesport_" target="_blank" class="ht">TWITCH</a>
     <a href="https://discord.gg/d5Fg67AMTV" target="_blank" class="ht">DISCORD</a>
-    <a href="/cdn-cgi/l/email-protection#c8a7baa1afa1a6bbe6adbbb8a7babce6b8baa788afa5a9a1a4e6aba7a5" class="ht">CONTACT</a>
+    <a href="mailto:origins.esport.pro@gmail.com" class="ht">CONTACT</a>
   </div>
   <div class="fc">© 2026 — TOUS DROITS RÉSERVÉS</div>
 </footer>
@@ -854,7 +854,7 @@ const cur = document.getElementById('cur');
 document.addEventListener('mousemove', e => {
   cur.style.left = e.clientX + 'px';
   cur.style.top  = e.clientY + 'px';
-});
+}, {passive: true});
 document.querySelectorAll('.ht,input,button,select,textarea,.ftab,.rt,.ci,.chest-wrapper').forEach(el => {
   el.addEventListener('mouseenter', () => document.body.classList.add('ch'));
   el.addEventListener('mouseleave', () => document.body.classList.remove('ch'));
@@ -886,7 +886,7 @@ window.addEventListener('load', () => {
       overlay.style.display = 'none';
       busSound.pause();
       // NPC says hi after loading
-      setTimeout(() => showBubble("Hey ! Ouvre le coffre pour candidater ! 🎁"), 1000);
+      setTimeout(() => showBubble("Hey ! Ouvre le coffre pour candidater !"), 1000);
     }, 1400);
   }, 5600);
 });
@@ -912,10 +912,10 @@ function triggerWave() {
 npc.addEventListener('click', () => {
   triggerWave();
   const msgs = [
-    "T'as le niveau pour join ? 👊",
-    "Ouvre le coffre et postule ! 🎁",
-    "FNCS ou rien ! 🏆",
-    "On recrute les sweat kings 🔥",
+    "T'as le niveau pour join ?",
+    "Ouvre le coffre et postule !",
+    "FNCS ou rien !",
+    "On recrute les sweat kings",
     "Montre ce que t'as dans le ventre !"
   ];
   showBubble(msgs[Math.floor(Math.random() * msgs.length)]);
@@ -940,7 +940,7 @@ function spawnLootParticles() {
   const count = 40;
   for (let i = 0; i < count; i++) {
     const p = document.createElement('div');
-    const isIcon = Math.random() > 0.55;
+    const isIcon = false; // Désactivation des emojis au profit des particules stylisées
     if (isIcon) {
       p.style.cssText = `
         position:absolute;left:50%;top:50%;
@@ -1037,7 +1037,7 @@ function openChest() {
   // NPC reacts
   setTimeout(() => {
     triggerWave();
-    showBubble("LOOT ! Maintenant postule ! 🏆");
+    showBubble("Loot ! Maintenant postule !");
   }, 400);
 }
 
@@ -1097,8 +1097,38 @@ let cS = 1;
 const XP_LABELS = ['20 / 100 XP','40 / 100 XP','60 / 100 XP','80 / 100 XP','100 / 100 XP'];
 const XP_VALS   = ['20%','40%','60%','80%','100%'];
 
+function showNotice(msg) {
+  const existing = document.querySelector('.toast-notice');
+  if (existing) existing.remove();
+  const errorNotif = document.createElement('div');
+  errorNotif.className = 'toast-notice';
+  errorNotif.style.cssText = "position:fixed;bottom:30px;left:50%;transform:translateX(-50%);background:rgba(2,10,24,0.9);color:var(--fn-yellow);padding:12px 24px;border:1px solid var(--fn-yellow);font-family:var(--fd);font-size:.7rem;letter-spacing:2px;z-index:10000;box-shadow:0 10px 40px rgba(0,0,0,0.6);text-transform:uppercase;backdrop-filter:blur(10px);pointer-events:none;";
+  errorNotif.textContent = msg;
+  document.body.appendChild(errorNotif);
+  gsap.fromTo(errorNotif, { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4 });
+  setTimeout(() => gsap.to(errorNotif, { y: 20, opacity: 0, duration: 0.4, onComplete: () => errorNotif.remove() }), 4500);
+}
+
 function gS(n) {
   if (n < 1 || n > 5) return;
+  
+  // Validation du palier actuel
+  if (n > cS) {
+    const curr = document.getElementById('p' + cS);
+    const inputs = curr.querySelectorAll('input[required], select[required], textarea[required]');
+    let valid = true;
+    inputs.forEach(i => {
+      if (!i.checkValidity()) {
+        valid = false;
+        i.style.borderColor = 'rgba(255,70,85,0.5)';
+        gsap.to(i, { x: 10, duration: 0.1, repeat: 3, yoyo: true });
+      }
+    });
+    if (!valid) {
+      showNotice("CHAMPS REQUIS MANQUANTS OU INVALIDES");
+      return;
+    }
+  }
   document.getElementById('p' + cS).classList.remove('active');
   document.getElementById('p' + n).classList.add('active');
   document.querySelectorAll('.ftab').forEach(t => t.classList.remove('active'));
@@ -1158,13 +1188,13 @@ document.getElementById('mf').addEventListener('submit', e => {
     document.querySelector('.xp-bar-wrap').style.display = 'none';
     document.querySelector('.form-loot-header').style.display = 'none';
     document.getElementById('sw').classList.add('show');
-    showBubble("VICTOIRE ROYALE ! Bien joué ! 🏆🎉");
+    showBubble("VICTOIRE ROYALE ! Bien joué !");
     triggerWave();
   })
   .catch(() => {
     btn.innerHTML = orig;
     document.querySelector('.fsub').style.pointerEvents = 'all';
-    alert('Erreur lors de l\'envoi. Réessaie.');
+    showNotice("ERREUR RÉSEAU. RÉESSAYEZ L'ENVOI.");
   });
 });
 </script>
