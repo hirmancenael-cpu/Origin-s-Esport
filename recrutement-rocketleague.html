@@ -308,7 +308,7 @@ footer{position:relative;z-index:10;border-top:1px solid var(--bd);padding:50px 
       <div class="sw" id="sw"><div class="swi">🚀</div><div class="swt">Candidature Envoyée</div><div class="swm">Ton dossier Rocket League a été transmis à notre staff.<br>Réponse sous 72h via Discord.</div><div class="swc">// STAY SHARP.</div></div>
       <div class="fbody" id="fb">
         <div class="fpl"><div class="fpb" id="fpb"></div></div>
-        <form id="mf" name="candidature-rocketleague" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+        <form id="mf" name="candidature-rocketleague" method="POST" action="/" data-netlify="true" netlify-honeypot="bot-field">
           <input type="hidden" name="form-name" value="candidature-rocketleague" />
           <input type="hidden" name="game" value="Rocket League">
           <input type="hidden" name="platform_val" id="pv">
@@ -636,7 +636,7 @@ document.getElementById('mf').addEventListener('submit', e => {
   e.preventDefault();
   const btn = document.querySelector('.fsub'), orig = btn.innerHTML;
   btn.innerHTML = '⏳ Envoi...'; btn.disabled = true;
-  fetch(window.location.pathname, {method:'POST', headers:{'Content-Type':'application/x-www-form-urlencoded'}, body: new URLSearchParams(new FormData(e.target)).toString()})
+  fetch('/', {method:'POST', headers:{'Content-Type':'application/x-www-form-urlencoded'}, body: new URLSearchParams(new FormData(e.target)).toString()})
   .then(() => {
     document.getElementById('fb').style.display = 'none';
     document.getElementById('ftabs').style.display = 'none';

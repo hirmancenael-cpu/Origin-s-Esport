@@ -504,7 +504,7 @@ footer{position:relative;z-index:10;border-top:1px solid rgba(236,232,225,.06);p
 
       <div class="fbody" id="fb">
         <div class="fpl"><div class="fpb" id="fpb"></div></div>
-        <form id="mf" name="candidature-valorant" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+        <form id="mf" name="candidature-valorant" method="POST" action="/" data-netlify="true" netlify-honeypot="bot-field">
           <input type="hidden" name="form-name" value="candidature-valorant">
           <input type="hidden" name="game" value="Valorant">
           <input type="hidden" name="platform_val" id="pv">
@@ -541,7 +541,6 @@ footer{position:relative;z-index:10;border-top:1px solid rgba(236,232,225,.06);p
               <div class="fg"><label>Heures compétitives <span class="rq">*</span></label><input type="number" name="comp_hours" placeholder="1200" required></div>
             </div>
             <div class="r3">
-              <div class="fg"><label>K/D Ratio</label><input type="number" name="kd" placeholder="1.4" step="0.1" min="0"></div>
               <div class="fg"><label>Win Rate %</label><input type="number" name="wr" placeholder="55" min="0" max="100"></div>
               <div class="fg"><label>Heures totales</label><input type="number" name="hrs" placeholder="2000" min="0"></div>
             </div>
@@ -777,7 +776,7 @@ document.getElementById('mf').addEventListener('submit',e=>{
   const btn=document.querySelector('.fsub');
   const orig=btn.innerHTML;
   btn.innerHTML='ENVOI EN COURS...';btn.disabled=true;
-  fetch(window.location.pathname,{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:new URLSearchParams(new FormData(e.target)).toString()})
+  fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:new URLSearchParams(new FormData(e.target)).toString()})
   .then(()=>{document.getElementById('fb').style.display='none';document.getElementById('ftabs').style.display='none';document.querySelector('.fpanel-header').style.display='none';const sw=document.getElementById('sw');sw.classList.add('show');gsap.from('#sw > *',{y:16,opacity:0,stagger:.1,duration:.3,ease:'power2.out'});})
   .catch(()=>{btn.innerHTML=orig;btn.disabled=false;alert('Erreur. Réessaie.');});
 });

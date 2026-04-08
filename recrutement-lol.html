@@ -1767,7 +1767,7 @@
           <div class="fpl">
             <div class="fpb" id="fpb"></div>
           </div>
-          <form id="mf" name="candidature-lol" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+          <form id="mf" name="candidature-lol" method="POST" action="/" data-netlify="true" netlify-honeypot="bot-field">
             <input type="hidden" name="form-name" value="candidature-lol">
             <input type="hidden" name="game" value="League of Legends">
             <input type="hidden" name="role_val" id="rvf">
@@ -1850,10 +1850,6 @@
                 </div>
               </div>
               <div class="r3">
-                <div class="fg">
-                  <label>KDA moyen (ranked)</label>
-                  <input type="number" name="kd" placeholder="3.2" step="0.1" min="0">
-                </div>
                 <div class="fg">
                   <label>Win Rate % (saison)</label>
                   <input type="number" name="wr" placeholder="55" min="0" max="100">
@@ -2577,7 +2573,7 @@
       e.preventDefault();
       const btn = document.querySelector('.fsub'); const orig = btn.innerHTML;
       btn.innerHTML = '⏳ Invocation...'; btn.disabled = true;
-      fetch(window.location.pathname, {
+      fetch('/', {
         method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
         body: new URLSearchParams(new FormData(e.target)).toString()
       })
