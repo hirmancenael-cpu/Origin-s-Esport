@@ -1147,7 +1147,7 @@ document.getElementById('mf').addEventListener('submit', e => {
   btn.innerHTML = '⏳ Envoi en cours...';
   document.querySelector('.fsub').style.pointerEvents = 'none';
 
-  fetch('/', {
+  fetch(window.location.pathname, {
     method: 'POST',
     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
     body: new URLSearchParams(new FormData(e.target)).toString()

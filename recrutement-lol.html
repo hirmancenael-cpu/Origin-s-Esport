@@ -2577,7 +2577,7 @@
       e.preventDefault();
       const btn = document.querySelector('.fsub'); const orig = btn.innerHTML;
       btn.innerHTML = '⏳ Invocation...'; btn.disabled = true;
-      fetch('/', {
+      fetch(window.location.pathname, {
         method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
         body: new URLSearchParams(new FormData(e.target)).toString()
       })

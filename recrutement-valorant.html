@@ -777,7 +777,7 @@ document.getElementById('mf').addEventListener('submit',e=>{
   const btn=document.querySelector('.fsub');
   const orig=btn.innerHTML;
   btn.innerHTML='ENVOI EN COURS...';btn.disabled=true;
-  fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:new URLSearchParams(new FormData(e.target)).toString()})
+  fetch(window.location.pathname,{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:new URLSearchParams(new FormData(e.target)).toString()})
   .then(()=>{document.getElementById('fb').style.display='none';document.getElementById('ftabs').style.display='none';document.querySelector('.fpanel-header').style.display='none';const sw=document.getElementById('sw');sw.classList.add('show');gsap.from('#sw > *',{y:16,opacity:0,stagger:.1,duration:.3,ease:'power2.out'});})
   .catch(()=>{btn.innerHTML=orig;btn.disabled=false;alert('Erreur. Réessaie.');});
 });
