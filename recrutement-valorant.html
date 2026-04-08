@@ -169,6 +169,13 @@ body.ct .cursor-ring{opacity:0}
 .nav a:hover{color:var(--white)}.nav a:hover::after{width:100%}
 .nav a.on{color:var(--red)}
 
+@media(max-width:768px) {
+  .nav a:not(.npill) { display: none; }
+  .nav a.ht[href="recrutement.html"] { display: block; }
+  .hdr { padding: 14px 4%; background: rgba(15,25,35,.9); backdrop-filter: blur(10px); }
+  .logo { font-size: .75rem; letter-spacing: 3px; }
+}
+
 .npill{
   font-family:var(--fd);font-size:.7rem;font-weight:700;letter-spacing:3px;
   padding:8px 20px;border:1px solid var(--red);color:var(--red);
@@ -193,11 +200,10 @@ body.ct .cursor-ring{opacity:0}
 }
 .hero-vline{width:1px;background:rgba(236,232,225,.04);height:100%}
 .hero-num{
-  position:absolute;right:6%;bottom:4vh;
-  font-family:var(--fd);font-size:clamp(12rem,25vw,22rem);font-weight:700;
-  color:transparent;-webkit-text-stroke:1px rgba(236,232,225,.04);
-  line-height:1;pointer-events:none;user-select:none;
   letter-spacing:-8px;
+}
+@media(max-width:900px) {
+  .hero-num { font-size: 15rem; right: -5%; opacity: .02; }
 }
 
 /* TITRE AJOUTÉ — RECRUTEMENT VALORANT */
@@ -279,7 +285,7 @@ section{position:relative;z-index:10}
 .rv{opacity:0;transform:translateY(20px)}
 .rvs{opacity:0}
 
-.fsh{background:var(--bg2);border:1px solid rgba(236,232,225,.08);position:relative;overflow:hidden}
+.fsh{background:var(--bg2);border:1px solid rgba(236,232,225,.08);position:relative;overflow:hidden;width:100%;max-width:1000px;margin:0 auto}
 .fsh::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--red)}
 .fsh::after{content:'';position:absolute;top:-1px;right:-1px;width:24px;height:24px;background:var(--bg);border-left:1px solid rgba(236,232,225,.08);border-bottom:1px solid rgba(236,232,225,.08)}
 .fpanel-header{padding:0;border-bottom:1px solid rgba(236,232,225,.06);display:flex;align-items:stretch}
@@ -299,7 +305,15 @@ section{position:relative;z-index:10}
 .ftab.active .tn,.ftab.active .tl{color:var(--white)}
 .ftab.done .tn,.ftab.done .tl{color:var(--gray)}.ftab.done .tck{opacity:1;color:var(--gray)}
 .fbody{padding:40px 40px 48px}
-@media(max-width:700px){.fbody{padding:24px 20px 32px}}
+@media(max-width:700px){
+  .fbody{padding:24px 20px 32px}
+  .ftab { min-width: 65px; padding: 12px 4px; }
+  .tl { font-size: .48rem; letter-spacing: 1px; }
+  .fnav { flex-direction: column; gap: 20px; align-items: stretch; margin-top: 32px; padding-top: 24px; }
+  .ffwd { margin-left: 0; justify-content: center; padding: 16px; width: 100%; order: -1; }
+  .fbk { justify-content: center; width: 100%; order: 1; margin: 0; }
+  .fsi { text-align: center; order: 0; }
+}
 .fpnl{display:none;will-change:transform,opacity}.fpnl.active{display:block}
 .fpl{height:1px;background:rgba(236,232,225,.06);margin-bottom:36px;overflow:visible;position:relative}
 .fpb{height:1px;background:var(--red);width:20%;transition:width .4s var(--t1);position:relative}
@@ -757,7 +771,7 @@ function showNotice(msg) {
   if (existing) existing.remove();
   const errorNotif = document.createElement('div');
   errorNotif.className = 'toast-notice';
-  errorNotif.style.cssText = "position:fixed;bottom:30px;left:50%;transform:translateX(-50%);background:rgba(15,25,35,0.9);color:var(--red);padding:12px 24px;border:1px solid var(--red);font-family:var(--fd);font-size:.7rem;letter-spacing:2px;z-index:10000;box-shadow:0 10px 30px rgba(0,0,0,0.5);text-transform:uppercase;backdrop-filter:blur(10px);pointer-events:none;";
+  errorNotif.style.cssText = "position:fixed;bottom:100px;left:50%;transform:translateX(-50%);background:rgba(15,25,35,0.9);color:var(--red);padding:12px 24px;border:1px solid var(--red);font-family:var(--fd);font-size:.7rem;letter-spacing:2px;z-index:10000;box-shadow:0 10px 30px rgba(0,0,0,0.5);text-transform:uppercase;backdrop-filter:blur(10px);pointer-events:none;width:90%;text-align:center;";
   errorNotif.textContent = msg;
   document.body.appendChild(errorNotif);
   gsap.fromTo(errorNotif, { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4 });

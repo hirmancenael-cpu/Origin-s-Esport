@@ -431,9 +431,9 @@
     }
 
     @media(max-width:768px) {
-      .nav a:not(.npill) {
-        display: none
-      }
+      .nav a:not(.npill) { display: none; }
+      .nav a.ht[href="recrutement.html"] { display: block; }
+      .hdr { padding: 14px 4%; background: rgba(3,8,15,.9); backdrop-filter: blur(10px); }
     }
 
     /* ── PAGE HERO ── */
@@ -850,6 +850,9 @@
       overflow: hidden;
       position: relative;
       box-shadow: 0 40px 100px rgba(0, 0, 0, .8), inset 0 0 100px rgba(10, 22, 40, .5);
+      width: 100%;
+      max-width: 1000px;
+      margin: 0 auto;
     }
 
     /* Top gold line */
@@ -907,11 +910,21 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 5px;
+      gap: 6px;
       position: relative;
       cursor: pointer;
       transition: background .3s;
-      border-right: 1px solid rgba(200, 168, 75, .08);
+      border-right: 1px solid var(--bd)
+    }
+
+    @media(max-width:700px) {
+      .fbody { padding: 24px 20px 32px; }
+      .ftab { min-width: 65px; padding: 12px 4px; }
+      .tl { font-size: .4rem; letter-spacing: 1px; }
+      .fnav { flex-direction: column; gap: 20px; align-items: stretch; margin-top: 32px; padding-top: 24px; border-top: 1px solid rgba(200,168,75,.1); }
+      .ffwd { margin-left: 0; justify-content: center; padding: 14px; width: 100%; order: -1; }
+      .fbk { justify-content: center; width: 100%; order: 1; margin: 0; }
+      .fsi { text-align: center; order: 0; }
     }
 
     .ftab:last-child {
@@ -2489,7 +2502,7 @@
       if (existing) existing.remove();
       const errorNotif = document.createElement('div');
       errorNotif.className = 'toast-notice';
-      errorNotif.style.cssText = "position:fixed;bottom:30px;left:50%;transform:translateX(-50%);background:rgba(2,8,16,0.9);color:var(--gold);padding:12px 24px;border:1px solid var(--gold);font-family:var(--fd);font-size:.7rem;letter-spacing:2px;z-index:10000;box-shadow:0 10px 40px rgba(0,0,0,0.6);text-transform:uppercase;backdrop-filter:blur(10px);pointer-events:none;";
+      errorNotif.style.cssText = "position:fixed;bottom:100px;left:50%;transform:translateX(-50%);background:rgba(2,8,16,0.9);color:var(--gold);padding:12px 24px;border:1px solid var(--gold);font-family:var(--fd);font-size:.7rem;letter-spacing:2px;z-index:10000;box-shadow:0 10px 40px rgba(0,0,0,0.6);text-transform:uppercase;backdrop-filter:blur(10px);pointer-events:none;width:90%;text-align:center;";
       errorNotif.textContent = msg;
       document.body.appendChild(errorNotif);
       gsap.fromTo(errorNotif, { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4 });
