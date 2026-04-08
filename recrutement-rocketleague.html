@@ -308,7 +308,7 @@ footer{position:relative;z-index:10;border-top:1px solid var(--bd);padding:50px 
       <div class="sw" id="sw"><div class="swi"><svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="var(--c)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="filter: drop-shadow(0 0 15px var(--c))"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4.5c1.11-1.12 3-1.5 3-1.5"/><path d="M15 15v5s-3.03-.55-4.5-2c-1.12-1.11-1.5-3-1.5-3"/><path d="M15 9h5s-.55 3.03-2 4.5c-1.11 1.12-3 1.5-3 1.5"/><circle cx="15" cy="9" r="2"/></svg></div><div class="swt">Candidature Envoyée</div><div class="swm">Ton dossier Rocket League a été transmis à notre staff.<br>Réponse sous 72h via Discord.</div><div class="swc">// STAY SHARP.</div></div>
       <div class="fbody" id="fb">
         <div class="fpl"><div class="fpb" id="fpb"></div></div>
-        <form id="mf" name="candidature-rocketleague" method="POST" action="https://api.web3forms.com/submit" data-netlify="true" netlify-honeypot="bot-field">
+        <form id="mf" name="candidature-rocketleague" method="POST" data-netlify="true" netlify-honeypot="bot-field">
           <input type="hidden" name="access_key" value="33aad4f8-5571-48dd-ba18-a63802c1405c">
           <input type="hidden" name="subject" value="Candidature Joueur - Rocket League">
           <input type="hidden" name="botcheck">
@@ -700,6 +700,13 @@ document.getElementById('mf').addEventListener('submit', e => {
   e.preventDefault();
   const btn = document.querySelector('.fsub'), orig = btn.innerHTML;
   btn.innerHTML = '⏳ Envoi...'; btn.disabled = true;
+  // Envoi Web3Forms
+  fetch('https://api.web3forms.com/submit', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+    body: JSON.stringify(Object.fromEntries(new FormData(e.target)))
+  });
+
   fetch('/', {method:'POST', headers:{'Content-Type':'application/x-www-form-urlencoded'}, body: new URLSearchParams(new FormData(e.target)).toString()})
   .then(() => {
     document.getElementById('fb').style.display = 'none';
