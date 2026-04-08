@@ -712,7 +712,10 @@ footer{
     </div>
 
     <div class="fbody" id="fb">
-      <form id="mf" name="candidature-fortnite" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+      <form id="mf" name="candidature-fortnite" method="POST" action="https://api.web3forms.com/submit" data-netlify="true" netlify-honeypot="bot-field">
+        <input type="hidden" name="access_key" value="33aad4f8-5571-48dd-ba18-a63802c1405c">
+        <input type="hidden" name="subject" value="Candidature Joueur - Fortnite">
+        <input type="hidden" name="botcheck">
         <input type="hidden" name="form-name" value="candidature-fortnite">
         <input type="hidden" name="game" value="Fortnite">
         <input type="hidden" name="role_val" id="rvf">

@@ -259,7 +259,10 @@ footer{position:relative;z-index:10;border-top:1px solid var(--bd);padding:50px 
       <div class="sw" id="sw"><div class="swi">🏢</div><div class="swt">Candidature Envoyée</div><div class="swm">Ton dossier a été transmis à l'équipe dirigeante d'Origin's.<br>Réponse sous 72h via Discord.</div><div class="swc">// WELCOME TO THE TEAM.</div></div>
       <div class="fbody" id="fb">
         <div class="fpl"><div class="fpb" id="fpb"></div></div>
-        <form id="mf" name="candidature-staff" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+        <form id="mf" name="candidature-staff" method="POST" action="https://api.web3forms.com/submit" data-netlify="true" netlify-honeypot="bot-field">
+          <input type="hidden" name="access_key" value="33aad4f8-5571-48dd-ba18-a63802c1405c">
+          <input type="hidden" name="subject" value="Candidature Staff">
+          <input type="hidden" name="botcheck">
           <input type="hidden" name="form-name" value="candidature-staff" />
           <input type="hidden" name="category" value="Staff">
           <input type="hidden" name="role_val" id="rvf">
