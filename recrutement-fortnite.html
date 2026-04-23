@@ -832,10 +832,10 @@ footer{
         <div class="fpnl" id="p5">
           <div class="ph2"><h3><span class="step-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>Validation</h3></div>
           <div class="fg">
-            <label class="ci ht" onclick="tC(this)"><input type="checkbox" name="regles" required><div class="cb"></div><span>J'accepte le règlement de la structure</span></label>
-            <label class="ci ht" onclick="tC(this)"><input type="checkbox" name="tryout" required><div class="cb"></div><span>Je suis prêt à passer les tryouts (scrims + évaluation)</span></label>
-            <label class="ci ht" onclick="tC(this)"><input type="checkbox" name="toxicite" required><div class="cb"></div><span>Je m'engage à une mentalité saine et pro (No toxic)</span></label>
-            <label class="ci ht" onclick="tC(this)"><input type="checkbox" name="scrims" required><div class="cb"></div><span>Je peux participer aux scrims quotidiens</span></label>
+            <label class="ci ht"><input type="checkbox" name="regles" required><div class="cb"></div><span>J'accepte le règlement de la structure</span></label>
+            <label class="ci ht"><input type="checkbox" name="tryout" required><div class="cb"></div><span>Je suis prêt à passer les tryouts (scrims + évaluation)</span></label>
+            <label class="ci ht"><input type="checkbox" name="toxicite" required><div class="cb"></div><span>Je m'engage à une mentalité saine et pro (No toxic)</span></label>
+            <label class="ci ht"><input type="checkbox" name="scrims" required><div class="cb"></div><span>Je peux participer aux scrims quotidiens</span></label>
           </div>
           <div class="fnav">
             <button type="button" class="fbk ht" onclick="pS()">Modifier</button>
@@ -1183,11 +1183,12 @@ function sR(el, val) {
   el.classList.add('sel');
   document.getElementById('rvf').value = val;
 }
-function tC(lbl) {
-  setTimeout(() => {
-    lbl.querySelector('input').checked ? lbl.classList.add('ck') : lbl.classList.remove('ck');
-  }, 10);
-}
+// Sync checkbox visual state via change event (fix double-toggle bug)
+document.querySelectorAll('.ci input[type="checkbox"]').forEach(input => {
+  input.addEventListener('change', () => {
+    input.closest('.ci').classList.toggle('ck', input.checked);
+  });
+});
 
 /* ══════════════════════════════════════════════
    SUBMIT
