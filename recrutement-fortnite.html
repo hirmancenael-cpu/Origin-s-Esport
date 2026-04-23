@@ -731,7 +731,7 @@ footer{
     </div>
 
     <div class="fbody" id="fb">
-      <form id="mf" name="candidature-fortnite" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+      <form id="mf" name="candidature-fortnite" method="POST" data-netlify="true" netlify-honeypot="bot-field" novalidate>
         <input type="hidden" name="access_key" value="33aad4f8-5571-48dd-ba18-a63802c1405c">
         <input type="hidden" name="subject" value="Candidature Joueur - Fortnite">
         <input type="hidden" name="botcheck">
@@ -832,10 +832,10 @@ footer{
         <div class="fpnl" id="p5">
           <div class="ph2"><h3><span class="step-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>Validation</h3></div>
           <div class="fg">
-            <label class="ci ht"><input type="checkbox" name="regles" required><div class="cb"></div><span>J'accepte le règlement de la structure</span></label>
-            <label class="ci ht"><input type="checkbox" name="tryout" required><div class="cb"></div><span>Je suis prêt à passer les tryouts (scrims + évaluation)</span></label>
-            <label class="ci ht"><input type="checkbox" name="toxicite" required><div class="cb"></div><span>Je m'engage à une mentalité saine et pro (No toxic)</span></label>
-            <label class="ci ht"><input type="checkbox" name="scrims" required><div class="cb"></div><span>Je peux participer aux scrims quotidiens</span></label>
+            <label class="ci ht" onclick="tC(this)"><input type="checkbox" name="regles" required><div class="cb"></div><span>J'accepte le règlement de la structure</span></label>
+            <label class="ci ht" onclick="tC(this)"><input type="checkbox" name="tryout" required><div class="cb"></div><span>Je suis prêt à passer les tryouts (scrims + évaluation)</span></label>
+            <label class="ci ht" onclick="tC(this)"><input type="checkbox" name="toxicite" required><div class="cb"></div><span>Je m'engage à une mentalité saine et pro (No toxic)</span></label>
+            <label class="ci ht" onclick="tC(this)"><input type="checkbox" name="scrims" required><div class="cb"></div><span>Je peux participer aux scrims quotidiens</span></label>
           </div>
           <div class="fnav">
             <button type="button" class="fbk ht" onclick="pS()">Modifier</button>
@@ -1183,18 +1183,41 @@ function sR(el, val) {
   el.classList.add('sel');
   document.getElementById('rvf').value = val;
 }
-// Sync checkbox visual state via change event (fix double-toggle bug)
-document.querySelectorAll('.ci input[type="checkbox"]').forEach(input => {
-  input.addEventListener('change', () => {
-    input.closest('.ci').classList.toggle('ck', input.checked);
-  });
-});
+function tC(lbl) {
+  setTimeout(() => {
+    lbl.querySelector('input').checked ? lbl.classList.add('ck') : lbl.classList.remove('ck');
+  }, 10);
+}
 
 /* ══════════════════════════════════════════════
    SUBMIT
 ══════════════════════════════════════════════ */
 document.getElementById('mf').addEventListener('submit', e => {
   e.preventDefault();
+
+  // Valider les checkboxes du step 5
+  const checkboxes = document.querySelectorAll('#p5 input[type="checkbox"][required]');
+  const allChecked = [...checkboxes].every(cb => cb.checked);
+  if (!allChecked) {
+    showNotice("COCHE TOUTES LES CASES AVANT D'ENVOYER.");
+    return;
+  }
+
+  // Valider tous les champs required du formulaire
+  const allInputs = document.querySelectorAll('#mf input[required], #mf select[required], #mf textarea[required]');
+  let formValid = true;
+  allInputs.forEach(i => {
+    if (i.type === 'checkbox') return; // déjà géré
+    if (!i.value.trim()) {
+      formValid = false;
+      i.style.borderColor = 'rgba(255,70,85,0.5)';
+    }
+  });
+  if (!formValid) {
+    showNotice("CERTAINS CHAMPS SONT MANQUANTS. VÉRIFIE LES ÉTAPES PRÉCÉDENTES.");
+    return;
+  }
+
   const btn = document.querySelector('.fsub span');
   const orig = btn.innerHTML;
   btn.innerHTML = '⏳ Envoi en cours...';
