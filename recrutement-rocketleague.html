@@ -714,20 +714,25 @@ document.getElementById('mf').addEventListener('submit', e => {
   e.preventDefault();
   const btn = document.querySelector('.fsub'), orig = btn.innerHTML;
   btn.innerHTML = '⏳ Envoi...'; btn.disabled = true;
-  // Envoi Web3Forms
+
   fetch('https://api.web3forms.com/submit', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
     body: JSON.stringify(Object.fromEntries(new FormData(e.target)))
-  });
-
-  fetch('/', {method:'POST', headers:{'Content-Type':'application/x-www-form-urlencoded'}, body: new URLSearchParams(new FormData(e.target)).toString()})
-  .then(() => {
-    document.getElementById('fb').style.display = 'none';
-    document.getElementById('ftabs').style.display = 'none';
-    const sw = document.getElementById('sw');
-    sw.classList.add('show');
-    gsap.from('#sw > *', {y:20, opacity:0, stagger:0.08, duration:0.45, ease:'expo.out'});
+  })
+  .then(r => r.json())
+  .then(data => {
+    if (data.success) {
+      document.getElementById('fb').style.display = 'none';
+      document.getElementById('ftabs').style.display = 'none';
+      const sw = document.getElementById('sw');
+      sw.classList.add('show');
+      gsap.from('#sw > *', {y:20, opacity:0, stagger:0.08, duration:0.45, ease:'expo.out'});
+    } else {
+      btn.innerHTML = orig;
+      btn.disabled = false;
+      showNotice("ERREUR LORS DE L'ENVOI. RÉESSAYEZ.");
+    }
   })
   .catch(() => { 
     btn.innerHTML = orig; 

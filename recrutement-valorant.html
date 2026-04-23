@@ -840,15 +840,27 @@ document.getElementById('mf').addEventListener('submit',e=>{
   const btn=document.querySelector('.fsub');
   const orig=btn.innerHTML;
   btn.innerHTML='ENVOI EN COURS...';btn.disabled=true;
-  // Envoi Web3Forms
+
   fetch('https://api.web3forms.com/submit', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
     body: JSON.stringify(Object.fromEntries(new FormData(e.target)))
-  });
-
-  fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:new URLSearchParams(new FormData(e.target)).toString()})
-  .then(()=>{document.getElementById('fb').style.display='none';document.getElementById('ftabs').style.display='none';document.querySelector('.fpanel-header').style.display='none';const sw=document.getElementById('sw');sw.classList.add('show');gsap.from('#sw > *',{y:16,opacity:0,stagger:.1,duration:.3,ease:'power2.out'});})
+  })
+  .then(r => r.json())
+  .then(data => {
+    if (data.success) {
+      document.getElementById('fb').style.display='none';
+      document.getElementById('ftabs').style.display='none';
+      document.querySelector('.fpanel-header').style.display='none';
+      const sw=document.getElementById('sw');
+      sw.classList.add('show');
+      gsap.from('#sw > *',{y:16,opacity:0,stagger:.1,duration:.3,ease:'power2.out'});
+    } else {
+      btn.innerHTML=orig;
+      btn.disabled=false;
+      showNotice("ERREUR LORS DE L'ENVOI. RÉESSAYEZ.");
+    }
+  })
   .catch(()=>{
     btn.innerHTML=orig;
     btn.disabled=false;

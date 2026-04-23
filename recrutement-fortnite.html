@@ -1199,26 +1199,26 @@ document.getElementById('mf').addEventListener('submit', e => {
   btn.innerHTML = '⏳ Envoi en cours...';
   document.querySelector('.fsub').style.pointerEvents = 'none';
 
-  // Envoi Web3Forms
   fetch('https://api.web3forms.com/submit', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
     body: JSON.stringify(Object.fromEntries(new FormData(e.target)))
-  });
-
-  fetch(window.location.pathname, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-    body: new URLSearchParams(new FormData(e.target)).toString()
   })
-  .then(() => {
-    document.getElementById('fb').style.display = 'none';
-    document.getElementById('ftabs').style.display = 'none';
-    document.querySelector('.xp-bar-wrap').style.display = 'none';
-    document.querySelector('.form-loot-header').style.display = 'none';
-    document.getElementById('sw').classList.add('show');
-    showBubble("VICTOIRE ROYALE ! Bien joué !");
-    triggerWave();
+  .then(response => response.json())
+  .then(data => {
+    if (data.success) {
+      document.getElementById('fb').style.display = 'none';
+      document.getElementById('ftabs').style.display = 'none';
+      document.querySelector('.xp-bar-wrap').style.display = 'none';
+      document.querySelector('.form-loot-header').style.display = 'none';
+      document.getElementById('sw').classList.add('show');
+      showBubble("VICTOIRE ROYALE ! Bien joué !");
+      triggerWave();
+    } else {
+      btn.innerHTML = orig;
+      document.querySelector('.fsub').style.pointerEvents = 'all';
+      showNotice("ERREUR LORS DE L'ENVOI. RÉESSAYEZ.");
+    }
   })
   .catch(() => {
     btn.innerHTML = orig;
