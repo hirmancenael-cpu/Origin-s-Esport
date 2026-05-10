@@ -1780,7 +1780,7 @@
           <div class="fpl">
             <div class="fpb" id="fpb"></div>
           </div>
-          <form id="mf" name="candidature-lol" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+          <form id="mf" name="candidature-lol" method="POST" data-netlify="true" netlify-honeypot="bot-field" novalidate>
             <input type="hidden" name="access_key" value="33aad4f8-5571-48dd-ba18-a63802c1405c">
             <input type="hidden" name="subject" value="Candidature Joueur - League of Legends">
             <input type="hidden" name="botcheck">
@@ -2636,11 +2636,38 @@
       e.preventDefault();
       const btn = document.querySelector('.fsub'); const orig = btn.innerHTML;
       btn.innerHTML = '⏳ Invocation...'; btn.disabled = true;
+  // Validation des checkboxes required
+  var _reqCbs = document.querySelectorAll('#mf input[type="checkbox"][required]');
+  var _cbValid = true;
+  _reqCbs.forEach(function(cb) {
+    if (!cb.checked) { _cbValid = false; cb.closest('label') && cb.closest('label').classList.add('cb-error'); }
+    else { cb.closest('label') && cb.closest('label').classList.remove('cb-error'); }
+  });
+  if (!_cbValid) {
+    btn.innerHTML = orig; btn.disabled = false;
+    showNotice && showNotice("COCHE LES CASES OBLIGATOIRES AVANT D'ENVOYER.");
+    return;
+  }
+
+
+
+  // Sérialisation robuste (compatible Opera GX, Edge legacy, Safari < 14)
+  var _fd = new FormData(e.target);
+  var _data = {};
+  _fd.forEach(function(val, key) {
+    if (_data[key] !== undefined) {
+      if (!Array.isArray(_data[key])) _data[key] = [_data[key]];
+      _data[key].push(val);
+    } else {
+      _data[key] = val;
+    }
+  });
+  _data['botcheck'] = ''; // anti-spam honeypot toujours vide
 
       fetch('https://api.web3forms.com/submit', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-        body: JSON.stringify(Object.fromEntries(new FormData(e.target)))
+        body: JSON.stringify(_data)
       })
         .then(r => r.json())
         .then(data => {

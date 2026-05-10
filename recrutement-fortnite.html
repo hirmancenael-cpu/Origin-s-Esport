@@ -597,6 +597,9 @@ footer{
 .social-links{display:flex;gap:20px;flex-wrap:wrap;justify-content:center;margin:10px 0}
 .social-links a{font-family:var(--fm);font-size:.58rem;color:var(--mt);text-decoration:none;letter-spacing:2px;transition:color .3s}
 .social-links a:hover{color:var(--chest-cyan)}
+
+/* Checkbox error highlight */
+label.cb-error .cb { border-color: rgba(255,70,85,0.8) !important; box-shadow: 0 0 6px rgba(255,70,85,0.4); }
 </style>
 </head>
 <body>
@@ -1203,7 +1206,9 @@ document.getElementById('mf').addEventListener('submit', e => {
     return;
   }
 
-  // Valider tous les champs required du formulaire
+  // Valider tous les champs required (tous les steps, y compris les steps cachés)
+  const allPanels = document.querySelectorAll('#mf .fpanel, #mf .fp');
+  allPanels.forEach(p => { if (!p.classList.contains('active')) p.style.visibility = 'hidden'; });
   const allInputs = document.querySelectorAll('#mf input[required], #mf select[required], #mf textarea[required]');
   let formValid = true;
   allInputs.forEach(i => {
@@ -1213,6 +1218,7 @@ document.getElementById('mf').addEventListener('submit', e => {
       i.style.borderColor = 'rgba(255,70,85,0.5)';
     }
   });
+  allPanels.forEach(p => { p.style.visibility = ''; });
   if (!formValid) {
     showNotice("CERTAINS CHAMPS SONT MANQUANTS. VÉRIFIE LES ÉTAPES PRÉCÉDENTES.");
     return;
@@ -1223,10 +1229,24 @@ document.getElementById('mf').addEventListener('submit', e => {
   btn.innerHTML = '⏳ Envoi en cours...';
   document.querySelector('.fsub').style.pointerEvents = 'none';
 
+
+  // Sérialisation robuste (compatible Opera GX, Edge legacy, Safari < 14)
+  var _fd = new FormData(e.target);
+  var _data = {};
+  _fd.forEach(function(val, key) {
+    if (_data[key] !== undefined) {
+      if (!Array.isArray(_data[key])) _data[key] = [_data[key]];
+      _data[key].push(val);
+    } else {
+      _data[key] = val;
+    }
+  });
+  _data['botcheck'] = ''; // anti-spam honeypot toujours vide
+
   fetch('https://api.web3forms.com/submit', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-    body: JSON.stringify(Object.fromEntries(new FormData(e.target)))
+    body: JSON.stringify(_data)
   })
   .then(response => response.json())
   .then(data => {

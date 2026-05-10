@@ -392,6 +392,9 @@ footer{position:relative;z-index:10;border-top:1px solid rgba(236,232,225,.06);p
 .fl a{font-family:var(--fm);font-size:.55rem;color:var(--gray);text-decoration:none;letter-spacing:2px;transition:color .15s}
 .fl a:hover{color:var(--red)}
 .fc{font-family:var(--fm);font-size:.52rem;color:var(--gray2);letter-spacing:2px}
+
+/* Checkbox error highlight */
+label.cb-error .cb { border-color: rgba(255,70,85,0.8) !important; box-shadow: 0 0 6px rgba(255,70,85,0.4); }
 </style>
 </head>
 <body>
@@ -518,7 +521,7 @@ footer{position:relative;z-index:10;border-top:1px solid rgba(236,232,225,.06);p
 
       <div class="fbody" id="fb">
         <div class="fpl"><div class="fpb" id="fpb"></div></div>
-        <form id="mf" name="candidature-valorant" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+        <form id="mf" name="candidature-valorant" method="POST" data-netlify="true" netlify-honeypot="bot-field" novalidate>
           <input type="hidden" name="access_key" value="33aad4f8-5571-48dd-ba18-a63802c1405c">
           <input type="hidden" name="subject" value="Candidature Joueur - Valorant">
           <input type="hidden" name="botcheck">
@@ -841,10 +844,38 @@ document.getElementById('mf').addEventListener('submit',e=>{
   const orig=btn.innerHTML;
   btn.innerHTML='ENVOI EN COURS...';btn.disabled=true;
 
+  // Validation des checkboxes required
+  var _reqCbs = document.querySelectorAll('#mf input[type="checkbox"][required]');
+  var _cbValid = true;
+  _reqCbs.forEach(function(cb) {
+    if (!cb.checked) { _cbValid = false; cb.closest('label') && cb.closest('label').classList.add('cb-error'); }
+    else { cb.closest('label') && cb.closest('label').classList.remove('cb-error'); }
+  });
+  if (!_cbValid) {
+    btn.innerHTML = orig; btn.disabled = false;
+    showNotice && showNotice("COCHE LES CASES OBLIGATOIRES AVANT D'ENVOYER.");
+    return;
+  }
+
+
+
+  // Sérialisation robuste (compatible Opera GX, Edge legacy, Safari < 14)
+  var _fd = new FormData(e.target);
+  var _data = {};
+  _fd.forEach(function(val, key) {
+    if (_data[key] !== undefined) {
+      if (!Array.isArray(_data[key])) _data[key] = [_data[key]];
+      _data[key].push(val);
+    } else {
+      _data[key] = val;
+    }
+  });
+  _data['botcheck'] = ''; // anti-spam honeypot toujours vide
+
   fetch('https://api.web3forms.com/submit', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-    body: JSON.stringify(Object.fromEntries(new FormData(e.target)))
+    body: JSON.stringify(_data)
   })
   .then(r => r.json())
   .then(data => {

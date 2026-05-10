@@ -215,6 +215,9 @@ footer{position:relative;z-index:10;border-top:1px solid var(--bd);padding:50px 
 .fl a{font-family:var(--fm);font-size:.58rem;color:var(--mt);text-decoration:none;letter-spacing:2px;transition:color .3s}
 .fl a:hover{color:var(--c)}
 .fc{font-family:var(--fm);font-size:.58rem;color:var(--mt);letter-spacing:2px}
+
+/* Checkbox error highlight */
+label.cb-error .cb { border-color: rgba(255,70,85,0.8) !important; box-shadow: 0 0 6px rgba(255,70,85,0.4); }
 </style>
 </head>
 <body>
@@ -274,7 +277,7 @@ footer{position:relative;z-index:10;border-top:1px solid var(--bd);padding:50px 
       <div class="sw" id="sw"><div class="swi">🏢</div><div class="swt">Candidature Envoyée</div><div class="swm">Ton dossier a été transmis à l'équipe dirigeante d'Origin's.<br>Réponse sous 72h via Discord.</div><div class="swc">// WELCOME TO THE TEAM.</div></div>
       <div class="fbody" id="fb">
         <div class="fpl"><div class="fpb" id="fpb"></div></div>
-        <form id="mf" name="candidature-staff" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+        <form id="mf" name="candidature-staff" method="POST" data-netlify="true" netlify-honeypot="bot-field" novalidate>
           <input type="hidden" name="access_key" value="33aad4f8-5571-48dd-ba18-a63802c1405c">
           <input type="hidden" name="subject" value="Candidature Staff">
           <input type="hidden" name="botcheck">
@@ -582,21 +585,50 @@ document.querySelectorAll('input,textarea,select').forEach(el=>{
   el.addEventListener('blur',()=>gsap.to(el,{borderColor:el.value?'rgba(167,139,250,.25)':'rgba(167,139,250,.12)',duration:.3}));
 });
 // SUBMIT
-document.getElementById('mf').addEventListener('submit',e=>{
+document.getElementById('mf').addEventListener('submit', function(e) {
   e.preventDefault();
-  const btn=document.querySelector('.fsub');const orig=btn.innerHTML;btn.innerHTML='⏳ Envoi...';btn.disabled=true;
-  // Envoi Web3Forms
+  var btn = document.querySelector('.fsub');
+  var orig = btn.innerHTML;
+  btn.innerHTML = '⏳ Envoi...';
+  btn.disabled = true;
+
+  // Sérialisation robuste (compatible Opera GX, Edge legacy, etc.)
+  var fd = new FormData(e.target);
+  var data = {};
+  fd.forEach(function(val, key) {
+    if (data[key] !== undefined) {
+      if (!Array.isArray(data[key])) data[key] = [data[key]];
+      data[key].push(val);
+    } else {
+      data[key] = val;
+    }
+  });
+  // S'assurer que botcheck reste vide (anti-spam)
+  data['botcheck'] = '';
+
   fetch('https://api.web3forms.com/submit', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-    body: JSON.stringify(Object.fromEntries(new FormData(e.target)))
-  });
-
-  fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:new URLSearchParams(new FormData(e.target)).toString()})
-  .then(()=>{document.getElementById('fb').style.display='none';document.getElementById('ftabs').style.display='none';const sw=document.getElementById('sw');sw.classList.add('show');gsap.from('#sw > *',{y:30,opacity:0,stagger:.15,duration:.9,ease:'power3.out'})})
-  .catch(()=>{
-    btn.innerHTML=orig;btn.disabled=false;
-    showNotice("ERREUR DE RÉCEPTION. RÉESSAYEZ L'ENVOI.");
+    body: JSON.stringify(data)
+  })
+  .then(function(r) { return r.json(); })
+  .then(function(res) {
+    if (res.success) {
+      document.getElementById('fb').style.display = 'none';
+      document.getElementById('ftabs').style.display = 'none';
+      var sw = document.getElementById('sw');
+      sw.classList.add('show');
+      gsap.from('#sw > *', { y: 30, opacity: 0, stagger: .15, duration: .9, ease: 'power3.out' });
+    } else {
+      btn.innerHTML = orig;
+      btn.disabled = false;
+      showNotice("ERREUR DE RÉCEPTION. RÉESSAYEZ L'ENVOI.");
+    }
+  })
+  .catch(function() {
+    btn.innerHTML = orig;
+    btn.disabled = false;
+    showNotice("ERREUR RÉSEAU. RÉESSAYEZ L'ENVOI.");
   });
 });
 </script>
