@@ -67,7 +67,7 @@
       font-weight: 400
     }
 
-    @media(max-width:900px) {
+    @media(max-width:900px), (hover:none), (pointer:coarse) {
 
       *,
       *::before,
@@ -76,7 +76,7 @@
       }
 
       .cursor,
-      .cursor-ring {
+      .cursor-ring {pointer-events:none;
         display: none !important
       }
     }
@@ -280,13 +280,13 @@
     }
 
     /* Hex cursor on hover */
-    body.ch .cursor {
+    body.ch .cursor {pointer-events:none;
       width: 6px;
       height: 6px;
       background: var(--gold2)
     }
 
-    body.ch .cursor-ring {
+    body.ch .cursor-ring {pointer-events:none;
       width: 50px;
       height: 50px;
       border-color: var(--gold);
@@ -296,7 +296,7 @@
       background: rgba(200, 168, 75, .06);
     }
 
-    body.cc .cursor-ring {
+    body.cc .cursor-ring {pointer-events:none;
       width: 70px;
       height: 70px;
       border-color: var(--magic);
@@ -304,14 +304,14 @@
       border-radius: 50%
     }
 
-    body.ct .cursor {
+    body.ct .cursor {pointer-events:none;
       width: 2px;
       height: 24px;
       border-radius: 2px;
       background: var(--gold)
     }
 
-    body.ct .cursor-ring {
+    body.ct .cursor-ring {pointer-events:none;
       opacity: 0
     }
 
@@ -1780,15 +1780,17 @@
           <div class="fpl">
             <div class="fpb" id="fpb"></div>
           </div>
-          <form id="mf" name="candidature-lol" method="POST" data-netlify="true" netlify-honeypot="bot-field" novalidate>
+          <form id="mf" name="candidature-lol" method="POST" novalidate>
             <input type="hidden" name="access_key" value="33aad4f8-5571-48dd-ba18-a63802c1405c">
-            <input type="hidden" name="subject" value="Candidature Joueur - League of Legends">
-            <input type="hidden" name="botcheck">
+            <input type="hidden" name="subject" value="⚔️ Nouvelle Candidature LoL — Origins Esports">
+        <input type="hidden" name="from_name" value="Origins Esports — Recrutement">
+        <input type="hidden" name="redirect" value="false">
+        <input type="hidden" name="from_name" value="Origins Esports — Recrutement">
+        <input type="hidden" name="redirect" value="false">
+            <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" autocomplete="off">
             <input type="hidden" name="form-name" value="candidature-lol">
             <input type="hidden" name="game" value="League of Legends">
             <input type="hidden" name="role_val" id="rvf">
-            <p style="display:none"><label>Bot:<input name="bot-field"></label></p>
-
             <!-- STEP 1 — PROFIL -->
             <div class="fpnl active" id="p1">
               <div class="ph2">
@@ -1802,7 +1804,7 @@
                 </div>
                 <div class="fg">
                   <label>Âge <span class="rq">✦</span></label>
-                  <input type="number" name="age" placeholder="18" min="13" max="40" required>
+                  <input type="number" name="age" inputmode="numeric" pattern="[0-9]*" inputmode="numeric" pattern="[0-9]*" placeholder="18" min="13" max="30"  min="13" required>
                 </div>
               </div>
               <div class="r2">
@@ -1812,7 +1814,7 @@
                 </div>
                 <div class="fg">
                   <label>Twitter / X <span class="op">optionnel</span></label>
-                  <input type="url" name="twitter" placeholder="https://x.com/...">
+                  <input type="text" name="twitter" placeholder="https://x.com/...">
                 </div>
               </div>
               <div class="fg">
@@ -1862,22 +1864,22 @@
                 </div>
                 <div class="fg">
                   <label>LP actuels</label>
-                  <input type="number" name="lp" placeholder="Ex: 250 LP" min="0">
+                  <input type="number" name="lp" inputmode="numeric" pattern="[0-9]*" inputmode="numeric" pattern="[0-9]*" placeholder="Ex: 250 LP" min="0">
                 </div>
               </div>
               <div class="r3">
                 <div class="fg">
                   <label>Win Rate % (saison)</label>
-                  <input type="number" name="wr" placeholder="55" min="0" max="100">
+                  <input type="number" name="wr" inputmode="numeric" pattern="[0-9]*" inputmode="numeric" pattern="[0-9]*" placeholder="55" min="0" max="100">
                 </div>
                 <div class="fg">
                   <label>Parties jouées</label>
-                  <input type="number" name="hrs" placeholder="800" min="0">
+                  <input type="number" name="hrs" inputmode="numeric" pattern="[0-9]*" inputmode="numeric" pattern="[0-9]*" placeholder="800" min="0">
                 </div>
               </div>
               <div class="fg">
                 <label>Lien OP.GG / U.GG <span class="rq">✦</span></label>
-                <input type="url" name="tracker_link" placeholder="https://op.gg/summoners/euw/..." required>
+                <input type="text" data-url-field="true" name="tracker_link" placeholder="https://op.gg/summoners/euw/..." required>
               </div>
               <div class="fg">
                 <label>Rôle principal <span class="rq">✦</span></label>
@@ -1895,7 +1897,7 @@
               </div>
               <div class="fg">
                 <label>Highlights / Stream <span class="op">optionnel</span></label>
-                <input type="url" name="highlight_link" placeholder="https://...">
+                <input type="text" name="highlight_link" placeholder="https://...">
               </div>
               <div class="fnav">
                 <button type="button" class="fbk ht" onclick="pS()"><svg width="14" height="14" viewBox="0 0 24 24"
@@ -1953,7 +1955,7 @@
               </div>
               <div class="fg">
                 <label>VOD / POD gameplay <span class="rq">✦</span></label>
-                <input type="url" name="pov_link" placeholder="YouTube replay, Twitch VOD, Google Drive..." required>
+                <input type="text" name="pov_link" placeholder="YouTube replay, Twitch VOD, Google Drive..." required>
               </div>
               <div class="fnav">
                 <button type="button" class="fbk ht" onclick="pS()"><svg width="14" height="14" viewBox="0 0 24 24"
@@ -2016,16 +2018,16 @@
               <div class="fg">
                 <label>Engagements requis <span class="rq">✦</span></label>
                 <div class="cg">
-                  <label class="ci" onclick="tC(this)"><input type="checkbox" name="mature" required>
+                  <label class="ci" onclick="tC(this)"><input type="checkbox" name="mature" value="Accepté" required>
                     <div class="cb"></div><span>Mature & discipliné</span>
                   </label>
-                  <label class="ci" onclick="tC(this)"><input type="checkbox" name="scrims" required>
+                  <label class="ci" onclick="tC(this)"><input type="checkbox" name="scrims" value="Accepté" required>
                     <div class="cb"></div><span>Scrims quotidiens</span>
                   </label>
                   <label class="ci" onclick="tC(this)"><input type="checkbox" name="lan" required>
                     <div class="cb"></div><span>Déplacements LAN</span>
                   </label>
-                  <label class="ci" onclick="tC(this)"><input type="checkbox" name="tryout" required>
+                  <label class="ci" onclick="tC(this)"><input type="checkbox" name="tryout" value="Accepté" required>
                     <div class="cb"></div><span>Phase de test acceptée</span>
                   </label>
                 </div>
@@ -2110,6 +2112,23 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
   <script>
+/* ── GSAP GUARD : évite un crash si le CDN est indisponible ── */
+if (typeof gsap === 'undefined') {
+  window.gsap = {
+    to: function() { return {}; },
+    from: function() { return {}; },
+    fromTo: function(el, from, to) {
+      if (to && typeof to.onComplete === 'function') to.onComplete();
+      return {};
+    },
+    set: function() { return {}; },
+    timeline: function() { return { to:function(){return this;}, from:function(){return this;}, fromTo:function(){return this;}, set:function(){return this;} }; },
+    utils: { toArray: function(s) { return Array.from(document.querySelectorAll(s)); } },
+    registerPlugin: function() {}
+  };
+  console.warn('[Origins] GSAP non chargé — fallback activé');
+}
+
     gsap.registerPlugin(ScrollTrigger);
 
     /* ══════════════════════════════════════════
@@ -2512,14 +2531,29 @@
     let cS = 1; const BARS = ['20%', '40%', '60%', '80%', '100%'];
     function gS(n) {
       if (n < 1 || n > 5) return;
-      
-      // Validation du palier actuel avant de passer au suivant
+
       if (n > cS) {
         const curr = document.getElementById('p' + cS);
-        const inputs = curr.querySelectorAll('input[required], select[required], textarea[required]');
+
+        // Step 2 : vérifier rôle sélectionné
+        if (cS === 2) {
+          const rvf = document.getElementById('rvf');
+          if (!rvf || !rvf.value) {
+            showNotice("SÉLECTIONNE UN RÔLE AVANT DE CONTINUER.");
+            document.querySelectorAll('.rt').forEach(t => {
+              gsap.to(t, { x: 5, duration: .08, repeat: 3, yoyo: true });
+              t.style.borderColor = 'rgba(255,70,85,0.6)';
+              setTimeout(() => t.style.borderColor = '', 2000);
+            });
+            return;
+          }
+        }
+
+        const inputs = curr.querySelectorAll('input[required]:not([type="checkbox"]):not([type="hidden"]), select[required], textarea[required]');
         let valid = true;
         inputs.forEach(i => {
-          if (!i.checkValidity()) {
+          i.style.borderColor = '';
+          if (!i.value.trim() || !i.checkValidity()) {
             valid = false;
             i.style.borderColor = 'rgba(255,70,85,0.5)';
             gsap.to(i, { x: 10, duration: 0.1, repeat: 3, yoyo: true });
@@ -2634,42 +2668,85 @@
     /* NETLIFY SUBMIT */
     document.getElementById('mf').addEventListener('submit', e => {
       e.preventDefault();
-      const btn = document.querySelector('.fsub'); const orig = btn.innerHTML;
+      const btn = document.querySelector('.fsub');
+      const orig = btn.innerHTML;
+
+      // Vérif rôle
+      if (!document.getElementById('rvf').value) {
+        showNotice("RETOURNE À L'ÉTAPE 2 ET SÉLECTIONNE UN RÔLE.");
+        return;
+      }
+
+      // Vérif tous les champs required
+      const allInputs = document.querySelectorAll('#mf input[required]:not([type="checkbox"]):not([type="hidden"]), #mf select[required], #mf textarea[required]');
+      let formValid = true, firstInvalid = null;
+      allInputs.forEach(i => {
+        i.style.borderColor = '';
+        if (!i.value.trim() || !i.checkValidity()) {
+          formValid = false;
+          i.style.borderColor = 'rgba(255,70,85,0.5)';
+          if (!firstInvalid) firstInvalid = i;
+        }
+      });
+      if (!formValid) {
+        showNotice("CERTAINS CHAMPS SONT MANQUANTS. VÉRIFIE LES ÉTAPES PRÉCÉDENTES.");
+        if (firstInvalid) {
+          const panel = firstInvalid.closest('.fpnl');
+          if (panel) {
+            const stepNum = parseInt(panel.id.replace('p', ''));
+            if (!isNaN(stepNum)) {
+              const old = document.getElementById('p' + cS);
+              old.classList.remove('active'); old.style.cssText = '';
+              document.getElementById('p' + stepNum).classList.add('active');
+              document.querySelectorAll('.ftab').forEach((t, i) => {
+                t.classList.remove('active', 'done');
+                if (i + 1 === stepNum) t.classList.add('active');
+                else if (i + 1 < stepNum) t.classList.add('done');
+              });
+              document.getElementById('fpb').style.width = BARS[stepNum - 1];
+              cS = stepNum;
+              setTimeout(() => firstInvalid.focus(), 200);
+            }
+          }
+        }
+        return;
+      }
+
+      // Valider les checkboxes required
+      const reqCbs = document.querySelectorAll('#mf input[type="checkbox"][required]');
+      let cbValid = true;
+      reqCbs.forEach(cb => {
+        if (!cb.checked) { cbValid = false; cb.closest('label') && cb.closest('label').classList.add('cb-error'); }
+        else { cb.closest('label') && cb.closest('label').classList.remove('cb-error'); }
+      });
+      if (!cbValid) {
+        showNotice("COCHE LES CASES OBLIGATOIRES AVANT D'ENVOYER.");
+        return;
+      }
+
       btn.innerHTML = '⏳ Invocation...'; btn.disabled = true;
-  // Validation des checkboxes required
-  var _reqCbs = document.querySelectorAll('#mf input[type="checkbox"][required]');
-  var _cbValid = true;
-  _reqCbs.forEach(function(cb) {
-    if (!cb.checked) { _cbValid = false; cb.closest('label') && cb.closest('label').classList.add('cb-error'); }
-    else { cb.closest('label') && cb.closest('label').classList.remove('cb-error'); }
-  });
-  if (!_cbValid) {
-    btn.innerHTML = orig; btn.disabled = false;
-    showNotice && showNotice("COCHE LES CASES OBLIGATOIRES AVANT D'ENVOYER.");
-    return;
-  }
 
-
-
-  // Sérialisation robuste (compatible Opera GX, Edge legacy, Safari < 14)
-  var _fd = new FormData(e.target);
-  var _data = {};
-  _fd.forEach(function(val, key) {
-    if (_data[key] !== undefined) {
-      if (!Array.isArray(_data[key])) _data[key] = [_data[key]];
-      _data[key].push(val);
-    } else {
-      _data[key] = val;
-    }
-  });
-  _data['botcheck'] = ''; // anti-spam honeypot toujours vide
+      var _fd = new FormData(e.target);
+      var _data = {};
+      _fd.forEach(function(val, key) {
+        if (key === 'botcheck') return;
+        if (_data[key] !== undefined) {
+          if (!Array.isArray(_data[key])) _data[key] = [_data[key]];
+          _data[key].push(val);
+        } else {
+          _data[key] = val;
+        }
+      });
 
       fetch('https://api.web3forms.com/submit', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
         body: JSON.stringify(_data)
       })
-        .then(r => r.json())
+        .then(function(r) {
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    return r.json();
+  })
         .then(data => {
           if (data.success) {
             document.getElementById('fb').style.display = 'none';
@@ -2677,18 +2754,52 @@
             const sw = document.getElementById('sw'); sw.classList.add('show');
             gsap.from('#sw > *', { y: 30, opacity: 0, stagger: .15, duration: .9, ease: 'power3.out' });
           } else {
-            btn.innerHTML = orig;
-            btn.disabled = false;
+            btn.innerHTML = orig; btn.disabled = false;
             showNotice("ERREUR LORS DE L'ENVOI. RÉESSAYEZ.");
           }
         })
-        .catch(() => { 
-          btn.innerHTML = orig; 
-          btn.disabled = false; 
+        .catch(() => {
+          btn.innerHTML = orig; btn.disabled = false;
           showNotice("ERREUR D'INVOCATION. RÉESSAYEZ L'ENVOI.");
         });
     });
-  </script>
+  
+/* ── URL FIELDS FIX ──────────────────────────────────
+   Autofix https:// + validation douce sur les trackers
+   Champs twitter/pov/highlight/portfolio = text libre
+──────────────────────────────────────────────────── */
+(function() {
+  // Autofix https:// sur les champs tracker au blur
+  document.querySelectorAll('[data-url-field="true"]').forEach(function(el) {
+    el.addEventListener('blur', function() {
+      var v = el.value.trim();
+      if (!v) return;
+      // Si ça commence par http:// ou https://, c'est bon
+      if (/^https?:\/\//i.test(v)) return;
+      // Si ça commence par www. → ajouter https://
+      if (/^www\./i.test(v)) { el.value = 'https://' + v; return; }
+      // Sinon si ça ressemble à un domaine (contient un point) → ajouter https://
+      if (v.indexOf('.') !== -1 && v.indexOf(' ') === -1) {
+        el.value = 'https://' + v;
+      }
+    });
+
+    // Validation visuelle douce (avertissement, pas blocage)
+    el.addEventListener('change', function() {
+      var v = el.value.trim();
+      if (!v) { el.style.borderColor = ''; return; }
+      var isUrl = /^https?:\/\//i.test(v);
+      if (!isUrl) {
+        // Juste un warning visuel orange, on ne bloque pas
+        el.style.borderColor = 'rgba(255, 180, 0, 0.6)';
+      } else {
+        el.style.borderColor = '';
+      }
+    });
+  });
+})();
+
+</script>
 </body>
 
 </html>

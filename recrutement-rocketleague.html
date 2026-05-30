@@ -9,6 +9,7 @@
 <style>
 /* ── ROOT ── */
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;cursor:none}
+@media(hover:none),(pointer:coarse){body{cursor:auto}#cur{display:none!important}.cursor,.cursor-ring{pointer-events:none;display:none!important}}
 :root{
   --c:#00d4ff;--c2:#0090cc;--c3:#5ce1ff;
   --orange:#ff6b14;--orange2:#ff9444;--orange-glow:rgba(255,107,20,0.45);
@@ -22,7 +23,7 @@
 }
 html{overflow-x:hidden}
 body{font-family:var(--fb);background:var(--bg);color:var(--tx);overflow-x:hidden;line-height:1.7}
-@media(max-width:900px){*,*::before,*::after{cursor:auto!important}.cursor,.cursor-ring{display:none!important}}
+@media(max-width:900px){*,*::before,*::after{cursor:auto!important}.cursor,.cursor-ring{pointer-events:none;display:none!important}}
 ::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:var(--bg)}
 ::-webkit-scrollbar-thumb{background:linear-gradient(180deg,var(--c),var(--orange));border-radius:3px;opacity:.6}
 ::-webkit-scrollbar-thumb:hover{background:var(--c)}
@@ -70,11 +71,11 @@ body{font-family:var(--fb);background:var(--bg);color:var(--tx);overflow-x:hidde
 /* CURSOR */
 .cursor{position:fixed;z-index:9998;width:8px;height:8px;background:var(--c);border-radius:50%;transform:translate(-50%,-50%);pointer-events:none;box-shadow:0 0 10px var(--c);transition:width .15s,height .15s,background .15s,border-radius .15s}
 .cursor-ring{position:fixed;z-index:9997;width:40px;height:40px;border:1px solid rgba(0,212,255,.4);border-radius:50%;transform:translate(-50%,-50%);pointer-events:none;transition:width .35s var(--expo),height .35s var(--expo),border-color .3s,opacity .3s}
-body.ch .cursor{width:5px;height:5px;background:#fff}
-body.ch .cursor-ring{width:55px;height:55px;border-color:var(--c)}
-body.cc .cursor-ring{width:72px;height:72px;border-color:var(--c);border-width:2px}
-body.ct .cursor{width:2px;height:22px;border-radius:2px}
-body.ct .cursor-ring{opacity:0}
+body.ch .cursor{pointer-events:none;width:5px;height:5px;background:#fff}
+body.ch .cursor-ring{pointer-events:none;width:55px;height:55px;border-color:var(--c)}
+body.cc .cursor-ring{pointer-events:none;width:72px;height:72px;border-color:var(--c);border-width:2px}
+body.ct .cursor{pointer-events:none;width:2px;height:22px;border-radius:2px}
+body.ct .cursor-ring{pointer-events:none;opacity:0}
 
 /* HEADER */
 .hdr{position:fixed;top:0;left:0;width:100%;z-index:1000;padding:26px 6%;display:flex;justify-content:space-between;align-items:center;transition:padding .5s var(--expo),background .5s,border-color .5s;border-bottom:1px solid transparent}
@@ -322,26 +323,28 @@ footer{position:relative;z-index:10;border-top:1px solid var(--bd);padding:50px 
       <div class="sw" id="sw"><div class="swi"><svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="var(--c)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="filter: drop-shadow(0 0 15px var(--c))"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4.5c1.11-1.12 3-1.5 3-1.5"/><path d="M15 15v5s-3.03-.55-4.5-2c-1.12-1.11-1.5-3-1.5-3"/><path d="M15 9h5s-.55 3.03-2 4.5c-1.11 1.12-3 1.5-3 1.5"/><circle cx="15" cy="9" r="2"/></svg></div><div class="swt">Candidature Envoyée</div><div class="swm">Ton dossier Rocket League a été transmis à notre staff.<br>Réponse sous 72h via Discord.</div><div class="swc">// STAY SHARP.</div></div>
       <div class="fbody" id="fb">
         <div class="fpl"><div class="fpb" id="fpb"></div></div>
-        <form id="mf" name="candidature-rocketleague" method="POST" data-netlify="true" netlify-honeypot="bot-field" novalidate>
+        <form id="mf" name="candidature-rocketleague" method="POST" novalidate>
           <input type="hidden" name="access_key" value="33aad4f8-5571-48dd-ba18-a63802c1405c">
-          <input type="hidden" name="subject" value="Candidature Joueur - Rocket League">
-          <input type="hidden" name="botcheck">
+          <input type="hidden" name="subject" value="🚀 Nouvelle Candidature Rocket League — Origins Esports">
+        <input type="hidden" name="from_name" value="Origins Esports — Recrutement">
+        <input type="hidden" name="redirect" value="false">
+        <input type="hidden" name="from_name" value="Origins Esports — Recrutement">
+        <input type="hidden" name="redirect" value="false">
+          <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" autocomplete="off">
           <input type="hidden" name="form-name" value="candidature-rocketleague">
           <input type="hidden" name="game" value="Rocket League">
           <input type="hidden" name="platform_val" id="pv">
           <input type="hidden" name="role_val" id="rvf">
-          <p class="hidden" style="display: none;"><label>Ne pas remplir : <input name="bot-field"></label></p>
-
           <!-- STEP 1 — PROFIL -->
           <div class="fpnl active" id="p1">
             <div class="ph2"><h3>Profil Joueur</h3><p>Tes informations de base</p></div>
             <div class="r2">
               <div class="fg"><label>Pseudo Epic Games <span class="rq">*</span></label><input type="text" name="epic_name" placeholder="Origins_Tayson" required id="fe"><div class="fm2" id="me"></div></div>
-              <div class="fg"><label>Âge <span class="rq">*</span></label><input type="number" name="age" placeholder="18" min="13" max="35" required></div>
+              <div class="fg"><label>Âge <span class="rq">*</span></label><input type="number" name="age" inputmode="numeric" pattern="[0-9]*" inputmode="numeric" pattern="[0-9]*" placeholder="18" min="13" max="30"  min="13" required></div>
             </div>
             <div class="r2">
               <div class="fg"><label>Discord Tag <span class="rq">*</span></label><input type="text" name="discord" placeholder="pseudo#0000" required></div>
-              <div class="fg"><label>Twitter / X <span class="op">optionnel</span></label><input type="url" name="twitter" placeholder="https://x.com/..."></div>
+              <div class="fg"><label>Twitter / X <span class="op">optionnel</span></label><input type="text" name="twitter" placeholder="https://x.com/..."></div>
             </div>
             <div class="fg"><label>Nationalité</label><input type="text" name="nationality" placeholder="Française, Belge, Suisse..."></div>
             <div class="fg"><label>Plateforme <span class="rq">*</span></label>
@@ -371,14 +374,14 @@ footer{position:relative;z-index:10;border-top:1px solid var(--bd);padding:50px 
                   <option>Supersonic Legend</option>
                 </select>
               </div>
-              <div class="fg"><label>MMR actuel <span class="rq">*</span></label><input type="number" name="mmr" placeholder="Ex: 1800 MMR" required></div>
+              <div class="fg"><label>MMR actuel <span class="rq">*</span></label><input type="number" name="mmr" inputmode="numeric" pattern="[0-9]*" inputmode="numeric" pattern="[0-9]*" placeholder="Ex: 1800 MMR" required></div>
             </div>
             <div class="r3">
               
       
-              <div class="fg"><label>Heures jouées</label><input type="number" name="hrs" placeholder="3000" min="0"></div>
+              <div class="fg"><label>Heures jouées</label><input type="number" name="hrs" inputmode="numeric" pattern="[0-9]*" inputmode="numeric" pattern="[0-9]*" placeholder="3000" min="0"></div>
             </div>
-            <div class="fg"><label>Lien Rocket League Tracker <span class="rq">*</span></label><input type="url" name="tracker_link" placeholder="https://rocketleague.tracker.gg/..." required></div>
+            <div class="fg"><label>Lien Rocket League Tracker <span class="rq">*</span></label><input type="text" data-url-field="true" name="tracker_link" placeholder="https://rocketleague.tracker.gg/..." required></div>
             <div class="fg"><label>Spécialité <span class="rq">*</span></label>
               <div class="rtg">
                 <div class="rt" onclick="sR(this,'Striker')">Striker</div>
@@ -389,7 +392,7 @@ footer{position:relative;z-index:10;border-top:1px solid var(--bd);padding:50px 
 
               </div>
             </div>
-            <div class="fg"><label>Highlights (YouTube / Twitch) <span class="op">optionnel</span></label><input type="url" name="highlight_link" placeholder="https://..."></div>
+            <div class="fg"><label>Highlights (YouTube / Twitch) <span class="op">optionnel</span></label><input type="text" name="highlight_link" placeholder="https://..."></div>
             <div class="fnav">
               <button type="button" class="fbk ht" onclick="pS()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Retour</button>
               <div class="fsi">02 / 05</div>
@@ -418,7 +421,7 @@ footer{position:relative;z-index:10;border-top:1px solid var(--bd);padding:50px 
                 <select name="lan_exp"><option value="">Aucune</option><option>1–2 LAN régionales</option><option>3–5 LAN</option><option>6+ LAN</option><option>LAN majeure</option></select></div>
             </div>
             <div class="fg"><label>Anciennes structures <span class="rq">*</span></label><textarea name="historique_teams" rows="2" placeholder="Teams précédentes, durées, rôles..." required></textarea></div>
-            <div class="fg"><label>Lien POV / VOD de gameplay <span class="rq">*</span></label><input type="url" name="pov_link" placeholder="YouTube, Twitch VOD, Google Drive..." required></div>
+            <div class="fg"><label>Lien POV / VOD de gameplay <span class="rq">*</span></label><input type="text" name="pov_link" placeholder="YouTube, Twitch VOD, Google Drive..." required></div>
             <div class="fnav">
               <button type="button" class="fbk ht" onclick="pS()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Retour</button>
               <div class="fsi">03 / 05</div>
@@ -442,10 +445,10 @@ footer{position:relative;z-index:10;border-top:1px solid var(--bd);padding:50px 
             </div>
             <div class="fg"><label>Engagements <span class="rq">*</span></label>
               <div class="cg">
-                <label class="ci" onclick="tC(this)"><input type="checkbox" name="mature" required><div class="cb"></div><span>Mature & discipliné</span></label>
-                <label class="ci" onclick="tC(this)"><input type="checkbox" name="scrims" required><div class="cb"></div><span>Dispo pour scrims quotidiens</span></label>
+                <label class="ci" onclick="tC(this)"><input type="checkbox" name="mature" value="Accepté" required><div class="cb"></div><span>Mature & discipliné</span></label>
+                <label class="ci" onclick="tC(this)"><input type="checkbox" name="scrims" value="Accepté" required><div class="cb"></div><span>Dispo pour scrims quotidiens</span></label>
                 <label class="ci" onclick="tC(this)"><input type="checkbox" name="lan" required><div class="cb"></div><span>Prêt à voyager en LAN</span></label>
-                <label class="ci" onclick="tC(this)"><input type="checkbox" name="tryout" required><div class="cb"></div><span>Accepte la phase de test</span></label>
+                <label class="ci" onclick="tC(this)"><input type="checkbox" name="tryout" value="Accepté" required><div class="cb"></div><span>Accepte la phase de test</span></label>
               </div>
             </div>
             <div class="fnav">
@@ -496,6 +499,23 @@ footer{position:relative;z-index:10;border-top:1px solid var(--bd);padding:50px 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script>
+/* ── GSAP GUARD : évite un crash si le CDN est indisponible ── */
+if (typeof gsap === 'undefined') {
+  window.gsap = {
+    to: function() { return {}; },
+    from: function() { return {}; },
+    fromTo: function(el, from, to) {
+      if (to && typeof to.onComplete === 'function') to.onComplete();
+      return {};
+    },
+    set: function() { return {}; },
+    timeline: function() { return { to:function(){return this;}, from:function(){return this;}, fromTo:function(){return this;}, set:function(){return this;} }; },
+    utils: { toArray: function(s) { return Array.from(document.querySelectorAll(s)); } },
+    registerPlugin: function() {}
+  };
+  console.warn('[Origins] GSAP non chargé — fallback activé');
+}
+
 gsap.registerPlugin(ScrollTrigger);
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const isMobile = innerWidth < 900 || /Mobi|Android/i.test(navigator.userAgent);
@@ -666,35 +686,69 @@ function showNotice(msg) {
 
 function gS(n){
   if(n<1||n>5)return;
-  
-  // Validation du palier actuel
-  if (n > cS) {
-    const curr = document.getElementById('p' + cS);
-    const inputs = curr.querySelectorAll('input[required], select[required], textarea[required]');
+
+  if(n > cS){
+    const curr = document.getElementById('p'+cS);
+
+    // Step 1 : vérifier plateforme sélectionnée
+    if(cS === 1){
+      const pv = document.getElementById('pv');
+      if(!pv || !pv.value){
+        showNotice("SÉLECTIONNE UNE PLATEFORME AVANT DE CONTINUER.");
+        document.querySelectorAll('.plb').forEach(b=>{
+          gsap.to(b,{x:5,duration:.08,repeat:3,yoyo:true});
+          b.style.borderBottomColor='rgba(255,70,85,0.7)';
+          setTimeout(()=>b.style.borderBottomColor='',2000);
+        });
+        return;
+      }
+    }
+
+    // Step 2 : vérifier spécialité sélectionnée
+    if(cS === 2){
+      const rvf = document.getElementById('rvf');
+      if(!rvf || !rvf.value){
+        showNotice("SÉLECTIONNE UNE SPÉCIALITÉ AVANT DE CONTINUER.");
+        document.querySelectorAll('.rt').forEach(t=>{
+          gsap.to(t,{x:5,duration:.08,repeat:3,yoyo:true});
+          t.style.borderColor='rgba(255,70,85,0.6)';
+          setTimeout(()=>t.style.borderColor='',2000);
+        });
+        return;
+      }
+    }
+
+    const inputs = curr.querySelectorAll('input[required]:not([type="checkbox"]):not([type="hidden"]), select[required], textarea[required]');
     let valid = true;
-    inputs.forEach(i => {
-      if (!i.checkValidity()) {
-        valid = false;
-        i.style.borderColor = 'rgba(255,107,20,0.6)';
-        gsap.to(i, { x: 10, duration: 0.1, repeat: 3, yoyo: true });
+    inputs.forEach(i=>{
+      i.style.borderColor='';
+      if(!i.value.trim()||!i.checkValidity()){
+        valid=false;
+        i.style.borderColor='rgba(255,70,85,0.7)';
+        gsap.to(i,{x:10,duration:.1,repeat:3,yoyo:true});
       }
     });
-    if (!valid) {
-      showNotice("CHAMPS REQUIS MANQUANTS OU INVALIDES");
-      return;
-    }
+    if(!valid){ showNotice("CHAMPS REQUIS MANQUANTS OU INVALIDES"); return; }
   }
-  const old = document.getElementById('p'+cS), nw = document.getElementById('p'+n), fwd = n > cS;
-  if(n===5) upRec();
-  gsap.to(old,{opacity:0,x:fwd?-40:40,duration:0.2,ease:'power3.in',onComplete:()=>{
-    old.classList.remove('active');old.style.cssText='';nw.classList.add('active');
-    gsap.fromTo(nw,{opacity:0,x:fwd?48:-48},{opacity:1,x:0,duration:0.38,ease:'expo.out'});
+
+  const old=document.getElementById('p'+cS);
+  const nw=document.getElementById('p'+n);
+  const fwd=n>cS;
+  if(n===5)upRec();
+
+  gsap.to(old,{opacity:0,x:fwd?-24:24,duration:.2,ease:'power2.in',onComplete:()=>{
+    old.classList.remove('active');old.style.cssText='';
+    nw.classList.add('active');
+    gsap.fromTo(nw,{opacity:0,x:fwd?24:-24},{opacity:1,x:0,duration:.3,ease:'power2.out'});
   }});
+
   document.querySelectorAll('.ftab').forEach((t,i)=>{t.classList.remove('active','done');if(i+1===n)t.classList.add('active');else if(i+1<n)t.classList.add('done');});
-  document.getElementById('fpb').style.width = BARS[n-1]; cS = n;
-  const top = document.querySelector('.fsh').getBoundingClientRect().top;
-  if(top < -30) window.scrollTo({top: window.scrollY + top - 100, behavior:'smooth'});
+  document.getElementById('fpb').style.width=BARS[n-1];
+  cS=n;
+  const top=document.querySelector('.fsh').getBoundingClientRect().top;
+  if(top<-20)window.scrollTo({top:window.scrollY+top-80,behavior:'smooth'});
 }
+
 function nS(){ gS(cS+1); }
 function pS(){ gS(cS-1); }
 function upRec(){
@@ -733,6 +787,7 @@ document.getElementById('mf').addEventListener('submit', e => {
   var _fd = new FormData(e.target);
   var _data = {};
   _fd.forEach(function(val, key) {
+    if (key === 'botcheck') return; // honeypot
     if (_data[key] !== undefined) {
       if (!Array.isArray(_data[key])) _data[key] = [_data[key]];
       _data[key].push(val);
@@ -740,14 +795,17 @@ document.getElementById('mf').addEventListener('submit', e => {
       _data[key] = val;
     }
   });
-  _data['botcheck'] = ''; // anti-spam honeypot toujours vide
+  // honeypot: ne pas inclure botcheck dans les données
 
   fetch('https://api.web3forms.com/submit', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
     body: JSON.stringify(_data)
   })
-  .then(r => r.json())
+  .then(function(r) {
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    return r.json();
+  })
   .then(data => {
     if (data.success) {
       document.getElementById('fb').style.display = 'none';
@@ -767,6 +825,42 @@ document.getElementById('mf').addEventListener('submit', e => {
     showNotice("ERREUR DE TRANSMISSION. RÉESSAYEZ L'ENVOI.");
   });
 });
+
+/* ── URL FIELDS FIX ──────────────────────────────────
+   Autofix https:// + validation douce sur les trackers
+   Champs twitter/pov/highlight/portfolio = text libre
+──────────────────────────────────────────────────── */
+(function() {
+  // Autofix https:// sur les champs tracker au blur
+  document.querySelectorAll('[data-url-field="true"]').forEach(function(el) {
+    el.addEventListener('blur', function() {
+      var v = el.value.trim();
+      if (!v) return;
+      // Si ça commence par http:// ou https://, c'est bon
+      if (/^https?:\/\//i.test(v)) return;
+      // Si ça commence par www. → ajouter https://
+      if (/^www\./i.test(v)) { el.value = 'https://' + v; return; }
+      // Sinon si ça ressemble à un domaine (contient un point) → ajouter https://
+      if (v.indexOf('.') !== -1 && v.indexOf(' ') === -1) {
+        el.value = 'https://' + v;
+      }
+    });
+
+    // Validation visuelle douce (avertissement, pas blocage)
+    el.addEventListener('change', function() {
+      var v = el.value.trim();
+      if (!v) { el.style.borderColor = ''; return; }
+      var isUrl = /^https?:\/\//i.test(v);
+      if (!isUrl) {
+        // Juste un warning visuel orange, on ne bloque pas
+        el.style.borderColor = 'rgba(255, 180, 0, 0.6)';
+      } else {
+        el.style.borderColor = '';
+      }
+    });
+  });
+})();
+
 </script>
 </body>
 </html>

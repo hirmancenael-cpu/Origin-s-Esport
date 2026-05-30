@@ -23,6 +23,7 @@
 }
 html{overflow-x:hidden;scroll-behavior:smooth}
 body{font-family:var(--fn-font);color:var(--tx);overflow-x:hidden;line-height:1.6;min-height:100vh;cursor:none}
+@media(hover:none),(pointer:coarse){body{cursor:auto}#cur{display:none!important}}
 
 /* ─── CUSTOM CURSOR ─── */
 .cursor{
@@ -32,7 +33,7 @@ body{font-family:var(--fn-font);color:var(--tx);overflow-x:hidden;line-height:1.
   transition:transform 0.08s cubic-bezier(0.4,0,0.2,1);
   will-change:transform;filter:drop-shadow(0 0 6px var(--fn-yellow));
 }
-body.ch .cursor{transform:translate(-50%,-50%) scale(1.25);filter:drop-shadow(0 0 14px var(--fn-yellow));}
+body.ch .cursor{pointer-events:none;transform:translate(-50%,-50%) scale(1.25);filter:drop-shadow(0 0 14px var(--fn-yellow));}
 
 /* ═══════════════════════════════════════════════════
    LOADING SCREEN — Battle Bus
@@ -734,25 +735,29 @@ label.cb-error .cb { border-color: rgba(255,70,85,0.8) !important; box-shadow: 0
     </div>
 
     <div class="fbody" id="fb">
-      <form id="mf" name="candidature-fortnite" method="POST" data-netlify="true" netlify-honeypot="bot-field" novalidate>
+      <form id="mf" name="candidature-fortnite" method="POST" novalidate>
         <input type="hidden" name="access_key" value="33aad4f8-5571-48dd-ba18-a63802c1405c">
-        <input type="hidden" name="subject" value="Candidature Joueur - Fortnite">
-        <input type="hidden" name="botcheck">
+        <input type="hidden" name="subject" value="🎮 Nouvelle Candidature Fortnite — Origins Esports">
+        <input type="hidden" name="from_name" value="Origins Esports — Recrutement">
+        <input type="hidden" name="redirect" value="false">
+        <input type="hidden" name="from_name" value="Origins Esports — Recrutement">
+        <input type="hidden" name="redirect" value="false">
         <input type="hidden" name="form-name" value="candidature-fortnite">
         <input type="hidden" name="game" value="Fortnite">
         <input type="hidden" name="role_val" id="rvf">
-        <p style="display:none"><label>Ne pas remplir : <input name="bot-field"></label></p>
+        <!-- Honeypot anti-spam web3forms (doit rester vide) -->
+        <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" autocomplete="off">
 
         <!-- STEP 1 : Identité -->
         <div class="fpnl active" id="p1">
           <div class="ph2"><h3><span class="step-icon">🪪</span>Identité Joueur</h3></div>
           <div class="r2">
             <div class="fg"><label>Pseudo Epic Games <span class="rq">*</span></label><input type="text" class="ht" name="epic" required placeholder="Origin_Bugha"></div>
-            <div class="fg"><label>Âge <span class="rq">*</span></label><input type="number" class="ht" name="age" required min="13" max="35" placeholder="16"></div>
+            <div class="fg"><label>Âge <span class="rq">*</span></label><input type="number" class="ht" name="age"  min="13" required min="13" max="30" placeholder="16"></div>
           </div>
           <div class="r2">
             <div class="fg"><label>Discord <span class="rq">*</span></label><input type="text" class="ht" name="discord" required placeholder="pseudo#1234"></div>
-            <div class="fg"><label>Twitter / X</label><input type="url" class="ht" name="twitter" placeholder="https://x.com/tonpseudo"></div>
+            <div class="fg"><label>Twitter / X</label><input type="text" class="ht" name="twitter" placeholder="https://x.com/tonpseudo"></div>
           </div>
           <div class="fnav">
             <div class="fsi">01 / 05</div>
@@ -763,7 +768,7 @@ label.cb-error .cb { border-color: rgba(255,70,85,0.8) !important; box-shadow: 0
         <!-- STEP 2 : Compétitif -->
         <div class="fpnl" id="p2">
           <div class="ph2"><h3><span class="step-icon">🏆</span>Profil Compétitif</h3></div>
-          <div class="fg"><label>Lien Fortnite Tracker <span class="rq">*</span></label><input type="url" class="ht" name="tracker" required placeholder="https://fortnitetracker.com/profile/..."></div>
+          <div class="fg"><label>Lien Fortnite Tracker <span class="rq">*</span></label><input type="text" data-url-field="true" class="ht" name="tracker" required placeholder="https://fortnitetracker.com/profile/..."></div>
           <div class="r2">
             <div class="fg"><label>Power Ranking (PR) <span class="rq">*</span></label><input type="number" class="ht" name="pr" required placeholder="Ex: 1850"></div>
             <div class="fg"><label>Gains totaux ($)</label><input type="number" class="ht" name="earnings" placeholder="0"></div>
@@ -835,10 +840,10 @@ label.cb-error .cb { border-color: rgba(255,70,85,0.8) !important; box-shadow: 0
         <div class="fpnl" id="p5">
           <div class="ph2"><h3><span class="step-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>Validation</h3></div>
           <div class="fg">
-            <label class="ci ht" onclick="tC(this)"><input type="checkbox" name="regles" required><div class="cb"></div><span>J'accepte le règlement de la structure</span></label>
-            <label class="ci ht" onclick="tC(this)"><input type="checkbox" name="tryout" required><div class="cb"></div><span>Je suis prêt à passer les tryouts (scrims + évaluation)</span></label>
-            <label class="ci ht" onclick="tC(this)"><input type="checkbox" name="toxicite" required><div class="cb"></div><span>Je m'engage à une mentalité saine et pro (No toxic)</span></label>
-            <label class="ci ht" onclick="tC(this)"><input type="checkbox" name="scrims" required><div class="cb"></div><span>Je peux participer aux scrims quotidiens</span></label>
+            <label class="ci ht" onclick="tC(this)"><input type="checkbox" name="regles" value="Accepté" required><div class="cb"></div><span>J'accepte le règlement de la structure</span></label>
+            <label class="ci ht" onclick="tC(this)"><input type="checkbox" name="tryout" value="Accepté" required><div class="cb"></div><span>Je suis prêt à passer les tryouts (scrims + évaluation)</span></label>
+            <label class="ci ht" onclick="tC(this)"><input type="checkbox" name="toxicite" value="Accepté" required><div class="cb"></div><span>Je m'engage à une mentalité saine et pro (No toxic)</span></label>
+            <label class="ci ht" onclick="tC(this)"><input type="checkbox" name="scrims" value="Accepté" required><div class="cb"></div><span>Je peux participer aux scrims quotidiens</span></label>
           </div>
           <div class="fnav">
             <button type="button" class="fbk ht" onclick="pS()">Modifier</button>
@@ -872,6 +877,23 @@ label.cb-error .cb { border-color: rgba(255,70,85,0.8) !important; box-shadow: 0
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script>
+/* ── GSAP GUARD : évite un crash si le CDN est indisponible ── */
+if (typeof gsap === 'undefined') {
+  window.gsap = {
+    to: function() { return {}; },
+    from: function() { return {}; },
+    fromTo: function(el, from, to) {
+      if (to && typeof to.onComplete === 'function') to.onComplete();
+      return {};
+    },
+    set: function() { return {}; },
+    timeline: function() { return { to:function(){return this;}, from:function(){return this;}, fromTo:function(){return this;}, set:function(){return this;} }; },
+    utils: { toArray: function(s) { return Array.from(document.querySelectorAll(s)); } },
+    registerPlugin: function() {}
+  };
+  console.warn('[Origins] GSAP non chargé — fallback activé');
+}
+
 /* ══════════════════════════════════════════════
    CURSOR
 ══════════════════════════════════════════════ */
@@ -1137,13 +1159,30 @@ function showNotice(msg) {
 function gS(n) {
   if (n < 1 || n > 5) return;
   
-  // Validation du palier actuel
+  // Validation du palier actuel avant d'avancer
   if (n > cS) {
     const curr = document.getElementById('p' + cS);
-    const inputs = curr.querySelectorAll('input[required], select[required], textarea[required]');
+
+    // Step 3 : vérifier qu'une plateforme est sélectionnée
+    if (cS === 3) {
+      const rvf = document.getElementById('rvf');
+      if (!rvf.value) {
+        showNotice("SÉLECTIONNE UNE PLATEFORME AVANT DE CONTINUER.");
+        // Highlight visuel sur les boutons de plateforme
+        document.querySelectorAll('.rt').forEach(rt => {
+          gsap.to(rt, { x: 5, duration: 0.08, repeat: 3, yoyo: true });
+          rt.style.borderColor = 'rgba(255,70,85,0.6)';
+          setTimeout(() => rt.style.borderColor = '', 2000);
+        });
+        return;
+      }
+    }
+
+    const inputs = curr.querySelectorAll('input[required]:not([type="checkbox"]), select[required], textarea[required]');
     let valid = true;
     inputs.forEach(i => {
-      if (!i.checkValidity()) {
+      i.style.borderColor = '';
+      if (!i.value.trim() || !i.checkValidity()) {
         valid = false;
         i.style.borderColor = 'rgba(255,70,85,0.5)';
         gsap.to(i, { x: 10, duration: 0.1, repeat: 3, yoyo: true });
@@ -1154,6 +1193,7 @@ function gS(n) {
       return;
     }
   }
+
   document.getElementById('p' + cS).classList.remove('active');
   document.getElementById('p' + n).classList.add('active');
   document.querySelectorAll('.ftab').forEach(t => t.classList.remove('active'));
@@ -1206,21 +1246,45 @@ document.getElementById('mf').addEventListener('submit', e => {
     return;
   }
 
-  // Valider tous les champs required (tous les steps, y compris les steps cachés)
-  const allPanels = document.querySelectorAll('#mf .fpanel, #mf .fp');
-  allPanels.forEach(p => { if (!p.classList.contains('active')) p.style.visibility = 'hidden'; });
-  const allInputs = document.querySelectorAll('#mf input[required], #mf select[required], #mf textarea[required]');
+  // Vérifier plateforme sélectionnée
+  if (!document.getElementById('rvf').value) {
+    showNotice("RETOURNE AU STEP 3 ET SÉLECTIONNE UNE PLATEFORME.");
+    return;
+  }
+
+  // Valider tous les champs required de tous les steps
+  const allInputs = document.querySelectorAll('#mf input[required]:not([type="checkbox"]):not([type="hidden"]), #mf select[required], #mf textarea[required]');
   let formValid = true;
+  let firstInvalid = null;
   allInputs.forEach(i => {
-    if (i.type === 'checkbox') return; // déjà géré
-    if (!i.value.trim()) {
+    i.style.borderColor = '';
+    if (!i.value.trim() || !i.checkValidity()) {
       formValid = false;
       i.style.borderColor = 'rgba(255,70,85,0.5)';
+      if (!firstInvalid) firstInvalid = i;
     }
   });
-  allPanels.forEach(p => { p.style.visibility = ''; });
   if (!formValid) {
     showNotice("CERTAINS CHAMPS SONT MANQUANTS. VÉRIFIE LES ÉTAPES PRÉCÉDENTES.");
+    // Tenter de retrouver le step du premier champ invalide
+    if (firstInvalid) {
+      const panel = firstInvalid.closest('.fpnl');
+      if (panel) {
+        const panelId = panel.id; // "p1" à "p5"
+        const stepNum = parseInt(panelId.replace('p', ''));
+        if (!isNaN(stepNum)) {
+          // Forcer la navigation sans validation pour corriger
+          document.getElementById('p' + cS).classList.remove('active');
+          document.getElementById('p' + stepNum).classList.add('active');
+          document.querySelectorAll('.ftab').forEach(t => t.classList.remove('active'));
+          document.querySelector('.ftab[data-step="' + stepNum + '"]').classList.add('active');
+          document.getElementById('xpBar').style.width = XP_VALS[stepNum-1];
+          document.getElementById('xpLabel').textContent = XP_LABELS[stepNum-1];
+          cS = stepNum;
+          setTimeout(() => firstInvalid.focus(), 200);
+        }
+      }
+    }
     return;
   }
 
@@ -1229,11 +1293,12 @@ document.getElementById('mf').addEventListener('submit', e => {
   btn.innerHTML = '⏳ Envoi en cours...';
   document.querySelector('.fsub').style.pointerEvents = 'none';
 
-
-  // Sérialisation robuste (compatible Opera GX, Edge legacy, Safari < 14)
+  // Sérialisation robuste
   var _fd = new FormData(e.target);
   var _data = {};
   _fd.forEach(function(val, key) {
+    // Ignorer le honeypot et les champs vides non obligatoires
+    if (key === 'botcheck') return;
     if (_data[key] !== undefined) {
       if (!Array.isArray(_data[key])) _data[key] = [_data[key]];
       _data[key].push(val);
@@ -1241,14 +1306,16 @@ document.getElementById('mf').addEventListener('submit', e => {
       _data[key] = val;
     }
   });
-  _data['botcheck'] = ''; // anti-spam honeypot toujours vide
 
   fetch('https://api.web3forms.com/submit', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
     body: JSON.stringify(_data)
   })
-  .then(response => response.json())
+  .then(function(response) {
+    if (!response.ok) throw new Error('HTTP ' + response.status);
+    return response.json();
+  })
   .then(data => {
     if (data.success) {
       document.getElementById('fb').style.display = 'none';
@@ -1261,15 +1328,52 @@ document.getElementById('mf').addEventListener('submit', e => {
     } else {
       btn.innerHTML = orig;
       document.querySelector('.fsub').style.pointerEvents = 'all';
-      showNotice("ERREUR LORS DE L'ENVOI. RÉESSAYEZ.");
+      const errMsg = data.message || "ERREUR LORS DE L'ENVOI.";
+      showNotice(errMsg.toUpperCase() + " — RÉESSAYEZ.");
     }
   })
   .catch(() => {
     btn.innerHTML = orig;
     document.querySelector('.fsub').style.pointerEvents = 'all';
-    showNotice("ERREUR RÉSEAU. RÉESSAYEZ L'ENVOI.");
+    showNotice("ERREUR RÉSEAU. VÉRIFIE TA CONNEXION ET RÉESSAIE.");
   });
 });
+
+/* ── URL FIELDS FIX ──────────────────────────────────
+   Autofix https:// + validation douce sur les trackers
+   Champs twitter/pov/highlight/portfolio = text libre
+──────────────────────────────────────────────────── */
+(function() {
+  // Autofix https:// sur les champs tracker au blur
+  document.querySelectorAll('[data-url-field="true"]').forEach(function(el) {
+    el.addEventListener('blur', function() {
+      var v = el.value.trim();
+      if (!v) return;
+      // Si ça commence par http:// ou https://, c'est bon
+      if (/^https?:\/\//i.test(v)) return;
+      // Si ça commence par www. → ajouter https://
+      if (/^www\./i.test(v)) { el.value = 'https://' + v; return; }
+      // Sinon si ça ressemble à un domaine (contient un point) → ajouter https://
+      if (v.indexOf('.') !== -1 && v.indexOf(' ') === -1) {
+        el.value = 'https://' + v;
+      }
+    });
+
+    // Validation visuelle douce (avertissement, pas blocage)
+    el.addEventListener('change', function() {
+      var v = el.value.trim();
+      if (!v) { el.style.borderColor = ''; return; }
+      var isUrl = /^https?:\/\//i.test(v);
+      if (!isUrl) {
+        // Juste un warning visuel orange, on ne bloque pas
+        el.style.borderColor = 'rgba(255, 180, 0, 0.6)';
+      } else {
+        el.style.borderColor = '';
+      }
+    });
+  });
+})();
+
 </script>
 </body>
 </html>

@@ -8,6 +8,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Orbitron:wght@400;700;900&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;cursor:none}
+@media(hover:none),(pointer:coarse){body{cursor:auto}#cur{display:none!important}.cursor,.cursor-ring{pointer-events:none;display:none!important}}
 :root{
   --c:#a78bfa;--c2:#6d28d9;--c3:#c4b5fd;
   --crgb:167,139,250;
@@ -20,7 +21,7 @@
 }
 html{overflow-x:hidden}
 body{font-family:var(--fb);background:var(--bg);color:var(--tx);overflow-x:hidden;line-height:1.7}
-@media(max-width:900px){*,*::before,*::after{cursor:auto!important}.cursor,.cursor-ring{display:none!important}}
+@media(max-width:900px){*,*::before,*::after{cursor:auto!important}.cursor,.cursor-ring{pointer-events:none;display:none!important}}
 ::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:var(--bg)}
 ::-webkit-scrollbar-thumb{background:rgba(167,139,250,.2);border-radius:3px}
 ::-webkit-scrollbar-thumb:hover{background:var(--c)}
@@ -45,11 +46,11 @@ body{font-family:var(--fb);background:var(--bg);color:var(--tx);overflow-x:hidde
 /* CURSOR */
 .cursor{position:fixed;z-index:9998;width:8px;height:8px;background:var(--c);border-radius:50%;transform:translate(-50%,-50%);pointer-events:none;box-shadow:0 0 10px var(--c);transition:width .15s,height .15s,background .15s,border-radius .15s}
 .cursor-ring{position:fixed;z-index:9997;width:40px;height:40px;border:1px solid rgba(167,139,250,.4);border-radius:50%;transform:translate(-50%,-50%);pointer-events:none;transition:width .35s var(--expo),height .35s var(--expo),border-color .3s,opacity .3s}
-body.ch .cursor{width:5px;height:5px;background:#fff}
-body.ch .cursor-ring{width:55px;height:55px;border-color:var(--c)}
-body.cc .cursor-ring{width:72px;height:72px;border-color:var(--c2);border-width:2px}
-body.ct .cursor{width:2px;height:22px;border-radius:2px}
-body.ct .cursor-ring{opacity:0}
+body.ch .cursor{pointer-events:none;width:5px;height:5px;background:#fff}
+body.ch .cursor-ring{pointer-events:none;width:55px;height:55px;border-color:var(--c)}
+body.cc .cursor-ring{pointer-events:none;width:72px;height:72px;border-color:var(--c2);border-width:2px}
+body.ct .cursor{pointer-events:none;width:2px;height:22px;border-radius:2px}
+body.ct .cursor-ring{pointer-events:none;opacity:0}
 
 /* HEADER */
 .hdr{position:fixed;top:0;left:0;width:100%;z-index:1000;padding:26px 6%;display:flex;justify-content:space-between;align-items:center;transition:padding .5s var(--expo),background .5s,border-color .5s;border-bottom:1px solid transparent}
@@ -277,30 +278,32 @@ label.cb-error .cb { border-color: rgba(255,70,85,0.8) !important; box-shadow: 0
       <div class="sw" id="sw"><div class="swi">🏢</div><div class="swt">Candidature Envoyée</div><div class="swm">Ton dossier a été transmis à l'équipe dirigeante d'Origin's.<br>Réponse sous 72h via Discord.</div><div class="swc">// WELCOME TO THE TEAM.</div></div>
       <div class="fbody" id="fb">
         <div class="fpl"><div class="fpb" id="fpb"></div></div>
-        <form id="mf" name="candidature-staff" method="POST" data-netlify="true" netlify-honeypot="bot-field" novalidate>
+        <form id="mf" name="candidature-staff" method="POST" novalidate>
           <input type="hidden" name="access_key" value="33aad4f8-5571-48dd-ba18-a63802c1405c">
-          <input type="hidden" name="subject" value="Candidature Staff">
-          <input type="hidden" name="botcheck">
+          <input type="hidden" name="subject" value="🛡️ Nouvelle Candidature Staff — Origins Esports">
+        <input type="hidden" name="from_name" value="Origins Esports — Recrutement">
+        <input type="hidden" name="redirect" value="false">
+        <input type="hidden" name="from_name" value="Origins Esports — Recrutement">
+        <input type="hidden" name="redirect" value="false">
+          <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" autocomplete="off">
           <input type="hidden" name="form-name" value="candidature-staff" />
           <input type="hidden" name="category" value="Staff">
           <input type="hidden" name="role_val" id="rvf">
           <input type="hidden" name="games_val" id="gvf">
-          <p class="hidden" style="display: none;"><label>Ne pas remplir : <input name="bot-field"></label></p>
-
           <!-- STEP 1 — PROFIL -->
           <div class="fpnl active" id="p1">
             <div class="ph2"><h3>Profil Personnel</h3><p>Qui es-tu ?</p></div>
             <div class="r2">
               <div class="fg"><label>Prénom / Pseudo <span class="rq">*</span></label><input type="text" name="name" placeholder="Ton nom ou pseudo" required></div>
-              <div class="fg"><label>Âge <span class="rq">*</span></label><input type="number" name="age" placeholder="18" min="16" max="50" required></div>
+              <div class="fg"><label>Âge <span class="rq">*</span></label><input type="number" name="age" inputmode="numeric" pattern="[0-9]*" inputmode="numeric" pattern="[0-9]*" placeholder="18" min="16" max="40"  min="13" required></div>
             </div>
             <div class="r2">
               <div class="fg"><label>Discord Tag <span class="rq">*</span></label><input type="text" name="discord" placeholder="pseudo#0000" required></div>
               <div class="fg"><label>Email <span class="rq">*</span></label><input type="email" name="email" placeholder="ton@email.com" required></div>
             </div>
             <div class="r2">
-              <div class="fg"><label>Twitter / X <span class="op">optionnel</span></label><input type="url" name="twitter" placeholder="https://x.com/..."></div>
-              <div class="fg"><label>LinkedIn / Portfolio <span class="op">optionnel</span></label><input type="url" name="portfolio" placeholder="https://..."></div>
+              <div class="fg"><label>Twitter / X <span class="op">optionnel</span></label><input type="text" name="twitter" placeholder="https://x.com/..."></div>
+              <div class="fg"><label>LinkedIn / Portfolio <span class="op">optionnel</span></label><input type="text" name="portfolio" placeholder="https://..."></div>
             </div>
             <div class="r2">
               <div class="fg"><label>Nationalité</label><input type="text" name="nationality" placeholder="Française, Belge..."></div>
@@ -354,7 +357,7 @@ label.cb-error .cb { border-color: rgba(255,70,85,0.8) !important; box-shadow: 0
                 <select name="availability"><option value="">Sélectionner...</option><option>5–10h</option><option>10–20h</option><option>20–30h</option><option>30h+</option><option>Temps plein</option></select></div>
             </div>
             <div class="fg"><label>Compétences clés (logiciels, outils, skills)</label><textarea name="skills" rows="3" placeholder="Ex: Adobe Premiere, OBS, Excel avancé, coaching Fortnite depuis 3 ans, méthodo VoD review..."></textarea></div>
-            <div class="fg"><label>Lien portfolio / références <span class="op">optionnel</span></label><input type="url" name="portfolio_link" placeholder="Site perso, Behance, YouTube, Google Drive..."></div>
+            <div class="fg"><label>Lien portfolio / références <span class="op">optionnel</span></label><input type="text" name="portfolio_link" placeholder="Site perso, Behance, YouTube, Google Drive..."></div>
             <div class="fg"><label>Jeux pratiqués (niveau, temps de jeu)</label><textarea name="gaming_profile" rows="2" placeholder="Ex: Fortnite — 2000h, PR 8000 / Valorant — Immortal 2..."></textarea></div>
             <div class="fnav">
               <button type="button" class="fbk ht" onclick="pS()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Retour</button>
@@ -430,6 +433,23 @@ label.cb-error .cb { border-color: rgba(255,70,85,0.8) !important; box-shadow: 0
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script>
+/* ── GSAP GUARD : évite un crash si le CDN est indisponible ── */
+if (typeof gsap === 'undefined') {
+  window.gsap = {
+    to: function() { return {}; },
+    from: function() { return {}; },
+    fromTo: function(el, from, to) {
+      if (to && typeof to.onComplete === 'function') to.onComplete();
+      return {};
+    },
+    set: function() { return {}; },
+    timeline: function() { return { to:function(){return this;}, from:function(){return this;}, fromTo:function(){return this;}, set:function(){return this;} }; },
+    utils: { toArray: function(s) { return Array.from(document.querySelectorAll(s)); } },
+    registerPlugin: function() {}
+  };
+  console.warn('[Origins] GSAP non chargé — fallback activé');
+}
+
 gsap.registerPlugin(ScrollTrigger);
 // THREE.JS ESPORT CYBER-FLUX
 (function(){const s=document.createElement('script');s.src='https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js';s.onload=()=>{
@@ -611,7 +631,10 @@ document.getElementById('mf').addEventListener('submit', function(e) {
     headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
     body: JSON.stringify(data)
   })
-  .then(function(r) { return r.json(); })
+  .then(function(r) {
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    return r.json();
+  })
   .then(function(res) {
     if (res.success) {
       document.getElementById('fb').style.display = 'none';
@@ -631,6 +654,42 @@ document.getElementById('mf').addEventListener('submit', function(e) {
     showNotice("ERREUR RÉSEAU. RÉESSAYEZ L'ENVOI.");
   });
 });
+
+/* ── URL FIELDS FIX ──────────────────────────────────
+   Autofix https:// + validation douce sur les trackers
+   Champs twitter/pov/highlight/portfolio = text libre
+──────────────────────────────────────────────────── */
+(function() {
+  // Autofix https:// sur les champs tracker au blur
+  document.querySelectorAll('[data-url-field="true"]').forEach(function(el) {
+    el.addEventListener('blur', function() {
+      var v = el.value.trim();
+      if (!v) return;
+      // Si ça commence par http:// ou https://, c'est bon
+      if (/^https?:\/\//i.test(v)) return;
+      // Si ça commence par www. → ajouter https://
+      if (/^www\./i.test(v)) { el.value = 'https://' + v; return; }
+      // Sinon si ça ressemble à un domaine (contient un point) → ajouter https://
+      if (v.indexOf('.') !== -1 && v.indexOf(' ') === -1) {
+        el.value = 'https://' + v;
+      }
+    });
+
+    // Validation visuelle douce (avertissement, pas blocage)
+    el.addEventListener('change', function() {
+      var v = el.value.trim();
+      if (!v) { el.style.borderColor = ''; return; }
+      var isUrl = /^https?:\/\//i.test(v);
+      if (!isUrl) {
+        // Juste un warning visuel orange, on ne bloque pas
+        el.style.borderColor = 'rgba(255, 180, 0, 0.6)';
+      } else {
+        el.style.borderColor = '';
+      }
+    });
+  });
+})();
+
 </script>
 </body>
 </html>
