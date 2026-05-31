@@ -592,7 +592,7 @@ const li = setInterval(() => {
   document.getElementById('lp').textContent = Math.round(pc) + '%';
 }, 100);
 
-window.addEventListener('load', () => {
+function finishLoading() {
   clearInterval(li);
   document.getElementById('lf').style.width = '100%';
   document.getElementById('lp').textContent = '100%';
@@ -600,7 +600,9 @@ window.addEventListener('load', () => {
     document.getElementById('loader').style.display = 'none';
     heroIn();
   }});
-});
+}
+if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',finishLoading);}else{finishLoading();}
+setTimeout(()=>{const l=document.getElementById('loader');if(l&&l.style.display!=='none'){l.style.display='none';try{heroIn();}catch(e){}}},8000);
 
 function heroIn(){
   gsap.set('#phEye',{y:12});

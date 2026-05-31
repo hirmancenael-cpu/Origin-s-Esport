@@ -2442,7 +2442,7 @@ if (typeof gsap === 'undefined') {
       document.getElementById('lp').textContent = Math.round(pc) + '%';
     }, 120);
 
-    window.addEventListener('load', () => {
+    function finishLoading() {
       clearInterval(li);
       document.getElementById('lf').style.width = '100%';
       document.getElementById('lp').textContent = '100%';
@@ -2450,7 +2450,9 @@ if (typeof gsap === 'undefined') {
         opacity: 0, duration: 1, delay: .4, ease: 'power2.inOut',
         onComplete: () => { document.getElementById('loader').style.display = 'none'; heroIn() }
       });
-    });
+    }
+    if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',finishLoading);}else{finishLoading();}
+    setTimeout(()=>{const l=document.getElementById('loader');if(l&&l.style.display!=='none'){l.style.display='none';try{heroIn();}catch(e){}}},8000);
 
     /* ══════════════════════════════════════════
        HERO CINEMATIC — ARCANE SEQUENCE

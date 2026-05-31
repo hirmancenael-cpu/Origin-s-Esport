@@ -614,7 +614,7 @@ label.cb-error .cb { border-color: rgba(255,70,85,0.8) !important; box-shadow: 0
     <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
     <div class="progress-info"><span>PRÉPARATION AU DROP</span><span id="percent">0%</span></div>
   </div>
-  <audio id="bus-sound" autoplay loop><source src="https://freesound.org/data/previews/276/276951_5123854-lq.mp3" type="audio/mpeg"></audio>
+
 </div>
 
 <!-- ═══════════════ WORLD ═══════════════ -->
@@ -910,20 +910,18 @@ document.querySelectorAll('.ht,input,button,select,textarea,.ftab,.rt,.ci,.chest
 /* ══════════════════════════════════════════════
    BATTLE BUS LOADING
 ══════════════════════════════════════════════ */
-window.addEventListener('load', () => {
+/* ── Démarre dès que le DOM est prêt, sans attendre les assets (images/CDN) ── */
+function startLoading() {
   const overlay = document.getElementById('battle-bus-overlay');
-  const busSound = document.getElementById('bus-sound');
   const progressFill = document.getElementById('progress-fill');
   const percentEl = document.getElementById('percent');
-
-  busSound.volume = 0.35;
-  progressFill.style.width = '100%';
 
   let progress = 0;
   const iv = setInterval(() => {
     progress += Math.random() * 7 + 4;
     if (progress > 100) progress = 100;
     percentEl.textContent = Math.floor(progress) + '%';
+    progressFill.style.width = progress + '%';
     if (progress >= 100) clearInterval(iv);
   }, 110);
 
@@ -931,12 +929,25 @@ window.addEventListener('load', () => {
     overlay.classList.add('fade-out');
     setTimeout(() => {
       overlay.style.display = 'none';
-      busSound.pause();
-      // NPC says hi after loading
       setTimeout(() => showBubble("Hey ! Ouvre le coffre pour candidater !"), 1000);
     }, 1400);
   }, 5600);
-});
+}
+
+/* Lance au DOMContentLoaded, avec fallback load si déjà passé */
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', startLoading);
+} else {
+  startLoading();
+}
+/* Fallback de sécurité : si jamais rien ne s'est lancé après 8s, on force */
+setTimeout(() => {
+  const overlay = document.getElementById('battle-bus-overlay');
+  if (overlay && overlay.style.display !== 'none') {
+    overlay.style.display = 'none';
+    try { showBubble("Hey ! Ouvre le coffre pour candidater !"); } catch(e) {}
+  }
+}, 8000);
 
 /* ══════════════════════════════════════════════
    NPC

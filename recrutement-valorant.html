@@ -743,7 +743,7 @@ const li=setInterval(()=>{
   if(pc>90&&li_i===2){lines[2].classList.add('vis');li_i=3}
 },140);
 
-window.addEventListener('load',()=>{
+function finishLoading(){
   clearInterval(li);
   document.getElementById('lf').style.width='100%';
   document.getElementById('lp').textContent='100%';
@@ -751,7 +751,9 @@ window.addEventListener('load',()=>{
   setTimeout(()=>{
     gsap.to('#loader',{opacity:0,duration:.3,ease:'power2.in',onComplete:()=>{document.getElementById('loader').style.display='none';heroIn();}});
   },600);
-});
+}
+if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',finishLoading);}else{finishLoading();}
+setTimeout(()=>{const l=document.getElementById('loader');if(l&&l.style.display!=='none'){l.style.display='none';try{heroIn();}catch(e){}}},8000);
 
 /* HERO */
 function heroIn(){
